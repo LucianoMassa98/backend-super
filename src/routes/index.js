@@ -1,6 +1,6 @@
 const express = require('express');
 const productosRouter = require('./productos.router');
-const notaspedidosRouter = require('./notaspedidos.router');
+const notaspedidosRouter = require('./notaspedido.router');
 const usuariosRouter = require('./usuarios.router');
 const enviomercaderiaRouter = require('./enviomercaderia.router');
 const procesodeproduccionRouter = require('./procesoproduccion.router');
