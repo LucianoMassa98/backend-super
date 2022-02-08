@@ -4,8 +4,6 @@ const port = 3000;
 //formato en el que se reciben peticiones: Json
 //endpoints productos
 //se le entrega productos de servidor a cliente
-
-
 const stock =[];
 //se manda stock actual
 router.get('/',(req,res)=>{
