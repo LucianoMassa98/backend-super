@@ -14,7 +14,7 @@ router.post('/enviarmacedria',(req,res)=>{
 });
 
 // se modifica valores
-router.patch();
+
 
 //mostrar envios de mercaderia pendiete
 router.get('/',(req,res)=>{

@@ -2,12 +2,11 @@
 const express = require('express');
 const router = express.Router();
 
-const notasdepedidosx = [{},{},{}];
-
 //cliente pide clase de nota de pedido
 
 //cliente solicita notas de pedidos vigentes
 router.get('/',(req,res)=>{
+  notasdepedidosx = [];
   res.json(notasdepedidosx);
 
 });

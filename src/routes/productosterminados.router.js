@@ -1,5 +1,4 @@
 const express = require('express');
-const { propfind } = require('./productos.router');
 const router = express.Router();
 
 
