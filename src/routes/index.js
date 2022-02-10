@@ -8,9 +8,12 @@ const productosRouter = require('./productos.router');
 const remitosRouter = require('./remitos.router');
 const usuariosRouter = require('./usuarios.router');
 
+//funcion que recibe a la aplicacion por parametro de entrada: MidleWere
 function routerApi(app) {
   const router = express.Router();
+  //  Para manejar la api por versiones, se crea la ruta maestra de cual todas parten
   app.use('/api/v1', router);
+  // defino el endpoint
   router.use('/facturas', facturasRouter);
   router.use('/galpones',galponesRouter);
   router.use('/materiales', materialesRouter);
@@ -24,8 +27,3 @@ function routerApi(app) {
 
 module.exports = routerApi;
 
-//api.example.com/productos
-//api.example.com/productos?page=1
-//api.example.com/productos?limit=1&offset=2
-//api.example.com/productos?region=USA
-//api.example.com/productos?region=USA&brand=XY
