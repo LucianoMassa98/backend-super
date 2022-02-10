@@ -36,22 +36,54 @@ class ProductoServicio{
     ];
   }
   //create
-  Crear(){}
+  async Crear(data){
+
+    const newproduct = {
+      id: '1.6',
+      ...data
+    }
+    this.productos.push(newproduct);
+    return newproduct;
+  }
   //edit
-  Editar(){}
+  async Editar(){}
   //find
-  Buscar(){
-    return this.productos;
+  async Buscar(){
+    return new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        resolve(this.productos);
+      },5000);
+    });
   }
   //findOne
-  BuscarUno(id){
-
+  async BuscarUno(id){
     return this.productos.find(item => item.id === id);
   }
   //update
-  Actualizar(){}
+  async Actualizar(id,changes){
+    const index =  this.productos.findIndex(item => item.id === id);
+    if(index === -1){
+      throw new Error('Producto no encontrado');
+    }else{
+      const producto = this.productos[index];
+      this.productos[index] ={
+        ...producto,
+        ...changes
+      };
+
+      return this.productos[index];
+    }
+  }
   //delete
-  Borrar(){}
+  async Borrar(id){
+    const index =  this.productos.findIndex(item => item.id === id);
+    if(index === -1){
+      throw new Error('Producto no encontrado');
+    }else{
+      this.productos.splice(index,1);
+      return {message: true}
+    }
+  }
 
 }
 
