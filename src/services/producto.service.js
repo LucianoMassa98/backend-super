@@ -10,28 +10,38 @@ class ProductoServicio{
     this.productos = [
       {
         id: '1.1',
-        cantidad: 'producto 1',
-        precio: 100
+        barra:'123213214',
+        nombre: 'producto 1',
+        precio: 100,
+        venta: 150
       },
       {
         id: '1.2',
-        cantidad: 'producto 2',
-        precio: 1500
+        barra:'123213214',
+        nombre: 'producto 2',
+        precio: 1500,
+        venta: 150
       },
       {
         id: '1.3',
-        cantidad: 'producto 3',
-        precio: 360
+        barra:'123213214',
+        nombre: 'producto 3',
+        precio: 360,
+        venta: 150
       },
       {
         id: '1.4',
-        cantidad: 'producto 4',
-        precio: 550
+        barra:'123213214',
+        nombre: 'producto 4',
+        precio: 550,
+        venta: 150
       },
       {
         id: '1.5',
-        cantidad: 'producto 5',
-        precio: 200
+        barra:'123213214',
+        nombre: 'producto 5',
+        precio: 200,
+        venta: 150
       }
     ];
   }
