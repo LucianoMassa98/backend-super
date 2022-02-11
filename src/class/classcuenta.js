@@ -7,6 +7,56 @@ export class Cuenta{
       this.debe = 0;
       this.haber = 0;
   }
+
+generador(){
+
+    this.cuentas = [
+      {
+        codigo: '1',
+        nombre: 'ACTIVO',
+        debe: 0,
+        haber: 0,
+      },
+      {
+        codigo: '1.1',
+        nombre: 'efectivo',
+        debe: 0,
+        haber: 0
+      },
+      {
+        codigo: '1.2',
+        nombre: 'cuenta corriente',
+        debe: 0,
+        haber: 0
+      },
+      {
+        codigo: '1.3',
+        nombre: 'debito',
+        debe: 0,
+        haber: 0
+      },
+
+      {codigo: '2',
+      nombre: 'PASIVO',
+      debe: 0,
+      haber: 0
+      },
+      {
+        codigo: '2.1',
+        nombre: 'Empleados',
+        debe: 0,
+        haber: 0
+      },
+      {
+        codigo: '2.1.1',
+        nombre: 'Producion',
+        debe: 0,
+        haber: 0
+      }
+    ];
+
+}
+
    saldo(){
        return (this.debe-this.haber);
       }
