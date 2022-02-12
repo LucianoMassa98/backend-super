@@ -103,6 +103,8 @@ class formularioService{
       ...oldformulario,
       ...change
     }
+
+    this.formularios.push(newformulario);
     return newformulario;
   }
   async CntNTP(){
