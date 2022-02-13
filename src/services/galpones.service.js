@@ -84,4 +84,7 @@ class galponeService{
     }
   }
 
+
+
 }
+module.exports = {galponeService};
