@@ -1,6 +1,6 @@
 
 
-class StockServicio{
+class ProductoServicio{
 
   constructor(){
     this.productos = [];
@@ -47,8 +47,8 @@ class StockServicio{
     ];
   }
   //create
-  async Crear(data,tipo){
-
+ async Crear(data,tipo){
+/*
     switch(tipo){
       case 'PRD':
       // escribir archivo productos
@@ -61,17 +61,18 @@ class StockServicio{
       break;
     }
 
-    if(this.BuscarporBarra(data.barra)!={}){
+    if(this.BuscarporBarra(data.codigo)!={}){
       throw  new Error('Producto ya existente');
     }else{
-      const id = this.CntTIPO(data.tipo)+1;
-      new newproduct = {
-        id: id,
-        ...data
-      }
-      this.productos.push(newproduct);
-      return newproduct;
-    }
+
+    }*/
+    const ide = await this.GenerarCodigo(tipo);
+    const newproduct = {
+      id: ide,
+      ...data
+    };
+    this.productos.push(newproduct);
+    return newproduct;
 
   }
   //edit
@@ -112,7 +113,9 @@ class StockServicio{
     }
   }
   async GenerarCodigo(tipo){
-    return (await this.BuscarporTipo(tipo)).length();
+
+    //return (await this.BuscarporTipo(tipo)).length();
+    return "1.6";
   }
   //update
   async Actualizar(id,changes,tipo){
@@ -143,7 +146,7 @@ class StockServicio{
   }
   //delete
   async Borrar(id,tipo){
-
+    /*
     switch(tipo){
       case 'PRD':
       // borrar de archivo productos
@@ -154,7 +157,7 @@ class StockServicio{
       case 'MCD':
       // Borrar de archivo mercaderia
       break;
-    }
+    }*/
     const index =  this.productos.findIndex(item => item.id === id);
     if(index === -1){
       throw new Error('Producto no encontrado');

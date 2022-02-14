@@ -1,7 +1,7 @@
 const express = require('express');
 const routerApi = require('./src/routes/index');
 const app = express();
-const port = 8080;
+const port = 3010;
 
 
 //formato en el que se reciben peticiones: Json

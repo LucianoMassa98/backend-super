@@ -9,14 +9,15 @@ const servicio = new ProductoServicio();
 //cliente solicita lista de productos
 router.get('/Lista',async (req,res)=>{
 
-  const productos = await servicio.BuscarporTipo('PRD');
+ // const productos = await servicio.BuscarporTipo('PRD');
+ const productos = await servicio.Buscar();
   res.json(productos);
 
  });
 // cliente busca producto por id
 router.get('/BuscarPorID/:id',async(req, res)=>{
   const { id } = req.params;
-   const producto = await servicio.BuscarUno(id);
+   const producto = await servicio.BuscarporID(id);
    res.json(producto);
 });
 // cliente busca producto por barra
@@ -34,14 +35,14 @@ router.post('/Agregar',async(req,res)=>{
   const body = req.body;
   const newproduct = await servicio.Crear(body,'PRD');
   // guardar producto en stock verificando que antes no exista
-  res.status(201).json(newproduct);
+  res.json(newproduct);
   });
 
 
 
 // --------------------- Endopoints Patch ----------------------
 //cliente actualizacion parcial
-router.patch('/ModificaParcial/:id',async(req,res)=>{
+router.patch('/Modificar/:id',async(req,res)=>{
   try{
   const {id} = req.params;
   const body =  req.body;
@@ -56,7 +57,7 @@ router.patch('/ModificaParcial/:id',async(req,res)=>{
 
 // --------------------- Endopoints Delete ----------------------
 //cliente borra producto de la lista por id
-router.delete('/BorrarProducto/:id',async(req,res)=>{
+router.delete('/Borrar/:id',async(req,res)=>{
   const {id} = req.params;
   const band = await servicio.Borrar(id,'PRD');
   res.json(band);

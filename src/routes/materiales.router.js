@@ -15,7 +15,7 @@ router.get('/Lista',async (req,res)=>{
 // cliente busca producto por id
 router.get('/BuscarPorID/:id',async(req, res)=>{
   const { id } = req.params;
-   const producto = await servicio.BuscarUno(id);
+   const producto = await servicio.BuscarporID(id);
    res.json(producto);
 });
 

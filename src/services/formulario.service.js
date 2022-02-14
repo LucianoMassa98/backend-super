@@ -110,4 +110,4 @@ class formularioService{
 }
 
 
-module.exports = {formularioService}
+module.exports = formularioService;
