@@ -1,10 +1,11 @@
 
-
+const boom = require('@hapi/boom');
 class ProductoServicio{
 
-  constructor(){
+  constructor(tipo){
     this.productos = [];
     this.Generador();
+
 
   }
   Generador(){
@@ -80,7 +81,22 @@ class ProductoServicio{
 
   //findOne
   async BuscarporID(id){
-    return this.productos.find(item => item.id === id);
+
+    const producto =  this.productos.find(item => item.id === id);
+    // si no exoste el producto
+    if(!producto){
+      throw boom.notFound('producto not found');
+    }
+    //si costo esta vacio
+    if (!producto.costo)
+    {
+      throw boom.conflict('product is block');
+    }
+
+    // si todo esta  bien, retorno el producto
+      return producto;
+
+
   }
   async BuscarporBarra(barra){
     return this.productos.find(item => item.codigo === barra);
@@ -119,7 +135,7 @@ class ProductoServicio{
   }
   //update
   async Actualizar(id,changes,tipo){
-
+/*
     switch(tipo){
       case 'PRD':
       // escribir archivo productos
@@ -130,10 +146,10 @@ class ProductoServicio{
       case 'MCD':
       // escribir archivo mercaderia
       break;
-    }
+    }*/
     const index =  this.productos.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Producto no encontrado');
+      throw boom.notFound('producto not found');
     }else{
       const producto = this.productos[index];
       this.productos[index] ={

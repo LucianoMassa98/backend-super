@@ -1,16 +1,21 @@
 const express = require('express');
 const routerApi = require('./src/routes/index');
+const {longError,errorHandler,boomErrorHandler}=require('./src/middlewares/error.handler');
 const app = express();
 const port = 3010;
 
 
 //formato en el que se reciben peticiones: Json
 app.use(express.json());
+//----
+app.use(longError);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 routerApi(app);
+//-----
 
 app.listen(port, ()=>{
-
 
   console.log("Mi port "+port);
 });
@@ -33,6 +38,6 @@ parte 4: definir servicios: en esta Etapa se utiliza logica de POO
         - se crea una clase "productoservicio"
         - se le agregan los metodos: create,edit,find,findone,update,delete
         - definir funciones asincronas con los manejos de errores
-parte 5: middlewere: software que permite la conectitividad con otros paqueres
+parte 5: middlewere: software que permite la conectitividad con otros paquetes
         -middlewere para errores, error global
 //*/
