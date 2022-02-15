@@ -10,7 +10,7 @@ class galponeService{
 
     this.galpones = [
       {
-        id: 'produccion',
+        nombre: 'produccion',
         mp: [
           {
             cod: '1.1.6.1',
@@ -19,16 +19,16 @@ class galponeService{
         ]
       },
       {
-        id: 'azul',
+        nombre: 'azul',
         mp: [
           {
             cod: '1.1.6.1',
             cnt: 500
           }
-        ]
+                ]
      },
      {
-      id: 'amarillo',
+      nombre: 'amarillo',
       mp: [
         {
           cod: '1.1.6.1',
@@ -37,7 +37,7 @@ class galponeService{
       ]
    },
    {
-    id: 'rojo',
+    nombre: 'rojo',
     mp: [
       {
         cod: '1.1.6.1',
@@ -46,7 +46,7 @@ class galponeService{
     ]
  },
  {
-  id: 'verde',
+  nombre: 'verde',
   mp: [
     {
       cod: '1.1.6.1',
