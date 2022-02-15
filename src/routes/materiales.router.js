@@ -1,33 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const ProductoServicio = require('../services/producto.service');
-const servicio = new ProductoServicio();
+const servicio = new ProductoServicio('MTP');
 
 
 // ------------------- EndPoint Get ------------------------
 //cliente solicita lista de productos
-router.get('/Lista',async (req,res)=>{
+router.get('/Lista',async (req,res,next)=>{
 
-  const productos = await servicio.BuscarporTipo('MTP');
-  res.json(productos);
+  try{
+
+    const productos = await servicio.Buscar();
+    res.json(productos);
+  }catch(error){ next(error);}
 
  });
 // cliente busca producto por id
-router.get('/BuscarPorID/:id',async(req, res)=>{
-  const { id } = req.params;
+router.get('/BuscarPorID/:id',async(req, res,next)=>{
+  try{
+    const { id } = req.params;
    const producto = await servicio.BuscarporID(id);
    res.json(producto);
+  }catch(error){ next(error);}
+
 });
-
-
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
-router.post('/Agregar',async(req,res)=>{
-  const body = req.body;
-  const newproduct = await servicio.Crear(body,'MTP');
-  // guardar producto en stock verificando que antes no exista
+router.post('/Agregar',async(req,res,next)=>{
+  try{
+    const body = req.body;
+  const newproduct = await servicio.Crear(body);
   res.status(201).json(newproduct);
+  }catch(error){next(error);}
+
   });
 
 
@@ -35,25 +41,27 @@ router.post('/Agregar',async(req,res)=>{
 
 // --------------------- Endopoints Patch ----------------------
 //cliente actualizacion parcial
-router.patch('/ModificaParcial/:id',async(req,res)=>{
+router.patch('/ModificaParcial/:id',async(req,res,next)=>{
+
   try{
   const {id} = req.params;
   const body =  req.body;
-  const producto = await servicio.Actualizar(id,body,'MTP');
+  const producto = await servicio.Actualizar(id,body);
   res.json(producto);
   }catch(error){
-    res.json({
-      message: error.message
-    });
+   next(error);
   }
 });
 
 // --------------------- Endopoints Delete ----------------------
 //cliente borra producto de la lista por id
-router.delete('/BorrarProducto/:id',async(req,res)=>{
-  const {id} = req.params;
-  const band = await servicio.Borrar(id,'MTP');
+router.delete('/BorrarProducto/:id',async(req,res,next)=>{
+  try{
+    const {id} = req.params;
+  const band = await servicio.Borrar(id);
   res.json(band);
+  }catch(error){next(error);}
+
 });
 
 

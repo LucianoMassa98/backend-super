@@ -58,16 +58,12 @@ const newproduct = {
 };
   switch(this.tipo){
     case 'PRD':
-    //  ----> leer archivo productos
     //falta verificar esquema de creacion de Producto
     if(!producto){}
     //verificar datos de entrada de productos
     if(this.BuscarporBarra(producto.codigo)){
       throw boom.conflict('producto ya existente');
         }
-    // Fatla Guardar en base de datos
-
-
     break;
     case 'MTP':
     //falta verificar esquema de creacion de Materia prima
@@ -85,51 +81,30 @@ const newproduct = {
     if(this.BuscarporBarra(producto.id)){
       throw boom.conflict('producto ya existente');
         }
-        // Fatla Guardar en base de datos
     break;
   }
     // guardar en memoria principal
     this.productos.push(newproduct);
+    // guardar en base de datos
+    this.Guardar(newproduct);
     return newproduct;
 
   }
   //edit
   async Editar(){}
   //Guardar en Base de datos producto,material o mercaderia nueva;
-  async Guardar(){
+  async Guardar(producto){
     switch(this.tipo){
       case 'PRD':
-      //  ----> leer archivo productos
-      //falta verificar esquema de creacion de Producto
-      if(!producto){}
-      //verificar datos de entrada de productos
-      if(this.BuscarporBarra(producto.codigo)){
-        throw boom.conflict('producto ya existente');
-          }
-      // Fatla Guardar en base de datos
-
-
+       // Fatla Guardar en base de datos
       break;
       case 'MTP':
-      //falta verificar esquema de creacion de Materia prima
-      if(!producto){}
-      //verificar datos de entrada de materia prima
-      if(this.BuscarporID(producto.id)){
-        throw boom.conflict('producto ya existente');
-          }
-          // Fatla Guardar en base de datos
+      // Fatla Guardar en base de datos
       break;
       case 'MCD':
-      //falta verificar esquema de creacion de Mercaderia
-      if(!producto){}
-      //verificar datos de entrada de materia prima
-      if(this.BuscarporBarra(producto.id)){
-        throw boom.conflict('producto ya existente');
-          }
-          // Fatla Guardar en base de datos
+       // Fatla Guardar en base de datos
       break;
     }
-
   }
   //findOne
   async BuscarporID(id){
@@ -164,7 +139,7 @@ const newproduct = {
       },5000);
     });
   }
-  async GenerarCodigo(tipo){
+  async GenerarCodigo(){
     return '1.6';
   }
   //update
@@ -188,7 +163,7 @@ const newproduct = {
     }
   }
   //delete
-  async Borrar(id,tipo){
+  async Borrar(id){
 
     const index =  this.productos.findIndex(item => item.id === id);
 

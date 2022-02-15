@@ -7,18 +7,19 @@ const port = 3010;
 
 //formato en el que se reciben peticiones: Json
 app.use(express.json());
-//----
+//---- definir middlewares tipo error
 app.use(longError);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
 routerApi(app);
-//-----
-
+//----- escucha de peticiones en el port
 app.listen(port, ()=>{
 
   console.log("Mi port "+port);
 });
+
+
 /*
 parte 1: separado de responsabilidades (single responsibility principle)
     -importante definir una regla
@@ -39,5 +40,49 @@ parte 4: definir servicios: en esta Etapa se utiliza logica de POO
         - se le agregan los metodos: create,edit,find,findone,update,delete
         - definir funciones asincronas con los manejos de errores
 parte 5: middlewere: software que permite la conectitividad con otros paquetes
-        -middlewere para errores, error global
-//*/
+        -son software que puede ir entre medio del req y la res, aunque tambien pueden
+        encontrarse globalmente
+        -USES CASES
+          * funcionar como pipes o tuberias de paso, donde la salida de uno es la entrada de otro
+          * validar datos
+          * caputrar errores
+          * validar permisos
+          * controlar accesos
+
+        ----  Formas de middlewares ------
+        -> la mas comun
+        function(req,res,next){
+          if(sommething){
+            res.send('end');
+          }else{
+            next();
+          }
+        }
+        -> tipo error:
+
+        function(error,req,res,next){
+          if(error){
+            res.status(500).json({error});
+          }else{
+            next();
+          }
+        }
+        -> tipo error con boom:
+            se definen despues de hacer el routing y se deben caputrar del routing de forma explicita
+            para un mejor manejo, necesitamos la dependencia de "boom" npm i @hapi/boom
+            es un servicio para el mejor manejo de los errores
+            el error en servicio:
+            throw boom.notfound();
+                tipo de error -> statuscode -> mensaje
+            debemos tener un middleware porque boom maneja un formato especial
+            codigo src/middleares/error.handle/boomErrorHandle
+
+        -> validar datos con joi:
+        instalar dependencia npm i joi
+        sirve para la validacion de datos, permite crear esquemas de datos, usando un lenguaje simple
+
+
+
+
+
+ */

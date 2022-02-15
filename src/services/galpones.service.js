@@ -1,3 +1,4 @@
+const boom = require('@hapi/boom');
 class galponeService{
 
   constructor(){
@@ -66,13 +67,17 @@ class galponeService{
     });
   }
   async BuscarUno(id){
-    return this.formularios.find(item => item.id === id);
+    const galpon =  this.formularios.find(item => item.id === id);
+
+    if(!galpon){ throw boom.notFound('galpon no encontrado');}
+
+    return galpon;
   }
 
   async Actualizar(id,changes){
     const index =  this.galpones.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Galpon no encontrado');
+      throw boom.notFound('Galpon no encontrado');
     }else{
       const galpon = this.galpones[index];
       this.galpones[index] ={

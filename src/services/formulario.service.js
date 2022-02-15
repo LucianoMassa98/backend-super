@@ -6,7 +6,7 @@ class formularioService{
       this.formularios =[];
       this.generador(tipo);
   }
-  CodigoNewFormulario(){return this.formularios.length()+1;}
+  // genera espacio en la memoria principal del servidor
   generador(tipo){
     this.formularios = [
       {
@@ -42,7 +42,8 @@ class formularioService{
   }
    //create
    async Crear(formulario){
-
+   //verificar schema de entrada de formulario
+    if(!formulario){throw boom.conflict('formulario no aceptado');}
     const id =  this.CodigoNewFormulario();
     const numero = this.CntFormulariosTotal();
     const changes= {
@@ -56,13 +57,14 @@ class formularioService{
       ...changes
     }
     this.formularios.push(newformulario);
+    // falta guardar en base de datos
     return newformulario;
   }
-  //
+  // actualiza formularios
   async Actualizar(id,changes){
     const index =  this.formularios.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Formulario no encontrado');
+      throw boom.notFound('Formulario no encontrado');
     }else{
       const formulario = this.formularios[index];
       this.formularios[index] ={
@@ -73,14 +75,14 @@ class formularioService{
       return this.formularios[index];
     }
   }
-  //
+  // devuelv list completa de formularios de memoria principal
   async Buscar(){
     return new Promise((resolve,reject)=>{
     setTimeout(()=>{
       resolve(this.formularios);
     },5000);
   });}
-  //
+  //busca formulario por id
   async BuscarUno(id){
     const formulario = this.formularios.find(item => item.id === id);
 
@@ -90,29 +92,42 @@ class formularioService{
 
     return formulario;
   }
-  //
+  //busca formularios por tipos
   async BuscarporTipo(tipo){
-    return this.formularios.map(item => item.tipo === tipo);
+    const newformularios =  this.formularios.map(item => item.tipo === tipo);
+    if(!newformularios){ throw boom.notFound('formularios no encontrados');}
+
+    return newformularios;
   }
-  //
+  //busca formularios por fecha
   async BuscarporFecha(fecha){
-    return this.formularios.map(item => item.emision === fecha);
+    const newformularios =  this.formularios.map(item => item.emision === fecha);
+
+    if(newformularios){ throw boom.notFound('formularios no encontrados');}
+    return newformularios;
+
   }
+  //borra formularios por medio del id
   async Borrar(id){
     const index =  this.formularios.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Formulario no encontrado');
+      throw boom.notFound('Formulario no encontrado');
     }else{
       this.formularios.splice(index,1);
       return {message: true}
     }
   }
-
+  // retorna cantidad de formularios en memoria principal
   async CntFormulariosTotal(){
      return this.formularios.length();
     }
-  async CntPorTipo(estado){
-    return this.BuscarxEstado(estado).length();
+    // falta retornar una cantidad de formularios por cada tipo
+  async CntPorTipo(){
+
+  }
+   // crea un nuevo codigo por cada formulario
+   CodigoNewFormulario(){
+    return this.formularios.length()+1;
   }
 
 }

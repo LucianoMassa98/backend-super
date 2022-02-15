@@ -4,10 +4,13 @@ const galponeService = require('../services/galpones.service');
 const servicio = new galponeService();
 
 // lista de galpones
-router.get('/',async (req,res)=>{
+router.get('/Lista',async (req,res,next)=>{
 
-  const listagalpones = await servicio.Buscar();
-  res.json(listagalpones);
+  try{
+    const listagalpones = await servicio.Buscar();
+    res.json(listagalpones);
+
+  }catch(error){next(error);}
 
 });
 
@@ -25,30 +28,32 @@ router.get('/',async(req,res)=>{
   }
 });
 //galpon por id
-router.get('/:id',async(req,res)=>{
-const {id} = req.params;
-//enviar galpon
+router.get('/Galpon/:id',async(req,res,next)=>{
+try{const {id} = req.params;
 const galpon = await servicio.BuscarUno(id);
 res.json(galpon);
-
+}catch(error){next(error);}
 });
 
 //agregar a galponID el materialID
-router.post('/',async(req,res)=>{
-  const body = req.body;
+router.post('/Agregar',async(req,res,next)=>{
+  try{
+    const body = req.body;
+    const galpon = await servicio.Crear(body);
+    res.json(galpon);
+  }catch(error){next(error);}
+
 });
 
 //cliente actualizacion parcial
-router.patch('/ModificaParcial/:id',async(req,res)=>{
+router.patch('/Modificar/:id',async(req,res,next)=>{
   try{
   const {id} = req.params;
   const body =  req.body;
   const producto = await servicio.Actualizar(id,body);
   res.json(producto);
   }catch(error){
-    res.json({
-      message: error.message
-    });
+    next(error);
   }
 });
 

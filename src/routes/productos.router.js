@@ -7,11 +7,14 @@ const servicio = new ProductoServicio('PDO');
 
 // ------------------- EndPoint Get ------------------------
 //cliente solicita lista de productos
-router.get('/Lista',async (req,res)=>{
+router.get('/Lista',async (req,res,next)=>{
 
  // const productos = await servicio.BuscarporTipo('PRD');
- const productos = await servicio.Buscar();
+ try{
+  const productos = await servicio.Buscar();
   res.json(productos);
+ }catch(error){next(error);}
+
 
  });
 // cliente busca producto por id
@@ -38,8 +41,6 @@ router.get('/BuscarPorBarra/:id',async(req, res,next)=>{
     next(error);
   }
 });
-
-
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
