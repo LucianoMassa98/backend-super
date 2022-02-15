@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const port = 3000;
 const ProductoServicio = require('../services/producto.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const { createProductoSchema, updateProductoSchema, getProductoSchema,getProductoSchemaBarra} = require('../schemas/producto.schema');
+
 const servicio = new ProductoServicio('PDO');
 
 
@@ -18,7 +21,9 @@ router.get('/Lista',async (req,res,next)=>{
 
  });
 // cliente busca producto por id
-router.get('/BuscarPorID/:id',async(req, res,next)=>{
+router.get('/BuscarPorID/:id',
+validatorHandler(getProductoSchema, 'params'),
+  async(req, res,next)=>{
   try{
 
     const { id } = req.params;

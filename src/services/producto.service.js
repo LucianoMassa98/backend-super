@@ -5,7 +5,7 @@ class ProductoServicio{
   constructor(tipo){
     this.productos = [];
     this.tipo = tipo;
-
+    this.Generador();
 
 
   }
