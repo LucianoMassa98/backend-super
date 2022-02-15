@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const port = 3000;
 const ProductoServicio = require('../services/producto.service');
-const servicio = new ProductoServicio();
+const servicio = new ProductoServicio('PDO');
 
 
 // ------------------- EndPoint Get ------------------------
@@ -28,37 +28,44 @@ router.get('/BuscarPorID/:id',async(req, res,next)=>{
 
 });
 // cliente busca producto por barra
-router.get('/BuscarPorBarra/:id',async(req, res)=>{
-  const { id } = req.params;
-   const producto = await servicio.BuscarporBarra(id);
-   res.json(producto);
+router.get('/BuscarPorBarra/:id',async(req, res,next)=>{
+
+  try{
+    const { id } = req.params;
+    const producto = await servicio.BuscarporBarra(id);
+    res.json(producto);
+  }catch(error){
+    next(error);
+  }
 });
 
 
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
-router.post('/Agregar',async(req,res)=>{
-  const body = req.body;
-  const newproduct = await servicio.Crear(body,'PRD');
-  // guardar producto en stock verificando que antes no exista
-  res.json(newproduct);
+router.post('/Agregar',async(req,res,next)=>{
+  try{
+    const body = req.body;
+    const newproduct = await servicio.Crear(body);
+    // cliente retorna producto de ser creado
+    res.json(newproduct);
+
+  }catch(error){ next(error);}
+
   });
 
 
 
 // --------------------- Endopoints Patch ----------------------
 //cliente actualizacion parcial
-router.patch('/Modificar/:id',async(req,res)=>{
+router.patch('/Modificar/:id',async(req,res,next)=>{
   try{
   const {id} = req.params;
   const body =  req.body;
   const producto = await servicio.Actualizar(id,body,'PRD');
   res.json(producto);
   }catch(error){
-    res.json({
-      message: error.message
-    });
+    next(error);
   }
 });
 

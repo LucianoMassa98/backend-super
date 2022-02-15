@@ -1,4 +1,5 @@
 
+const boom = require('@hapi/boom');
 class formularioService{
 
   constructor(tipo){
@@ -41,6 +42,7 @@ class formularioService{
   }
    //create
    async Crear(formulario){
+
     const id =  this.CodigoNewFormulario();
     const numero = this.CntFormulariosTotal();
     const changes= {
@@ -80,7 +82,13 @@ class formularioService{
   });}
   //
   async BuscarUno(id){
-    return this.formularios.find(item => item.id === id);
+    const formulario = this.formularios.find(item => item.id === id);
+
+    if(!formulario){
+      throw boom.notFound('Formulario not found');
+    }
+
+    return formulario;
   }
   //
   async BuscarporTipo(tipo){
