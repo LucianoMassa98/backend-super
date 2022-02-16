@@ -11,7 +11,7 @@ const port = process.env.PORT || 3010;
 app.use(express.json());
 
 // estando vacio cualquiera puede conectarse
-const whitelist = ['http://localhost:3010','http://myappdominio.com'];
+const whitelist = ['http://localhost:3010','https://tranquil-thicket-16476.herokuapp.com/'];
 const options= {
   origin: (origin,callback)=>{
     if(whitelist.includes(origin) || !origin){
@@ -109,6 +109,16 @@ parte 6: antes de pasar a produccion debemos verificar siertas cosas
 
         instalar dependencia -> npm i cors
         llamamos nuestro cors en nuestro index principal
+
+        DEPLOY DE LA APP
+        - creamos cuenta en horoku
+        - instalamos heroku  curl https://cli-assets.heroku.com/install.sh | sh
+        - verificar version heroku --version
+        - conectamos con nuestra cuenta creada con heroku logs
+        - heroku create
+        - crear archivo Procfile y poner dentro web: npm run start
+        - agregar en package.json "engines": {  "node": "16.x" }
+        - subimos el repositorio local a heroku con git push heroku master
 
 
 

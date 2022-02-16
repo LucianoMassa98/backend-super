@@ -13,9 +13,9 @@ class ProductoServicio{
     this.productos = [
       {
         id: '1.1',
-        codigo:'123213214',
-        nombre: 'producto 1',
-        precio: 100
+        codigo:'Lucia',
+        nombre: 'TE AMOOOOO',
+        precio: 11022020
       },
       {
         id: '1.2',
