@@ -36,7 +36,9 @@ validatorHandler(getProductoSchema, 'params'),
 
 });
 // cliente busca producto por barra
-router.get('/BuscarPorBarra/:id',async(req, res,next)=>{
+router.get('/BuscarPorBarra/:id',
+validatorHandler(getProductoSchemaBarra,'params'),
+async(req, res,next)=>{
 
   try{
     const { id } = req.params;
@@ -49,7 +51,9 @@ router.get('/BuscarPorBarra/:id',async(req, res,next)=>{
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
-router.post('/Agregar',async(req,res,next)=>{
+router.post('/Agregar',
+validatorHandler(createProductoSchema,'body'),
+  async(req,res,next)=>{
   try{
     const body = req.body;
     const newproduct = await servicio.Crear(body);
@@ -64,7 +68,9 @@ router.post('/Agregar',async(req,res,next)=>{
 
 // --------------------- Endopoints Patch ----------------------
 //cliente actualizacion parcial
-router.patch('/Modificar/:id',async(req,res,next)=>{
+router.patch('/Modificar/:id',
+validatorHandler(updateProductoSchema,'body'),
+  async(req,res,next)=>{
   try{
   const {id} = req.params;
   const body =  req.body;
@@ -77,7 +83,9 @@ router.patch('/Modificar/:id',async(req,res,next)=>{
 
 // --------------------- Endopoints Delete ----------------------
 //cliente borra producto de la lista por id
-router.delete('/Borrar/:id',async(req,res,next)=>{
+router.delete('/Borrar/:id',
+  validatorHandler(getProductoSchema,'params'),
+async(req,res,next)=>{
   try{
   const {id} = req.params;
   const band = await servicio.Borrar(id,'PRD');
@@ -86,9 +94,6 @@ router.delete('/Borrar/:id',async(req,res,next)=>{
   next(error);
 }
 });
-
-
-
 
 /*
 Exportando el Modulo

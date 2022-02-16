@@ -49,7 +49,7 @@ class formularioService{
     const changes= {
       id: id,
       mensaje: {
-        numero
+        numero:numero
       }
     }
     const newformulario = {
