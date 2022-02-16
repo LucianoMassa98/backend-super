@@ -1,12 +1,27 @@
 const express = require('express');
+const cors = require('cors');
 const routerApi = require('./src/routes/index');
+
 const {longError,errorHandler,boomErrorHandler}=require('./src/middlewares/error.handler');
 const app = express();
-const port = 3010;
+const port = process.env.PORT || 3010;
 
 
 //formato en el que se reciben peticiones: Json
 app.use(express.json());
+
+// estando vacio cualquiera puede conectarse
+const whitelist = ['http://localhost:3010','http://myappdominio.com'];
+const options= {
+  origin: (origin,callback)=>{
+    if(whitelist.includes(origin) || !origin){
+      callback(null,true);
+    }else{
+      callback(new Error('No permitido'));
+    }
+  }
+}
+app.use(cors(whitelist));
 //---- definir middlewares tipo error
 app.use(longError);
 app.use(boomErrorHandler);
@@ -81,7 +96,19 @@ parte 5: middlewere: software que permite la conectitividad con otros paquetes
         instalar dependencia npm i joi
         sirve para la validacion de datos, permite crear esquemas de datos, usando un lenguaje simple
 
+parte 6: antes de pasar a produccion debemos verificar siertas cosas
+        - cors: a quienes le damos accesos para que hagan solicitudes
+        - https: nuestra api este en un servidor https
+        - procesos de build:
+        - remover logs:
+        - seguridad (helmet): es muy importante, helmet una coleccio nde middlewares para proteccion
+        - testing: probar la app
 
+        CORS (cross-origin resource sharing)
+        nuestro servicio tiene un defecto, que solo acepta peticiones del mismo dominio.
+
+        instalar dependencia -> npm i cors
+        llamamos nuestro cors en nuestro index principal
 
 
 
