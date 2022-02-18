@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const port = 3000;
 const ProductoServicio = require('../services/producto.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { createProductoSchema, updateProductoSchema, getProductoSchema,getProductoSchemaBarra} = require('../schemas/producto.schema');
 
-const servicio = new ProductoServicio('PDO');
+const servicio = new ProductoServicio();
 
 
 // ------------------- EndPoint Get ------------------------
@@ -35,23 +34,10 @@ validatorHandler(getProductoSchema, 'params'),
   }
 
 });
-// cliente busca producto por barra
-router.get('/BuscarPorBarra/:id',
-validatorHandler(getProductoSchemaBarra,'params'),
-async(req, res,next)=>{
-
-  try{
-    const { id } = req.params;
-    const producto = await servicio.BuscarporBarra(id);
-    res.json(producto);
-  }catch(error){
-    next(error);
-  }
-});
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
-router.post('/Agregar',
+router.post('/Crear',
 validatorHandler(createProductoSchema,'body'),
   async(req,res,next)=>{
   try{
@@ -74,7 +60,7 @@ validatorHandler(updateProductoSchema,'body'),
   try{
   const {id} = req.params;
   const body =  req.body;
-  const producto = await servicio.Actualizar(id,body,'PRD');
+  const producto = await servicio.Actualizar(id,body);
   res.json(producto);
   }catch(error){
     next(error);
@@ -88,7 +74,7 @@ router.delete('/Borrar/:id',
 async(req,res,next)=>{
   try{
   const {id} = req.params;
-  const band = await servicio.Borrar(id,'PRD');
+  const band = await servicio.Borrar(id);
   res.json(band);
 }catch(error){
   next(error);

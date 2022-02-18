@@ -2,9 +2,8 @@
 const boom = require('@hapi/boom');
 class ProductoServicio{
 
-  constructor(tipo){
+  constructor(){
     this.productos = [];
-    this.tipo = tipo;
     this.Generador();
 
 
@@ -13,32 +12,28 @@ class ProductoServicio{
     this.productos = [
       {
         id: '1.1',
-        codigo:'121487844',
+
         nombre: 'Producto 1',
         precio: 110
       },
       {
         id: '1.2',
-        codigo:'123213214',
         nombre: 'producto 2',
         precio: 150
 
       },
       {
         id: '1.3',
-        codigo:'123213214',
         nombre: 'producto 3',
         precio: 360
       },
       {
         id: '1.4',
-        codigo:'123213214',
         nombre: 'producto 4',
         precio: 550
       },
       {
         id: '1.5',
-        codigo:'123213214',
         nombre: 'producto 5',
         precio: 200
       }
@@ -52,56 +47,14 @@ const newproduct = {
   id: ide,
   ...producto
 };
-  switch(this.tipo){
-    case 'PRD':
-    //falta verificar esquema de creacion de Producto
-    if(!producto){}
-    //verificar datos de entrada de productos
-    if(this.BuscarporBarra(producto.codigo)){
-      throw boom.conflict('producto ya existente');
-        }
-    break;
-    case 'MTP':
-    //falta verificar esquema de creacion de Materia prima
-    if(!producto){}
-    //verificar datos de entrada de materia prima
-    if(this.BuscarporID(producto.id)){
-      throw boom.conflict('producto ya existente');
-        }
-        // Fatla Guardar en base de datos
-    break;
-    case 'MCD':
-    //falta verificar esquema de creacion de Mercaderia
-    if(!producto){}
-    //verificar datos de entrada de materia prima
-    if(this.BuscarporBarra(producto.id)){
-      throw boom.conflict('producto ya existente');
-        }
-    break;
-  }
     // guardar en memoria principal
     this.productos.push(newproduct);
-    // guardar en base de datos
-    this.Guardar(newproduct);
+    // falta guardar en base de datos
+
     return newproduct;
 
   }
-  //edit
-  async Editar(){}
-  //Guardar en Base de datos producto,material o mercaderia nueva;
-  async Guardar(producto){
-    switch(this.tipo){
-      case 'PRD':
-       // Fatla Guardar en base de datos
-      break;
-      case 'MTP':
-      // Fatla Guardar en base de datos
-      break;
-      case 'MCD':
-       // Fatla Guardar en base de datos
-      break;
-    }
-  }
+
   //findOne
   async BuscarporID(id){
 
@@ -113,18 +66,6 @@ const newproduct = {
     // si todo esta  bien, retorno el producto
       return producto;
 
-  }
-  async BuscarporBarra(barra){
-
-    if(tipo!= 'MTP'){
-      throw boom.notFound('Producto tipo: Materia Prima');
-    }
-    const producto= this.productos.find(item => item.codigo === barra);
-
-    if(!producto){
-      throw boom.notFound('Producto no encontrado');
-    }
-    return producto;
   }
   //find
   async Buscar(){
@@ -172,6 +113,14 @@ const newproduct = {
       //falta borrar en base de datos
       return {message: true}
     }
+  }
+   //agregar cantidad de materiales
+   async Agregar(listaProduccion){
+    // agregar a base de datos
+  }
+
+  async Restar(listaProduccion){
+    // restar a base de datos
   }
 
 }

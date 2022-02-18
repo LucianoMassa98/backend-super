@@ -1,8 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const formularioService = require('../services/formulario.service');
-const servicio = new formularioService('NTP');
+const NotaPedidoService = require('../services/notasDePedidos.service');
+const servicio = new NotaPedidoService();
 
 //cliente solicita lista de formularios: NTP
 router.get('/lista',async(req,res,next)=>{
@@ -21,7 +21,7 @@ router.get('/FiltrarPorFecha',async (req,res,next)=>{
 }catch(error){next(error);}
   });
 //cliente solicita formulario: NTP por id
-router.get('/:id', async(req,res,next)=>{
+router.get('/BuscarporID/:id', async(req,res,next)=>{
   try{
     const { id } = req.params;
   const ntp = await servicio.BuscarporID(id);

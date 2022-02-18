@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const ProductoServicio = require('../services/producto.service');
-const servicio = new ProductoServicio('MTP');
+const MaterialService = require('../services//materiales.service');
+const servicio = new MaterialService();
 
 
 // ------------------- EndPoint Get ------------------------
@@ -10,8 +10,8 @@ router.get('/Lista',async (req,res,next)=>{
 
   try{
 
-    const productos = await servicio.Buscar();
-    res.json(productos);
+    const materiales = await servicio.Buscar();
+    res.json(materiales);
   }catch(error){ next(error);}
 
  });
@@ -19,19 +19,19 @@ router.get('/Lista',async (req,res,next)=>{
 router.get('/BuscarPorID/:id',async(req, res,next)=>{
   try{
     const { id } = req.params;
-   const producto = await servicio.BuscarporID(id);
-   res.json(producto);
+   const material = await servicio.BuscarporID(id);
+   res.json(material);
   }catch(error){ next(error);}
 
 });
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
-router.post('/Agregar',async(req,res,next)=>{
+router.post('/Crear',async(req,res,next)=>{
   try{
     const body = req.body;
-  const newproduct = await servicio.Crear(body);
-  res.status(201).json(newproduct);
+  const newmaterial = await servicio.Crear(body);
+  res.status(201).json(newmaterial);
   }catch(error){next(error);}
 
   });
@@ -46,8 +46,8 @@ router.patch('/ModificaParcial/:id',async(req,res,next)=>{
   try{
   const {id} = req.params;
   const body =  req.body;
-  const producto = await servicio.Actualizar(id,body);
-  res.json(producto);
+  const material = await servicio.Actualizar(id,body);
+  res.json(material);
   }catch(error){
    next(error);
   }
