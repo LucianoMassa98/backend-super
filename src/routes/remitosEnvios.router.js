@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const RemitosEnvioService =require('../services/remitosEnvios.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const {createRemito,getRemito,updateRemito,filtrarFechaRemito} = require('../schemas/remito.schema');
+
 const servicio = new RemitosEnvioService();
 
 //cliente solicita lista de formularios: RMT
@@ -12,7 +15,9 @@ router.get('/lista',async(req,res,next)=>{
 
 });
 // filtrar formularios: RMT por fecha
-router.get('/FiltrarPorFecha',async (req,res,next)=>{
+router.get('/FiltrarPorFecha/:fecha',
+validatorHandler(filtrarFechaRemito,'params'),
+async (req,res,next)=>{
   try{const {fecha} = req.params;
   const remitosenvios = await servicio.BuscarporFecha(fecha);
   res.json(remitosenvios);
@@ -20,7 +25,9 @@ router.get('/FiltrarPorFecha',async (req,res,next)=>{
 }catch(error){next(error);}
   });
 //cliente solicita formulario: RMT por id
-router.get('/BuscarporID/:id', async(req,res,next)=>{
+router.get('/BuscarporID/:id',
+validatorHandler(getRemito,'params'),
+async(req,res,next)=>{
   try{
     const { id } = req.params;
   const rmtE = await servicio.BuscarporID(id);
@@ -28,7 +35,9 @@ router.get('/BuscarporID/:id', async(req,res,next)=>{
   }catch(error){next(error);}
 });
 //cliente agrega formulario: RMT
-router.post('/Crear',async (req,res,next)=>{
+router.post('/Crear',
+validatorHandler(createRemito,'body'),
+async (req,res,next)=>{
   try{
   const body = req.body;
   const rmtE = await servicio.Crear(body);

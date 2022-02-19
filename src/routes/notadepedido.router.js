@@ -2,6 +2,12 @@
 const express = require('express');
 const router = express.Router();
 const NotaPedidoService = require('../services/notasDePedidos.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const { createNotaPedido,
+  getNotaDePedido,
+  updateNotaPedido,
+  filtrarFechaRecepcion} = require('../schemas/notapedido.schema');
+
 const servicio = new NotaPedidoService();
 
 //cliente solicita lista de formularios: NTP
@@ -13,7 +19,9 @@ router.get('/lista',async(req,res,next)=>{
 
 });
 // filtrar formularios: NTP por fecha
-router.get('/FiltrarPorFecha',async (req,res,next)=>{
+router.get('/FiltrarPorFecha/:fecha',
+validatorHandler(filtrarFechaRecepcion,'params'),
+async (req,res,next)=>{
   try{const {fecha} = req.params;
   const notasdepedidos = await servicio.BuscarporFecha(fecha);
   res.json(notasdepedidos);
@@ -21,7 +29,9 @@ router.get('/FiltrarPorFecha',async (req,res,next)=>{
 }catch(error){next(error);}
   });
 //cliente solicita formulario: NTP por id
-router.get('/BuscarporID/:id', async(req,res,next)=>{
+router.get('/BuscarporID/:id',
+validatorHandler(getNotaDePedido,'params'),
+async(req,res,next)=>{
   try{
     const { id } = req.params;
   const ntp = await servicio.BuscarporID(id);
@@ -29,7 +39,9 @@ router.get('/BuscarporID/:id', async(req,res,next)=>{
   }catch(error){next(error);}
 });
 //cliente agrega formulario: NTP
-router.post('/agregar',async (req,res,next)=>{
+router.post('/Crear',
+validatorHandler(createNotaPedido,'body'),
+async (req,res,next)=>{
   try{
   const body = req.body;
   const ntp = await servicio.Crear(body);

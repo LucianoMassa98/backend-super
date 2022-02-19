@@ -88,10 +88,7 @@ const newmaterial = {
   }
   //delete
   async Borrar(id){
-
     const index =  this.materialesfindIndex(item => item.id === id);
-
-
     if(index === -1){
       throw boom.notFound('Producto no encontrado');
     }else{
@@ -102,11 +99,11 @@ const newmaterial = {
     }
   }
 
-  //agregar cantidad de materiales
+  //agregar cantidad de materiales ya existentes
   async Agregar(listaMateriales){
     // agregar a base de datos
   }
-
+//restar cantidad de materiales ya existentes
   async Restar(listaMateriales){
     // restar a base de datos
   }

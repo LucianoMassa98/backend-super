@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const MaterialService = require('../services//materiales.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const { createProductoSchema, updateProductoSchema, getProductoSchema} = require('../schemas/producto.schema');
+
 const servicio = new MaterialService();
 
 
@@ -16,7 +19,9 @@ router.get('/Lista',async (req,res,next)=>{
 
  });
 // cliente busca producto por id
-router.get('/BuscarPorID/:id',async(req, res,next)=>{
+router.get('/BuscarPorID/:id',
+validatorHandler(getProductoSchema,'params'),
+async(req, res,next)=>{
   try{
     const { id } = req.params;
    const material = await servicio.BuscarporID(id);
@@ -27,7 +32,9 @@ router.get('/BuscarPorID/:id',async(req, res,next)=>{
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
-router.post('/Crear',async(req,res,next)=>{
+router.post('/Crear',
+validatorHandler(createProductoSchema,'body'),
+async(req,res,next)=>{
   try{
     const body = req.body;
   const newmaterial = await servicio.Crear(body);
@@ -41,7 +48,10 @@ router.post('/Crear',async(req,res,next)=>{
 
 // --------------------- Endopoints Patch ----------------------
 //cliente actualizacion parcial
-router.patch('/ModificaParcial/:id',async(req,res,next)=>{
+router.patch('/ModificaParcial/:id',
+validatorHandler(getProductoSchema,'params'),
+validatorHandler(updateProductoSchema,'body'),
+async(req,res,next)=>{
 
   try{
   const {id} = req.params;
@@ -55,7 +65,9 @@ router.patch('/ModificaParcial/:id',async(req,res,next)=>{
 
 // --------------------- Endopoints Delete ----------------------
 //cliente borra producto de la lista por id
-router.delete('/BorrarProducto/:id',async(req,res,next)=>{
+router.delete('/BorrarProducto/:id',
+validatorHandler(getProductoSchema,'params'),
+async(req,res,next)=>{
   try{
     const {id} = req.params;
   const band = await servicio.Borrar(id);
@@ -63,8 +75,6 @@ router.delete('/BorrarProducto/:id',async(req,res,next)=>{
   }catch(error){next(error);}
 
 });
-
-
 
 
 /*
