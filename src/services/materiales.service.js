@@ -1,5 +1,6 @@
 
 const boom = require('@hapi/boom');
+const sequelize = require('../libs/sequelize');
 class MaterialService{
 
   constructor(){
@@ -57,11 +58,9 @@ const newmaterial = {
   //find
   async Buscar(){
 
-    return new Promise((resolve,reject)=>{
-      setTimeout(()=>{
-        resolve(this.materiales);
-      },5000);
-    });
+
+    const [data, metadata] = await sequelize.query('SELECT * FROM tasks');
+    return {data,metadata};
   }
   async GenerarCodigo(){
     return '1.6';
