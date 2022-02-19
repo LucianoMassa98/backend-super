@@ -9,7 +9,7 @@ class NotaPedidoService{
    // genera espacio en la memoria principal del servidor
    generador(){
 
-    super.notasdepedidos = [
+    this.notasdepedidos = [
       {
       id: 1,
       emision: '11/02/2022',
@@ -41,6 +41,8 @@ class NotaPedidoService{
     if(!this.BuscarporID(id)){
       throw boom.notFound('Nota de pedido no encontrada');
     }
+
+    return {message:true};
     // actualizar en base de datos
   }
 
@@ -60,6 +62,7 @@ class NotaPedidoService{
 
   async Entregado(id,receptor){
 
+    return {message: true};
   }
 
 }

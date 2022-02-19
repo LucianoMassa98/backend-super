@@ -120,6 +120,17 @@ parte 6: antes de pasar a produccion debemos verificar siertas cosas
         - agregar en package.json "engines": {  "node": "16.x" }
         - subimos el repositorio local a heroku con git push heroku master
 
+parte 7: agregar persistencia de datos, utilizando docker para poder simular una base de datos en un entorno local
+
+        - instalacion docker
+        - agregar archivo docker-compose.yml
+          indicar la version e ir agregando servicios a utilizar, como la base de datos
+          y pgadmin un servicio que nos permite visualisar las tablas de manera grafica, auqnue tambien existe el manejo por terminal
+
+        - agregar archivo Profile, sirve para ejecutar el npm run start
+
+
+
 
 
  */

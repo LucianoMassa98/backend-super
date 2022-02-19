@@ -1,11 +1,15 @@
 
 const boom = require('@hapi/boom');
+const pool = require('../libs/postgres.pool');
+
 class ProductoServicio{
 
   constructor(){
     this.productos = [];
     this.Generador();
 
+    this.pool = pool;
+    this.pool.on('error',(err) => console.error(err));
 
   }
   Generador(){
@@ -70,11 +74,10 @@ const newproduct = {
   //find
   async Buscar(){
 
-    return new Promise((resolve,reject)=>{
-      setTimeout(()=>{
-        resolve(this.productos);
-      },5000);
-    });
+    const query = 'SELECT * FROM tasks';
+    const rta = await this.pool.query(query);
+
+    return rta.rows;
   }
   async GenerarCodigo(){
     return '1.6';
