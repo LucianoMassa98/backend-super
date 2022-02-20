@@ -15,7 +15,7 @@ const RemitoEnvioSchema = {
   },
   receptor: {
     allowNull: false,
-    type: DataTypes.ARRAY
+    type: DataTypes.STRING
   },
   emision: {
     allowNull: false,
