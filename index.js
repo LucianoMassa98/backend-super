@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./src/routes/index');
 
-const {longError,errorHandler,boomErrorHandler}=require('./src/middlewares/error.handler');
+const {longError,errorHandler,boomErrorHandler,ormErrorHandler}=require('./src/middlewares/error.handler');
 const app = express();
 const port = process.env.PORT || 3010;
 
@@ -24,6 +24,7 @@ const options= {
 app.use(cors(whitelist));
 //---- definir middlewares tipo error
 app.use(longError);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 

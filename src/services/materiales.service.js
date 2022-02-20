@@ -1,6 +1,7 @@
 
 const boom = require('@hapi/boom');
-const sequelize = require('../libs/sequelize');
+//const sequelize = require('../libs/sequelize');
+const {models} =require('../libs/sequelize');
 class MaterialService{
 
   constructor(){
@@ -58,9 +59,14 @@ const newmaterial = {
   //find
   async Buscar(){
 
-
+    /*
     const [data, metadata] = await sequelize.query('SELECT * FROM tasks');
     return {data,metadata};
+    */
+
+    const rta = await models.material.findAll();
+    return rta;
+
   }
   async GenerarCodigo(){
     return '1.6';

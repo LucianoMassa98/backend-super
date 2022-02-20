@@ -1,16 +1,17 @@
 
 const boom = require('@hapi/boom');
-const pool = require('../libs/postgres.pool');
+//const pool = require('../libs/postgres.pool');
+const {models} =require('../libs/sequelize');
 
 class ProductoServicio{
 
   constructor(){
     this.productos = [];
     this.Generador();
-
+    /*
     this.pool = pool;
     this.pool.on('error',(err) => console.error(err));
-
+    */
   }
   Generador(){
     this.productos = [
@@ -73,11 +74,15 @@ const newproduct = {
   }
   //find
   async Buscar(){
-
+    /*
+    conectarse con un pool
     const query = 'SELECT * FROM tasks';
     const rta = await this.pool.query(query);
+    return rta.rows;*/
 
-    return rta.rows;
+    // consulta utilizando orm sequelize
+    const rta = await models.producto.findAll();
+    return rta;
   }
   async GenerarCodigo(){
     return '1.6';

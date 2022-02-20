@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-const id = joi.string();
+const id = joi.number().integer();
 const emisor = joi.string();
 const emision = joi.date();
 const receptores = joi.object([]);
