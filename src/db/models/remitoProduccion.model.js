@@ -9,20 +9,24 @@ const RemitoProduccionSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  email: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
-  },
-  password: {
+  emisor: {
     allowNull: false,
     type: DataTypes.STRING
   },
-  createdAt: {
+  receptor: {
+    allowNull: false,
+    type: DataTypes.ARRAY
+  },
+  emision: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'emision',
     defaultValue: Sequelize.NOW
+  },
+  recepcion: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'recepcion'
   }
 }
 

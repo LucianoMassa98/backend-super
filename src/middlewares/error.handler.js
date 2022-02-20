@@ -1,5 +1,6 @@
-// para debuggear errores
+
 const { ValidationError } = require('sequelize');
+
 function longError(err,req,res,next){
 
   console.error(err);

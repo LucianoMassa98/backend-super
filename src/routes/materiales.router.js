@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const MaterialService = require('../services//materiales.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createProductoSchema, updateProductoSchema, getProductoSchema} = require('../schemas/producto.schema');
+const { createMaterialSchema, updateMaterialSchema, getMaterialSchema} = require('../schemas/material.schema');
 
 const servicio = new MaterialService();
 
 
 // ------------------- EndPoint Get ------------------------
-//cliente solicita lista de productos
+//cliente solicita lista de Materials
 router.get('/Lista',async (req,res,next)=>{
 
   try{
@@ -18,9 +18,9 @@ router.get('/Lista',async (req,res,next)=>{
   }catch(error){ next(error);}
 
  });
-// cliente busca producto por id
+// cliente busca Material por id
 router.get('/BuscarPorID/:id',
-validatorHandler(getProductoSchema,'params'),
+validatorHandler(getMaterialSchema,'params'),
 async(req, res,next)=>{
   try{
     const { id } = req.params;
@@ -31,9 +31,9 @@ async(req, res,next)=>{
 });
 
   // --------------------- Endopoint post ----------------------
-//cliente agrega un producto nuevo a la lista "productos"
+//cliente agrega un Material nuevo a la lista "Materials"
 router.post('/Crear',
-validatorHandler(createProductoSchema,'body'),
+validatorHandler(createMaterialSchema,'body'),
 async(req,res,next)=>{
   try{
     const body = req.body;
@@ -49,8 +49,8 @@ async(req,res,next)=>{
 // --------------------- Endopoints Patch ----------------------
 //cliente actualizacion parcial
 router.patch('/ModificaParcial/:id',
-validatorHandler(getProductoSchema,'params'),
-validatorHandler(updateProductoSchema,'body'),
+validatorHandler(getMaterialSchema,'params'),
+validatorHandler(updateMaterialSchema,'body'),
 async(req,res,next)=>{
 
   try{
@@ -64,9 +64,9 @@ async(req,res,next)=>{
 });
 
 // --------------------- Endopoints Delete ----------------------
-//cliente borra producto de la lista por id
-router.delete('/BorrarProducto/:id',
-validatorHandler(getProductoSchema,'params'),
+//cliente borra Material de la lista por id
+router.delete('/BorrarMaterial/:id',
+validatorHandler(getMaterialSchema,'params'),
 async(req,res,next)=>{
   try{
     const {id} = req.params;

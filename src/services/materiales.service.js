@@ -31,30 +31,15 @@ class MaterialService{
   }
   //create
    async Crear(material){
-// falta generar codigo
-const ide = this.GenerarCodigo();
-const newmaterial = {
-  id: ide,
-  ...material
-};
-    // guardar en memoria principal
-    this.materialespush(newmaterial);
-    // falta guardar en base de datos
 
+    const newmaterial = this.models.material.create(material);
     return newmaterial;
-
   }
   //findOne
   async BuscarporID(id){
-
-    const material =  this.materialesfind(item => item.id === id);
-    // si no exoste el material
-    if(!material){
-      throw boom.notFound('material no existente');
-    }
-    // si todo esta  bien, retorno el material
-      return material;
-
+    const material = await models.material.findByPk(id);
+    if(!material){ throw boom.notFound('material no encontrado');}
+    return material;
   }
   //find
   async Buscar(){
@@ -64,44 +49,24 @@ const newmaterial = {
     return {data,metadata};
     */
 
-    const rta = await models.material.findAll();
-    return rta;
+    const material = await models.material.findAll();
+    return material;
 
   }
-  async GenerarCodigo(){
-    return '1.6';
-  }
+
   //update
   async Actualizar(id,changes){
 
-    const index =  this.materiales.findIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('material not found');
-    }else{
-      // guardar en memoria principal
-      const material = this.materiales[index];
-      this.materiales[index] ={
-        ...material,
-        ...changes
-      };
-
-
-      // falta actualizar en base de datos
-
-      return this.materiales[index];
-    }
+    const material = await this.BuscarporID(id);
+    const rta = await material.update(changes);
+    return rta;
   }
   //delete
   async Borrar(id){
-    const index =  this.materialesfindIndex(item => item.id === id);
-    if(index === -1){
-      throw boom.notFound('Producto no encontrado');
-    }else{
-      //Borrar en memoria principal
-      this.materiales.splice(index,1);
-      //falta borrar en base de datos
-      return {message: true}
-    }
+
+    const material = await this.BuscarporID(id);
+    await material.destroy();
+    return id;
   }
 
   //agregar cantidad de materiales ya existentes
