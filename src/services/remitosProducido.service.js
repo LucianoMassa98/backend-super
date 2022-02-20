@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const ProductoServicio = require('./producto.service');
+const sequelize = require('../libs/sequelize');
 class RemitosProducidoService{
 
   constructor(){
@@ -59,6 +60,11 @@ class RemitosProducidoService{
   }
   async BuscarporFecha(fecha){
     return [];
+  }
+  async Buscar(){
+
+    const [data] = await sequelize.query('SELECT * FROM tasks');
+    return data;
   }
 
 }
