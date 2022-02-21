@@ -6,6 +6,7 @@ const{RemitoEnvio,RemitoEnvioSchema}=require('./remitoEnvio.model');
 const{RemitoProduccion, RemitoProduccionSchema}=require('./remitoProduccion.model');
 const{RemitoProducido, RemitoProducidoSchema}=require('./remitoProducido.model');
 const { User, UserSchema } = require('./user.model');
+const {Customer, CustomerSchema}=require('./customer.model');
 function setupModels(sequelize) {
   Material.init(MaterialSchema, Material.config(sequelize));
   Notapedido.init(NotapedidoSchema, Notapedido.config(sequelize));
@@ -15,7 +16,12 @@ function setupModels(sequelize) {
   RemitoProduccion.init(RemitoProduccionSchema, RemitoProduccion.config(sequelize));
   RemitoProducido.init(RemitoProducidoSchema, RemitoProducido.config(sequelize));
 
+
   User.init(UserSchema, User.config(sequelize));
+
+  Customer.init(CustomerSchema,Customer.config(sequelize));
+  Customer.associate(sequelize.models);
+  User.associate(sequelize.models);
 }
 
 module.exports = setupModels;

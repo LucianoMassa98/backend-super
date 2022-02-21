@@ -7,6 +7,7 @@ const productosRouter = require('./productos.router');
 const remitosProduccion = require('./remitosProduccion.router');
 const remitosProducido = require('./remitosProducido.router');
 const usuariosRouter = require('./users.router');
+const customerRouter = require('./customer.router');
 
 //funcion que recibe a la aplicacion por parametro de entrada: MidleWere
 function routerApi(app) {
@@ -22,7 +23,7 @@ function routerApi(app) {
   router.use('/productos',productosRouter);
   router.use('/remitosProducido',remitosProducido);
   router.use('/usuarios',usuariosRouter);
-
+  router.use('/customers',customerRouter);
 }
 
 module.exports = routerApi;
