@@ -48,7 +48,15 @@ class NotaPedidoService{
   }
 
   async BuscarporID(id){
-    const ntp = await models.notapedido.findByPk(id);
+    const ntp = await models.Notapedido.findByPk(id,
+      {
+        include: [
+          {
+            association: 'customer',
+            include: ['user']
+          }
+        ]
+      });
 
     if(!ntp){
       throw boom.notFound('Nota de pedido no encontrada');

@@ -1,6 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-const {CUSTOMER_TABLE} = require('./customer.model');
-const   NOTAPEDIDO_TABLE = 'notapedidos';
+const { CUSTOMER_TABLE } = require('./customer.model');
+
+const NOTAPEDIDO_TABLE = 'notapedidos';
 
 const NotapedidoSchema = {
   id: {
@@ -9,14 +10,8 @@ const NotapedidoSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  emision: {
-    allowNull: false,
-    type: DataTypes.DATE,
-    field: 'emision',
-    defaultValue: Sequelize.NOW,
-  },
-  receptorId:{
-    field: 'receptor_id',
+  customerId: {
+    field: 'customer_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
@@ -26,16 +21,32 @@ const NotapedidoSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  recepcion: {
+  createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'recepcion'
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  },
+  recepcion:{
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'recepcion_at'
   }
 }
 
-class Notapedido extends Model {
+
+class NotaPedido extends Model {
+
   static associate(models) {
-   this.belongsTo(models.Customer,{ as: 'customers'});
+    this.belongsTo(models.Customer, {
+      as: 'customer',
+    });
+    this.belongsToMany(models.Producto, {
+      as: 'items',
+      through: models.NotaProducto,
+      foreignKey: 'notaId',
+      otherKey: 'productoId'
+    });
   }
 
   static config(sequelize) {
@@ -48,5 +59,4 @@ class Notapedido extends Model {
   }
 }
 
-
-module.exports = { NOTAPEDIDO_TABLE, NotapedidoSchema, Notapedido };
+module.exports = { NotaPedido, NotapedidoSchema, NOTAPEDIDO_TABLE };

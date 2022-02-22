@@ -48,7 +48,7 @@ class Customer extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, {as: 'user'});
-    this.hasMany(models.Notapedido,{as: 'notapedidos', foreignKey: 'receptorId'});
+    this.hasMany(models.Notapedido,{as: 'notapedidos', foreignKey: 'customerId'});
   }
 
   static config(sequelize) {

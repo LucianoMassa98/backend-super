@@ -1,7 +1,7 @@
 const joi = require('joi');
 
 const id = joi.number().integer();
-const receptorId = joi.number().integer();
+const customerId = joi.number().integer();
 const recepcion = joi.date();
 const pagos = joi.object([{
   id: id.required(),
@@ -18,7 +18,7 @@ const filtrarFechaRecepcion =joi.object({
 });
 
 const createNotaPedido = joi.object({
-  receptorId: receptorId.required(),
+  customerId: customerId.required(),
   recepcion: recepcion.required()
   /*pagos: pagos.required(),
   lp: lp.required()*/
