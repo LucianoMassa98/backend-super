@@ -11,7 +11,7 @@ const { createNotaPedido,
 const servicio = new NotaPedidoService();
 
 //cliente solicita lista de formularios: NTP
-router.get('/lista',async(req,res,next)=>{
+router.get('/',async(req,res,next)=>{
   try{
     const notasdepedidos = await servicio.Buscar();
   res.json(notasdepedidos);
@@ -29,7 +29,7 @@ async (req,res,next)=>{
 }catch(error){next(error);}
   });
 //cliente solicita formulario: NTP por id
-router.get('/BuscarporID/:id',
+router.get('/:id',
 validatorHandler(getNotaDePedido,'params'),
 async(req,res,next)=>{
   try{
@@ -39,7 +39,7 @@ async(req,res,next)=>{
   }catch(error){next(error);}
 });
 //cliente agrega formulario: NTP
-router.post('/Crear',
+router.post('/',
 validatorHandler(createNotaPedido,'body'),
 async (req,res,next)=>{
   try{

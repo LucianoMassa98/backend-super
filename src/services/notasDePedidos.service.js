@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom');
 
-const sequelize = require('../libs/sequelize');
+const {models} = require('../libs/sequelize');
 class NotaPedidoService{
 
   constructor(){
@@ -26,8 +26,8 @@ class NotaPedidoService{
   }
   // create
    async Crear(ntp){
-    // falta guardar en base de datos
-    this.notasdepedidos.push(ntp);
+    const newntp = await models.Notapedido.create(ntp);
+    return newntp;
   }
   // actualiza ntps
   async Actualizar(id,changes){
@@ -48,13 +48,13 @@ class NotaPedidoService{
   }
 
   async BuscarporID(id){
-    const index = this.notasdepedidos.findIndex(item => item.id === id);
+    const ntp = await models.notapedido.findByPk(id);
 
-    if(index===-1){
+    if(!ntp){
       throw boom.notFound('Nota de pedido no encontrada');
     }
 
-    return this.notasdepedidos[index];
+    return ntp;
 
   }
   async BuscarporFecha(fecha){
@@ -63,8 +63,8 @@ class NotaPedidoService{
 
   async Buscar(){
 
-    const [data] = await sequelize.query('SELECT * FROM tasks');
-    return data;
+    const ntps = await models.Notapedido.findAll();
+    return ntps;
   }
 
   async Entregado(id,receptor){

@@ -1,7 +1,7 @@
 const express = require('express');
 const remitosCompras = require('./remitosCompras.router');
 const remitosEnvios = require('./remitosEnvios.router');
-const materialesRouter = require('./materiales.router');
+const categoriesRouter = require('./categories.router');
 const notasdepedido = require('./notadepedido.router');
 const productosRouter = require('./productos.router');
 const remitosProduccion = require('./remitosProduccion.router');
@@ -17,7 +17,7 @@ function routerApi(app) {
   // defino el endpoint
   router.use('/remitosCompras', remitosCompras);
   router.use('/remitosEnvios',remitosEnvios);
-  router.use('/materiales', materialesRouter);
+  router.use('/categories', categoriesRouter);
   router.use('/notasdpds', notasdepedido);
   router.use('/remitosProduccion',remitosProduccion);
   router.use('/productos',productosRouter);

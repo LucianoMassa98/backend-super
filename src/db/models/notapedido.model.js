@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-
-const   NOTAPEDIDO_TABLE = 'notasdepedidos';
+const {CUSTOMER_TABLE} = require('./customer.model');
+const   NOTAPEDIDO_TABLE = 'notapedidos';
 
 const NotapedidoSchema = {
   id: {
@@ -9,19 +9,22 @@ const NotapedidoSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  emisor: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
-  receptor: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
   emision: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'emision',
-    defaultValue: Sequelize.NOW
+    defaultValue: Sequelize.NOW,
+  },
+  receptorId:{
+    field: 'receptor_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CUSTOMER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
   recepcion: {
     allowNull: false,
@@ -31,15 +34,15 @@ const NotapedidoSchema = {
 }
 
 class Notapedido extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+   this.belongsTo(models.Customer,{ as: 'customers'});
   }
 
   static config(sequelize) {
     return {
       sequelize,
       tableName: NOTAPEDIDO_TABLE,
-      modelName: 'notapedido',
+      modelName: 'Notapedido',
       timestamps: false
     }
   }

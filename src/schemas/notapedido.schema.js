@@ -1,9 +1,7 @@
 const joi = require('joi');
 
 const id = joi.number().integer();
-const emisor = joi.string();
-const emision = joi.date();
-const receptores = joi.object([]);
+const receptorId = joi.number().integer();
 const recepcion = joi.date();
 const pagos = joi.object([{
   id: id.required(),
@@ -20,18 +18,14 @@ const filtrarFechaRecepcion =joi.object({
 });
 
 const createNotaPedido = joi.object({
-  emisor: emisor.required(),
-  emision: emision.required(),
-  receptores: receptores.required(),
-  recepcion: recepcion.required(),
-  pagos: pagos.required(),
-  lp: lp.required()
+  receptorId: receptorId.required(),
+  recepcion: recepcion.required()
+  /*pagos: pagos.required(),
+  lp: lp.required()*/
 });
 
 const updateNotaPedido = joi.object({
-  recepcion: recepcion.required(),
-  pagos: pagos.required(),
-  lp: lp.required()
+  recepcion
 
 });
 

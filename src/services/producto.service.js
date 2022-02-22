@@ -68,7 +68,9 @@ class ProductoServicio{
     return rta.rows;*/
 
     // consulta utilizando orm sequelize
-    const rta = await models.producto.findAll();
+    const rta = await models.producto.findAll({
+      include: ['category']
+    });
     return rta;
   }
   //update
