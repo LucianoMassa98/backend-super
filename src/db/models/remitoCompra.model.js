@@ -1,4 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
+const { CUSTOMER_TABLE } = require('./customer.model');
+const { NOTAPEDIDO_TABLE } = require('./notapedido.model');
+
+
 
 const   REMITOCOMPRA_TABLE = 'remitosdecompras';
 
@@ -9,37 +13,55 @@ const RemitoCompraSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  emisor: {
+  customerId: {
+    field: 'customer_id',
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER,
+    references: {
+      model: CUSTOMER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
-  receptor: {
+  notaId: {
+    field: 'nota_id',
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER,
+    unique: true,
+    references: {
+      model: NOTAPEDIDO_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
-  emision: {
+  createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'emision',
-    defaultValue: Sequelize.NOW
-  },
-  recepcion: {
-    allowNull: false,
-    type: DataTypes.DATE,
-    field: 'recepcion'
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
   }
 }
 
 class RemitoCompra extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsTo(models.NotaPedido, { as: 'notapedido' });
+    this.belongsTo(models.Customer, { as: 'customer' });
+    this.belongsToMany(models.Producto, {
+      as: 'items',
+      through: models.CompraProducto,
+      foreignKey: 'compraId',
+      otherKey: 'productoId'
+    });
+
   }
 
   static config(sequelize) {
     return {
       sequelize,
       tableName: REMITOCOMPRA_TABLE,
-      modelName: 'remitocompra',
+      modelName: 'RemitoCompra',
       timestamps: false
     }
   }

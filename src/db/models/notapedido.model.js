@@ -31,22 +31,30 @@ const NotapedidoSchema = {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'recepcion_at'
-  }
+  }/*,
+  estado:{
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+
+  }*/
 }
 
 
 class NotaPedido extends Model {
 
   static associate(models) {
-    this.belongsTo(models.Customer, {
-      as: 'customer',
-    });
+    this.belongsTo(models.Customer, { as: 'customer'});
     this.belongsToMany(models.Producto, {
       as: 'items',
       through: models.NotaProducto,
       foreignKey: 'notaId',
       otherKey: 'productoId'
     });
+   /* this.hasOne(models.RemitoCompra,{
+      as: 'RemitoCompra',
+      foreignKey: 'notaId'
+    });*/
   }
 
   static config(sequelize) {
