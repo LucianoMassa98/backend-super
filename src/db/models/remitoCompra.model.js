@@ -46,9 +46,9 @@ const RemitoCompraSchema = {
 
 class RemitoCompra extends Model {
   static associate(models) {
-    this.belongsTo(models.NotaPedido, { as: 'notapedido' });
+    this.belongsTo(models.Notapedido, { as: 'notapedido' });
     this.belongsTo(models.Customer, { as: 'customer' });
-    this.belongsToMany(models.Producto, {
+    this.belongsToMany(models.producto, {
       as: 'items',
       through: models.CompraProducto,
       foreignKey: 'compraId',

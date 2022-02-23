@@ -1,9 +1,9 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const { REMITOCOMPRA_TABLE } = require('./notapedido.model');
+const { REMITOCOMPRA_TABLE } = require('./remitoCompra.model');
 const { PRODUCTO_TABLE } = require('./producto.model');
 
-const COMPRA_PRODUCTO_TABLE = 'compras_productos';
+const COMPRA_PRODUCTO_TABLE = 'comprasproductos';
 
 const CompraProductoSchema =  {
   id: {
@@ -11,12 +11,6 @@ const CompraProductoSchema =  {
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
-  },
-  createdAt: {
-    allowNull: false,
-    type: DataTypes.DATE,
-    field: 'created_at',
-    defaultValue: Sequelize.NOW,
   },
   cnt: {
     allowNull: false,
