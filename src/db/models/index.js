@@ -17,9 +17,9 @@ function setupModels(sequelize) {
   Producto.init(ProductoSchema, Producto.config(sequelize));
   NotaPedido.init(NotapedidoSchema, NotaPedido.config(sequelize));
   NotaProducto.init(NotaProductoSchema,NotaProducto.config(sequelize));
-
   RemitoCompra.init(RemitoCompraSchema, RemitoCompra.config(sequelize));
   CompraProducto.init(CompraProductoSchema,CompraProducto.config(sequelize));
+
   RemitoEnvio.init(RemitoEnvioSchema, RemitoEnvio.config(sequelize));
   RemitoProduccion.init(RemitoProduccionSchema, RemitoProduccion.config(sequelize));
   RemitoProducido.init(RemitoProducidoSchema, RemitoProducido.config(sequelize));
@@ -33,6 +33,7 @@ function setupModels(sequelize) {
   Producto.associate(sequelize.models);
   RemitoCompra.associate(sequelize.models);
   NotaPedido.associate(sequelize.models);
+
 
 
 }

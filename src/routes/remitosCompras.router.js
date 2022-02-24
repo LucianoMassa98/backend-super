@@ -7,7 +7,7 @@ const {createRemito,getRemito,filtrarFechaRemito} = require('../schemas/remito.s
 const servicio = new RemitosCompraService();
 
 //cliente solicita lista de formularios: RMT
-router.get('/lista',async(req,res,next)=>{
+router.get('/',async(req,res,next)=>{
   try{
     const remitoscompras = await servicio.Buscar();
   res.json(remitoscompras);
@@ -35,7 +35,7 @@ async(req,res,next)=>{
   }catch(error){next(error);}
 });
 //cliente agrega formulario: RMT
-router.post('/Crear',
+router.post('/',
 validatorHandler(createRemito,'body'),
 async (req,res,next)=>{
   try{
@@ -45,6 +45,15 @@ async (req,res,next)=>{
   }catch(error){next(error);}
 
 });
+router.post('/agregar',
+validatorHandler(createRemito,'body'),
+async (req,res,next)=>{
+  try{
+  const body = req.body;
+  const rmtC = await servicio.Crear(body);
+  res.json(rmtC);
+  }catch(error){next(error);}
 
+});
 
 module.exports = router;

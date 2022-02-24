@@ -6,7 +6,8 @@ const validatorHandler = require('../middlewares/validator.handler');
 const { createNotaPedido,
   getNotaDePedido,
   updateNotaPedido,
-  filtrarFechaRecepcion} = require('../schemas/notapedido.schema');
+  filtrarFechaRecepcion,
+  addItemSchema} = require('../schemas/notapedido.schema');
 
 const servicio = new NotaPedidoService();
 
@@ -49,6 +50,17 @@ async (req,res,next)=>{
   }catch(error){next(error);}
 
 });
-
+router.post('/add-item',
+  validatorHandler(addItemSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newItem = await servicio.additem(body);
+      res.status(201).json(newItem);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;

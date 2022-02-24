@@ -1,74 +1,58 @@
 const boom = require('@hapi/boom');
-const MaterialService = require('./materiales.service');
-const NotaPedidoService = require('./notasDePedidos.service');
-const sequelize = require('../libs/sequelize');
+const ProductoService = require('./producto.service');
+const {models} = require('../libs/sequelize');
 
 class RemitosCompraService{
 
   constructor(){
-    this.remitos=[];
-    this.generador();
-  }
-   // genera espacio en la memoria principal del servidor
-   generador(){
 
-    super.remitos = [
-      {
-      id: 1,
-      emision: '11/02/2022',
-      recepcion: '20/02/2022',
-      emisor: '1.1.5',
-      receptor: ['1.1.6.1'],
-      pagos:[{},{}],
-      lp:[{},{}]
-
-      }
-
-    ];
   }
-  // create
-   async Crear(rmtC){
-    // falta guardar en base de datos
-    this.remitos.push(rmtC);
-    const servicio = new MaterialService();
-    servicio.Agregar(rmtC.lp);
-    const servicio2 = new NotaPedidoService();
-    servicio2.Entregado(rmtc.id,rmtC.emisor);
+
+  async Crear(rmtc){
+    const newrmtc = await models.RemitoCompra.create(rmtc);
+    return newrmtc;
   }
-  // actualiza remito de copras
+
+  async additem(data){
+    const newitem = await models.CompraProducto.create(data);
+    return newitem;
+  }
   async Actualizar(id,changes){
-    if(!this.BuscarporID(id)){
-      throw boom.notFound('Remito de compra no encontrado');
+     const model = await this.BuscarporID(id);
+    const rta = await model.update(changes);
+    return rta;
     }
-    return id;
-    // actualizar en base de datos
-
-    }
-  //borra ntps por medio del id
   async Borrar(id){
-    if(!this.BuscarporID(id)){
-      throw boom.notFound('Remito de compra no encontrado');
-    }
-    // actualizar en base de datos
+    const rmtc = await this.BuscarporID(id);
+    await rmtc.destroy();
+    return { rta: true };
   }
-
+  async Buscar(){
+    const rmtcs = await models.RemitoCompra.findAll();
+    return rmtcs;
+   }
   async BuscarporID(id){
-    const index = this.remitos.findIndex(item => item.id === id);
+    const rmtc = await models.RemitoCompra.findByPk(id,
+      {
+        include: [
+          {
+            association: 'customer',
+            include: ['user']
+          }
+        ]
+      });
 
-    if(index===-1){
-      throw boom.notFound('Remito de compra no encontrado');
+    if(!rmtc){
+      throw boom.notFound('Nota de pedido no encontrada');
     }
 
-    return this.remitos[index];
+    return rmtc;
 
   }
   async BuscarporFecha(fecha){
-    return [];
-  }
-  async Buscar(){
+    const rmtcs = await models.RemitoCompra.findCreateFind(fecha);
+    return rmtcs;
 
-    const [data] = await sequelize.query('SELECT * FROM tasks');
-    return data;
   }
 
 

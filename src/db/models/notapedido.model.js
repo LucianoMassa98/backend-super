@@ -43,10 +43,10 @@ class NotaPedido extends Model {
       as: 'items',
       through: models.NotaProducto,
       foreignKey: 'notaId',
-      otherKey: 'productId'
+      otherKey: 'productoId'
     });
     this.hasOne(models.RemitoCompra,{
-      as: 'RemitoCompra',
+      as: 'remitocompra',
       foreignKey: 'notaId'
     });
 

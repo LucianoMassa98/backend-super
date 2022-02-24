@@ -1,27 +1,20 @@
 const joi = require('joi');
 
-const id = joi.string();
-const emisor = joi.string();
-const emision = joi.date();
-const receptores = joi.object([]);
+const id = joi.number();
+const customerId = joi.number();
+const notaId = joi.number();
+const emision= joi.date();
 
-const lp=joi.object([{
-  id: id.required(),
-  cnt: joi.number(),
-  precio: joi.number()
-}]);
 
 
 const createRemito = joi.object({
-  emisor: emisor.required(),
-  emision: emision.required(),
-  receptores: receptores.required(),
-  lp: lp.required()
+  customerId: customerId.required(),
+  notaId: notaId.required()
 });
 
 const updateRemito = joi.object({
 
-  lp: lp.required()
+
 
 });
 

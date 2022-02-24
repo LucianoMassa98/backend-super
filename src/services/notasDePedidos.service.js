@@ -11,6 +11,11 @@ class NotaPedidoService{
     const newntp = await models.Notapedido.create(ntp);
     return newntp;
   }
+
+  async additem(data){
+    const newitem = await models.NotaProducto.create(data);
+    return newitem;
+  }
   async Actualizar(id,changes){
      const model = await this.BuscarporID(id);
     const rta = await model.update(changes);
@@ -21,7 +26,10 @@ class NotaPedidoService{
     await ntp.destroy();
     return { rta: true };
   }
-
+  async Buscar(){
+    const ntps = await models.Notapedido.findAll();
+    return ntps;
+   }
   async BuscarporID(id){
     const ntp = await models.Notapedido.findByPk(id,
       {
@@ -29,7 +37,8 @@ class NotaPedidoService{
           {
             association: 'customer',
             include: ['user']
-          }
+          },
+          'items'
         ]
       });
 
@@ -41,13 +50,12 @@ class NotaPedidoService{
 
   }
   async BuscarporFecha(fecha){
-    return [];
+    const ntps = await models.Notapedido.findCreateFind(fecha);
+    return ntps;
+
   }
 
-  async Buscar(){
-    const ntps = await models.Notapedido.findAll();
-    return ntps;
-   }
+
 
 }
 

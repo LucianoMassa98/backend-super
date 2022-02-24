@@ -3,6 +3,10 @@ const joi = require('joi');
 const id = joi.number().integer();
 const customerId = joi.number().integer();
 const recepcion = joi.date();
+const cnt= joi.number().integer();
+const precio = joi.number();
+const notaId = joi.number().integer();
+const productId = joi.number().integer();
 const pagos = joi.object([{
   id: id.required(),
   monto: joi.number()
@@ -20,11 +24,18 @@ const filtrarFechaRecepcion =joi.object({
 const createNotaPedido = joi.object({
   customerId: customerId.required(),
   recepcion: recepcion.required()
-  /*pagos: pagos.required(),
-  lp: lp.required()*/
+
+});
+const addItemSchema = joi.object({
+  cnt: cnt.required(),
+  precio: precio.required(),
+  notaId: notaId.required(),
+  productoId: productId.required(),
+
 });
 
 const updateNotaPedido = joi.object({
+  customerId,
   recepcion
 
 });
@@ -36,5 +47,6 @@ const getNotaDePedido = joi.object({
 module.exports ={createNotaPedido,
   getNotaDePedido,
   updateNotaPedido,
-  filtrarFechaRecepcion
+  filtrarFechaRecepcion,
+  addItemSchema
 };
