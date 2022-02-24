@@ -1,61 +1,44 @@
 const boom = require('@hapi/boom');
 const MaterialService = require('./materiales.service');
-const sequelize = require('../libs/sequelize');
+const {models} = require('../libs/sequelize');
 class RemitosProduccionService{
 
   constructor(){
-    this.remitos=[];
-    this.generador();
+
   }
-   // genera espacio en la memoria principal del servidor
-   generador(){
 
-    super.remitos = [
-      {
-      id: 1,
-      emision: '11/02/2022',
-      recepcion: '20/02/2022',
-      emisor: '1.1.5',
-      receptor: ['1.1.6.1'],
-      pagos:[{},{}],
-      lp:[{},{}]
-
-      }
-
-    ];
-  }
   // create
-   async Crear(rmtEnP){
-    // falta guardar en base de datos
-    this.remitos.push(rmtEnP);
-    const servicio = new MaterialService();
-    servicio.Restar(rmtEnP.lp);
-  }
+   async Crear(data){
+    const newremito = await models.RemitoProduccion.create(data);
+    return newremito;
+    }
+    async additem(data){
+      const newitem = await models.ProduccionProducto.create(data);
+      return newitem;
+    }
   // actualiza remito de produccion
   async Actualizar(id,changes){
-    if(!this.BuscarporID(id)){
-      throw boom.notFound('Remito de compra no encontrado');
-    }
-    return id;
-    // actualizar en base de datos
-
+    const model = await this.BuscarporID(id);
+    const rta = await model.update(changes);
+    return rta;
     }
   //borra ntps por medio del id
   async Borrar(id){
-    if(!this.BuscarporID(id)){
-      throw boom.notFound('Remito de compra no encontrado');
-    }
-    // actualizar en base de datos
+    const model = await this.BuscarporID(id);
+     await model.destroy();
+    return { rta: true};
   }
 
   async BuscarporID(id){
-    const index = this.remitos.findIndex(item => item.id === id);
+    const remito = await models.RemitoProduccion.findByPk(id,{
+      include: ['items']
+    });
 
-    if(index===-1){
+    if(!remito){
       throw boom.notFound('Remito de compra no encontrado');
     }
 
-    return this.remitos[index];
+    return remito;
 
   }
   async BuscarporFecha(fecha){
@@ -63,8 +46,8 @@ class RemitosProduccionService{
   }
   async Buscar(){
 
-    const [data] = await sequelize.query('SELECT * FROM tasks');
-    return data;
+    const remitos = await models.RemitoProduccion.findAll();
+    return remitos;
   }
 
 }

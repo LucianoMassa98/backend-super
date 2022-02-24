@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const RemitosCompraService =require('../services/remitosCompras.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const {createRemito,getRemito,filtrarFechaRemito} = require('../schemas/remito.schema');
+const {createRemito,getRemito,filtrarFechaRemito,addItemSchema} = require('../schemas/remito.schema');
 
 const servicio = new RemitosCompraService();
 
@@ -25,7 +25,7 @@ async (req,res,next)=>{
 }catch(error){next(error);}
   });
 //cliente solicita formulario: RMT por id
-router.get('/BuscarporID/:id',
+router.get('/:id',
 validatorHandler(getRemito,'params'),
 async(req,res,next)=>{
   try{
@@ -46,14 +46,25 @@ async (req,res,next)=>{
 
 });
 router.post('/agregar',
-validatorHandler(createRemito,'body'),
+validatorHandler(addItemSchema,'body'),
 async (req,res,next)=>{
   try{
   const body = req.body;
-  const rmtC = await servicio.Crear(body);
+  const rmtC = await servicio.additem(body);
   res.json(rmtC);
   }catch(error){next(error);}
 
+});
+router.delete('/:id',
+  validatorHandler(getRemito,'params'),
+async(req,res,next)=>{
+  try{
+  const {id} = req.params;
+  const band = await servicio.Borrar(id);
+  res.json(band);
+}catch(error){
+  next(error);
+}
 });
 
 module.exports = router;

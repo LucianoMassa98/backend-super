@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-
+const { GALPON_TABLE}=require('./galpon.model');
 const   REMITOPRODUCCION_TABLE = 'remitosdeproduccion';
 
 const RemitoProduccionSchema = {
@@ -9,37 +9,42 @@ const RemitoProduccionSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  emisor: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
-  receptor: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
-  emision: {
+  createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'emision',
-    defaultValue: Sequelize.NOW
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
   },
-  recepcion: {
+  galponId: {
+    field: 'galpon_id',
     allowNull: false,
-    type: DataTypes.DATE,
-    field: 'recepcion'
+    type: DataTypes.INTEGER,
+    references: {
+      model: GALPON_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
+
 }
 
 class RemitoProduccion extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsTo(models.Galpon, { as: 'galpon', });
+    this.belongsToMany(models.producto, {
+      as: 'items',
+      through: models.ProduccionProducto,
+      foreignKey: 'produccionId',
+      otherKey: 'productoId'
+    });
   }
 
   static config(sequelize) {
     return {
       sequelize,
       tableName: REMITOPRODUCCION_TABLE,
-      modelName: 'remitoproduccion',
+      modelName: 'RemitoProduccion',
       timestamps: false
     }
   }

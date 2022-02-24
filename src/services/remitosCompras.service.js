@@ -12,6 +12,14 @@ class RemitosCompraService{
     const newrmtc = await models.RemitoCompra.create(rmtc);
     return newrmtc;
   }
+  async additem(data){
+    const newitem = await models.CompraProducto.create(data);
+    return newitem;
+  }
+  async mostrar(){
+    const rmtcs = await models.CompraProducto.findAll();
+    return rmtcs;
+  }
 
   async additem(data){
     const newitem = await models.CompraProducto.create(data);
@@ -36,9 +44,9 @@ class RemitosCompraService{
       {
         include: [
           {
-            association: 'customer',
-            include: ['user']
-          }
+            association: 'customer'
+          },
+          'items'
         ]
       });
 
