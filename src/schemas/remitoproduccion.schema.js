@@ -17,4 +17,17 @@ const addItemSchema = joi.object({
   productoId: productoId.required(),
 
 });
-module.exports={createRemitoProduccion,getRemitoProduccion,addItemSchema};
+const addItemProducidoSchema = joi.object({
+  cnt: cnt.required(),
+  producidoId: produccionId.required(),
+  productoId: productoId.required(),
+
+});
+const addItemEnvioSchema = joi.object({
+  cnt: cnt.required(),
+  envioId: produccionId.required(),
+  productoId: productoId.required(),
+
+});
+module.exports={createRemitoProduccion,getRemitoProduccion,
+  addItemSchema,addItemProducidoSchema,addItemEnvioSchema};

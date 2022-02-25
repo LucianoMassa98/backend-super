@@ -1,61 +1,38 @@
 const boom = require('@hapi/boom');
 const ProductoServicio = require('./producto.service');
-const sequelize = require('../libs/sequelize');
+const {models} = require('../libs/sequelize');
 class RemitosEnvioService{
 
   constructor(){
-    this.remitos=[];
-    this.generador();
+
   }
-   // genera espacio en la memoria principal del servidor
-   generador(){
 
-    super.remitos = [
-      {
-      id: 1,
-      emision: '11/02/2022',
-      recepcion: '20/02/2022',
-      emisor: '1.1.5',
-      receptor: ['1.1.6.1'],
-      pagos:[{},{}],
-      lp:[{},{}]
-
-      }
-
-    ];
-  }
   // create
-   async Crear(rmtE){
-    // falta guardar en base de datos
-    this.remitos.push(rmtE);
-    const servicio = new ProductoServicio();
-    servicio.Restar(rmtE.lp);
+   async Crear(data){
+    const newremito = await models.RemitoEnvio.create(data);
+    return newremito;
   }
-  // actualiza remito de produccion
+  async additem(data){
+    const newitem = await models.EnvioProducto.create(data);
+    return newitem;
+  }
   async Actualizar(id,changes){
-    if(!this.BuscarporID(id)){
-      throw boom.notFound('Remito de compra no encontrado');
-    }
-    return id;
-    // actualizar en base de datos
-
+    const remito = await this.BuscarporID(id);
+    const newremito = await remito.update(changes);
+    return newremito;
     }
   //borra ntps por medio del id
   async Borrar(id){
-    if(!this.BuscarporID(id)){
-      throw boom.notFound('Remito de compra no encontrado');
-    }
-    // actualizar en base de datos
+    const model = await this.BuscarporID(id);
+    await model.destroy();
   }
 
   async BuscarporID(id){
-    const index = this.remitos.findIndex(item => item.id === id);
-
-    if(index===-1){
-      throw boom.notFound('Remito de compra no encontrado');
+    const remito = await models.RemitoEnvio.findByPk(id,{include:['items']});
+    if(!remito){
+      throw boom.notFound('Remito de envio no encontrado');
     }
-
-    return this.remitos[index];
+    return remito;
 
   }
 
@@ -64,8 +41,8 @@ class RemitosEnvioService{
   }
   async Buscar(){
 
-    const [data] = await sequelize.query('SELECT * FROM tasks');
-    return data;
+    const remitos = await models.RemitoEnvio.findAll();
+    return remitos;
   }
 
 }

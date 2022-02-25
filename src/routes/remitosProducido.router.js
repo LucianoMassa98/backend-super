@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const RemitosProducidoService =require('../services/remitosProducido.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const {createRemito,getRemito,updateRemito,filtrarFechaRemito} = require('../schemas/remito.schema');
+const {createRemitoProduccion,getRemitoProduccion,addItemSchema,addItemProducidoSchema} = require('../schemas/remitoproduccion.schema');
 
 const servicio = new RemitosProducidoService();
 
 //cliente solicita lista de formularios: RMT
-router.get('/lista',async(req,res,next)=>{
+router.get('/',async(req,res,next)=>{
   try{
     const remitosproducido = await servicio.Buscar();
   res.json(remitosproducido);
@@ -16,7 +16,7 @@ router.get('/lista',async(req,res,next)=>{
 });
 // filtrar formularios: RMT por fecha
 router.get('/FiltrarPorFecha/:fecha',
-validatorHandler(filtrarFechaRemito,'params'),
+validatorHandler(getRemitoProduccion,'params'),
 async (req,res,next)=>{
   try{const {fecha} = req.params;
   const remitosproducido = await servicio.BuscarporFecha(fecha);
@@ -25,8 +25,8 @@ async (req,res,next)=>{
 }catch(error){next(error);}
   });
 //cliente solicita formulario: RMT por id
-router.get('/BuscarporID/:id',
-validatorHandler(getRemito,'params'),
+router.get('/:id',
+validatorHandler(getRemitoProduccion,'params'),
 async(req,res,next)=>{
   try{
     const { id } = req.params;
@@ -35,8 +35,8 @@ async(req,res,next)=>{
   }catch(error){next(error);}
 });
 //cliente agrega formulario: RMT
-router.post('/Crear',
-validatorHandler(createRemito,'body'),
+router.post('/',
+validatorHandler(createRemitoProduccion,'body'),
 async (req,res,next)=>{
   try{
   const body = req.body;
@@ -45,6 +45,15 @@ async (req,res,next)=>{
   }catch(error){next(error);}
 
 });
+router.post('/agregar',
+validatorHandler(addItemProducidoSchema,'body'),
+async (req,res,next)=>{
+  try{
+  const body = req.body;
+  const rmtP = await servicio.additem(body);
+  res.json(rmtP);
+  }catch(error){next(error);}
 
+});
 
 module.exports = router;
