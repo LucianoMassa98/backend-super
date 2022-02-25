@@ -1,10 +1,10 @@
 const boom = require('@hapi/boom');
-const ProductoServicio = require('./producto.service');
+const ProductoService = require('./producto.service');
 const {models} = require('../libs/sequelize');
 class RemitosEnvioService{
 
   constructor(){
-
+    this.servicio = new ProductoService();
   }
 
   // create
@@ -44,6 +44,33 @@ class RemitosEnvioService{
     const remitos = await models.RemitoEnvio.findAll();
     return remitos;
   }
+  // resta cnt de la tabla Prodcutos
+  async RestarProducto(id, data){
+    const rta = await this.servicio.Restar(id, data);
+    return rta;
+}
+async SumarProducto(id, data){
+  const rta = await this.servicio.Sumar(id, data);
+  return rta;
+}
+async Finalizar(data){
+
+  const nota = await this.create(data.nota);
+
+  if(!nota){ throw boom.notFound('No se creo nota de pedido');}
+
+    const array = [data.items];
+  /*
+  for(int i = 0; i<data.items.length(); i++){
+  const additem = await this.additem(data.items[i]);
+  if(!additem){ throw boom.conflict('producto no insetado');}
+  const rta = awiat this.RestarProducto();
+ if(rta===false){ throw boom.conflict('producto no insertado);}
+  }
+*/
+
+return {rta: true};
+}
 
 }
 

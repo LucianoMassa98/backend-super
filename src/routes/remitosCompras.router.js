@@ -66,5 +66,17 @@ async(req,res,next)=>{
   next(error);
 }
 });
+router.post('/Finalizar',
+  validatorHandler(addItemSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newItem = await servicio.Finalizar(body);
+      res.status(201).json(newItem);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;

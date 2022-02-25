@@ -5,9 +5,8 @@ const {models} = require('../libs/sequelize');
 class RemitosCompraService{
 
   constructor(){
-
+     this.servicio = new ProductoService();
   }
-
   async Crear(rmtc){
     const newrmtc = await models.RemitoCompra.create(rmtc);
     return newrmtc;
@@ -20,7 +19,6 @@ class RemitosCompraService{
     const rmtcs = await models.CompraProducto.findAll();
     return rmtcs;
   }
-
   async additem(data){
     const newitem = await models.CompraProducto.create(data);
     return newitem;
@@ -62,7 +60,33 @@ class RemitosCompraService{
     return rmtcs;
 
   }
+// resta cnt de la tabla Prodcutos
+  async RestarProducto(id, data){
+      const rta = await this.servicio.Restar(id, data);
+      return rta;
+  }
+  async SumarProducto(id, data){
+    const rta = await this.servicio.Sumar(id, data);
+    return rta;
+}
+async Finalizar(data){
 
+  const nota = await this.create(data.nota);
+
+  if(!nota){ throw boom.notFound('No se creo nota de pedido');}
+
+    const array = [data.items];
+  /*
+  for(int i = 0; i<data.items.length(); i++){
+  const additem = await this.additem(data.items[i]);
+  if(!additem){ throw boom.conflict('producto no insetado');}
+  const rta = awiat this.RestarProducto();
+ if(rta===false){ throw boom.conflict('producto no insertado);}
+  }
+*/
+
+return {rta: true};
+}
 
 
 }

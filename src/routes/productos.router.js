@@ -66,6 +66,30 @@ validatorHandler(updateProductoSchema,'body'),
     next(error);
   }
 });
+router.patch('/Sumar/:id',
+validatorHandler(updateProductoSchema,'body'),
+  async(req,res,next)=>{
+  try{
+  const {id} = req.params;
+  const body =  req.body;
+  const producto = await servicio.Sumar(id,body);
+  res.json(producto);
+  }catch(error){
+    next(error);
+  }
+});
+router.patch('/Restar/:id',
+validatorHandler(updateProductoSchema,'body'),
+  async(req,res,next)=>{
+  try{
+  const {id} = req.params;
+  const body =  req.body;
+  const producto = await servicio.Restar(id,body);
+  res.json(producto);
+  }catch(error){
+    next(error);
+  }
+});
 
 // --------------------- Endopoints Delete ----------------------
 //cliente borra producto de la lista por id

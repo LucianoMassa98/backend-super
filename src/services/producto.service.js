@@ -6,44 +6,9 @@ const {models} =require('../libs/sequelize');
 class ProductoServicio{
 
   constructor(){
-    this.productos = [];
-    this.Generador();
-    /*
-    this.pool = pool;
-    this.pool.on('error',(err) => console.error(err));
-    */
-  }
-  Generador(){
-    this.productos = [
-      {
-        id: '1.1',
 
-        nombre: 'Producto 1',
-        precio: 110
-      },
-      {
-        id: '1.2',
-        nombre: 'producto 2',
-        precio: 150
-
-      },
-      {
-        id: '1.3',
-        nombre: 'producto 3',
-        precio: 360
-      },
-      {
-        id: '1.4',
-        nombre: 'producto 4',
-        precio: 550
-      },
-      {
-        id: '1.5',
-        nombre: 'producto 5',
-        precio: 200
-      }
-    ];
   }
+
   //create
  async Crear(producto){
    const newproduct = await models.producto.create(producto);
@@ -86,14 +51,21 @@ class ProductoServicio{
     await producto.destroy();
     return id;
   }
-   //agregar cantidad de materiales
-   async Agregar(listaProduccion){
-    // agregar a base de datos
+ // sumar a la cantidad de los productos
+   async Sumar(id,data){
+    const producto = await this.BuscarporID(id);
+    const changes={cnt:producto.cnt + data.cnt };
+    await this.Actualizar(id,changes);
+    return {rta: true};
+
+  }
+  async Restar(id, data){
+    const producto = await this.BuscarporID(id);
+    const changes={cnt:producto.cnt - data.cnt };
+    await this.Actualizar(id,changes);
+    return {rta: true};
   }
 
-  async Restar(listaProduccion){
-    // restar a base de datos
-  }
 
 }
 
