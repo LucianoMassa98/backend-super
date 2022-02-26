@@ -19,6 +19,13 @@ router.get('/',async(req,res,next)=>{
   }catch(error){next(error);}
 
 });
+router.get('/Estado',async(req,res,next)=>{
+  try{
+    const notasdepedidos = await servicio.BuscarporEstado(true);
+  res.json(notasdepedidos);
+  }catch(error){next(error);}
+
+});
 // filtrar formularios: NTP por fecha
 router.get('/FiltrarPorFecha/:fecha',
 validatorHandler(filtrarFechaRecepcion,'params'),
@@ -64,7 +71,6 @@ router.post('/add-item',
 );
 
 router.post('/Finalizar',
-  validatorHandler(addItemSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;

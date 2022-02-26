@@ -1,18 +1,17 @@
 const boom = require('@hapi/boom');
 const ProductoService = require('./producto.service');
 
+
 const {models} = require('../libs/sequelize');
 class NotaPedidoService{
 
   constructor(){
     this.servicio = new ProductoService();
   }
-
    async Crear(ntp){
     const newntp = await models.Notapedido.create(ntp);
     return newntp;
   }
-
   async additem(data){
     const newitem = await models.NotaProducto.create(data);
     return newitem;
@@ -50,12 +49,25 @@ class NotaPedidoService{
     return ntp;
 
   }
+  async BuscarporEstado(estado){
+    const ntp = await models.Notapedido.findAll({
+      where: {
+        estado: estado
+      }
+    });
+    if(!ntp){ throw boom.notFound('No hay pedidos');}
+    return ntp;
+  }
   async BuscarporFecha(fecha){
-    const ntps = await models.Notapedido.findCreateFind(fecha);
-    return ntps;
+    const ntp = await models.Notapedido.findAll({
+      where: {
+        created_at: fecha
+      }
+    });
+    if(!ntp){ throw boom.notFound('No hay pedidos');}
+    return ntp;
 
   }
-  // resta cnt de la tabla Prodcutos
   async RestarProducto(id, data){
     const rta = await this.servicio.Restar(id, data);
     return rta;
@@ -64,24 +76,25 @@ async SumarProducto(id, data){
   const rta = await this.servicio.Sumar(id, data);
   return rta;
 }
-
 async Finalizar(data){
 
-  const nota = await this.create(data.nota);
 
+  const nota = await this.Crear(data.nota);
   if(!nota){ throw boom.notFound('No se creo nota de pedido');}
 
-    const array = [data.items];
-  /*
-  for(int i = 0; i<data.items.length(); i++){
-  const additem = await this.additem(data.items[i]);
-  if(!additem){ throw boom.conflict('producto no insetado');}
-  const rta = awiat this.RestarProducto();
- if(rta===false){ throw boom.conflict('producto no insertado);}
-  }
-*/
+  const items= data.items;
+  if(!items){ throw boom.notFound('No hay lista de productos');}
 
-return {rta: true};
+  const recorreArray =  arr => arr.forEach(item => {
+    const producto = {
+      ...item,
+      notaId: nota.id
+    }
+    const rta =  this.additem(producto);
+     if(!rta){ throw boom.notFound('producto no agregado');}
+     });
+   await recorreArray(items);
+  return {rta: true};
 }
 
 }

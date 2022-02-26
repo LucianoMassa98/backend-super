@@ -27,11 +27,12 @@ const NotapedidoSchema = {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
-  recepcion:{
+  estado:{
     allowNull: false,
-    type: DataTypes.DATE,
-    field: 'recepcion_at'
+    defaultValue: false,
+    type: DataTypes.BOOLEAN
   }
+
 }
 
 

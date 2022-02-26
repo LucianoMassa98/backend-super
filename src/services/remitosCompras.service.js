@@ -1,11 +1,13 @@
 const boom = require('@hapi/boom');
 const ProductoService = require('./producto.service');
+const NotaPedidoService = require('./notasDePedidos.service');
 const {models} = require('../libs/sequelize');
 
 class RemitosCompraService{
 
   constructor(){
      this.servicio = new ProductoService();
+     this.servicioPedido = new NotaPedidoService();
   }
   async Crear(rmtc){
     const newrmtc = await models.RemitoCompra.create(rmtc);
@@ -71,21 +73,29 @@ class RemitosCompraService{
 }
 async Finalizar(data){
 
-  const nota = await this.create(data.nota);
+  const compra = await this.Crear(data.compra);
+  if(!compra){ throw boom.notFound('No se creo compra de pedido');}
 
-  if(!nota){ throw boom.notFound('No se creo nota de pedido');}
+  const items= data.items;
+  if(!items){ throw boom.notFound('No hay lista de productos');}
 
-    const array = [data.items];
-  /*
-  for(int i = 0; i<data.items.length(); i++){
-  const additem = await this.additem(data.items[i]);
-  if(!additem){ throw boom.conflict('producto no insetado');}
-  const rta = awiat this.RestarProducto();
- if(rta===false){ throw boom.conflict('producto no insertado);}
-  }
-*/
+  const recorreArray =  arr => arr.forEach(item => {
+    const producto = {
+      ...item,
+      compraId: compra.id
+    }
+    const rta =  this.additem(producto);
+     if(!rta){ throw boom.notFound('producto no agregado');}
 
-return {rta: true};
+     const rta2 = this.SumarProducto(producto.productoId, {cnt: producto.cnt});
+
+     });
+
+
+   await recorreArray(items);
+// cambia el estado a true para la nota de pedido recibida en produccion
+   await this.servicioPedido.Actualizar(compra.notaid, {estado: true});
+  return {rta: true};
 }
 
 

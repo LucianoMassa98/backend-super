@@ -60,21 +60,25 @@ async SumarProducto(id, data){
 }
 async Finalizar(data){
 
-  const nota = await this.create(data.nota);
 
-  if(!nota){ throw boom.notFound('No se creo nota de pedido');}
+  const produccion = await this.Crear(data.produccion);
+  if(!produccion){ throw boom.notFound('No se creo produccion de pedido');}
 
-    const array = [data.items];
-  /*
-  for(int i = 0; i<data.items.length(); i++){
-  const additem = await this.additem(data.items[i]);
-  if(!additem){ throw boom.conflict('producto no insetado');}
-  const rta = awiat this.RestarProducto();
- if(rta===false){ throw boom.conflict('producto no insertado);}
-  }
-*/
+  const items= data.items;
+  if(!items){ throw boom.notFound('No hay lista de productos');}
 
-return {rta: true};
+  const recorreArray =  arr => arr.forEach(item => {
+    const producto = {
+      ...item,
+      produccionId: produccion.id
+    }
+    const rta =  this.additem(producto);
+     if(!rta){ throw boom.notFound('producto no agregado');}
+     const rta2 = this.RestarProducto(producto.productoId, {cnt: producto.cnt});
+
+     });
+   await recorreArray(items);
+  return {rta: true};
 }
 
 }

@@ -22,8 +22,7 @@ const filtrarFechaRecepcion =joi.object({
 });
 
 const createNotaPedido = joi.object({
-  customerId: customerId.required(),
-  recepcion: recepcion.required()
+  customerId: customerId.required()
 
 });
 const addItemSchema = joi.object({
@@ -35,8 +34,7 @@ const addItemSchema = joi.object({
 });
 
 const updateNotaPedido = joi.object({
-  customerId,
-  recepcion
+  customerId
 
 });
 

@@ -56,7 +56,6 @@ async (req,res,next)=>{
 
 });
 router.post('/Finalizar',
-  validatorHandler(addItemSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
