@@ -13,6 +13,13 @@ const GalponSchema = {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
+  },
+  enProduccion:{
+    allowNull: false,
+    defaultValue: 0,
+    type: DataTypes.INTEGER
+
+
   }
 }
 
