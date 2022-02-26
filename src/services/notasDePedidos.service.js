@@ -58,6 +58,8 @@ class NotaPedidoService{
     if(!ntp){ throw boom.notFound('No hay pedidos');}
     return ntp;
   }
+
+  // falta buscar por fecha
   async BuscarporFecha(fecha){
     const ntp = await models.Notapedido.findAll({
       where: {
@@ -68,6 +70,8 @@ class NotaPedidoService{
     return ntp;
 
   }
+
+
   async RestarProducto(id, data){
     const rta = await this.servicio.Restar(id, data);
     return rta;
@@ -96,6 +100,7 @@ async Finalizar(data){
    await recorreArray(items);
   return {rta: true};
 }
+
 
 }
 
