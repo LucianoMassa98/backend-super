@@ -9,7 +9,7 @@ const servicio = new ProductoServicio();
 
 // ------------------- EndPoint Get ------------------------
 //cliente solicita lista de productos
-router.get('/Lista',async (req,res,next)=>{
+router.get('/',async (req,res,next)=>{
 
  // const productos = await servicio.BuscarporTipo('PRD');
  try{
@@ -20,7 +20,7 @@ router.get('/Lista',async (req,res,next)=>{
 
  });
 // cliente busca producto por id
-router.get('/BuscarPorID/:id',
+router.get('/:id',
 validatorHandler(getProductoSchema, 'params'),
   async(req, res,next)=>{
   try{
@@ -37,7 +37,7 @@ validatorHandler(getProductoSchema, 'params'),
 
   // --------------------- Endopoint post ----------------------
 //cliente agrega un producto nuevo a la lista "productos"
-router.post('/Crear',
+router.post('/',
 validatorHandler(createProductoSchema,'body'),
   async(req,res,next)=>{
   try{
@@ -54,7 +54,7 @@ validatorHandler(createProductoSchema,'body'),
 
 // --------------------- Endopoints Patch ----------------------
 //cliente actualizacion parcial
-router.patch('/Modificar/:id',
+router.patch('/:id',
 validatorHandler(updateProductoSchema,'body'),
   async(req,res,next)=>{
   try{

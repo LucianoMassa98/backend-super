@@ -1,3 +1,4 @@
+const { database } = require('pg/lib/defaults');
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const {CUSTOMER_TABLE}=require('./customer.model');
 const REMITOCOMPRA_TABLE = 'RemitosDeCompras';
@@ -33,6 +34,11 @@ const RemitoCompraSchema = {
   notaid:{
     allowNull: false,
     type: DataTypes.INTEGER
+  },
+  modificacion:{
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 
 

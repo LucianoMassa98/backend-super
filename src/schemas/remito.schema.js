@@ -8,11 +8,12 @@ const cnt = joi.number();
 const precio = joi.number();
 const compraId = joi.number();
 const productoId = joi.number();
-
+const modificacion = joi.boolean();
 const createRemito = joi.object({
   customerId: customerId.required(),
   numero: joi.number(),
-  notaid: notadpId.required()
+  notaid: notadpId.required(),
+  modificacion: modificacion.required()
 });
 const addItemSchema = joi.object({
   cnt: cnt.required(),

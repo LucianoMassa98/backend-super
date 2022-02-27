@@ -59,17 +59,25 @@ class NotaPedidoService{
     return ntp;
   }
 
-  // falta buscar por fecha
-  async BuscarporFecha(fecha){
-    const ntp = await models.Notapedido.findAll({
+ // falta buscar por fecha
+  async BuscarporFecha(data){
+    const ntp = await models.Notapedido.findAll(
+    {
       where: {
-        created_at: fecha
+        created_at: data.fecha
       }
-    });
+    }
+    ,
+    {
+      include: [
+        {association:'customer'}
+      ]
+    }
+    );
     if(!ntp){ throw boom.notFound('No hay pedidos');}
     return ntp;
 
-  }
+  } /
 
 
   async RestarProducto(id, data){
