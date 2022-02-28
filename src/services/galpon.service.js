@@ -11,11 +11,11 @@ class GalponService {
   }
 
   async findOne(id) {
-    const user = await models.Galpon.findByPk(id);
-    if (!user) {
+    const galpon = await models.Galpon.findByPk(id);
+    if (!galpon) {
       throw boom.notFound('customer not found');
     }
-    return user;
+    return galpon;
   }
 
   async create(data) {
@@ -34,6 +34,23 @@ class GalponService {
     const model = await this.findOne(id);
     await model.destroy();
     return { rta: true };
+  }
+
+  async Sumar(id, data){
+
+    const galpon = await this.findOne(id);
+
+    const changes={enProduccion: galpon.enProduccion + data.enProduccion};
+    const rta = await this.update(id,changes);
+    return rta;
+  }
+  async Restar(id, changes){
+
+    const galpon = await this.findOne(id);
+
+    const cnt = galpon.enProduccion - changes.enProduccion;
+    const rta = await this.update(id,{enProduccion: cnt});
+    return rta;
   }
 
 }

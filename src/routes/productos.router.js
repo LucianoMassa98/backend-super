@@ -105,7 +105,4 @@ async(req,res,next)=>{
 }
 });
 
-/*
-Exportando el Modulo
- */
 module.exports = router;

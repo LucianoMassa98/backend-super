@@ -15,11 +15,12 @@ router.get('/',async(req,res,next)=>{
 
 });
 // filtrar formularios: RMT por fecha
-router.get('/FiltrarPorFecha/:fecha',
-validatorHandler(filtrarFechaRemito,'params'),
+router.get('/BuscarporFecha',
+validatorHandler(filtrarFechaRemito,'body'),
 async (req,res,next)=>{
-  try{const {fecha} = req.params;
-  const remitoscompras = await servicio.BuscarporFecha(fecha);
+  try{
+    const body = req.body;
+  const remitoscompras = await servicio.BuscarporFecha(body);
   res.json(remitoscompras);
   //devolver lista de notas de pedidos filtradas por fecha
 }catch(error){next(error);}
@@ -45,7 +46,7 @@ async (req,res,next)=>{
   }catch(error){next(error);}
 
 });
-router.post('/agregar',
+router.post('/Agregar',
 validatorHandler(addItemSchema,'body'),
 async (req,res,next)=>{
   try{

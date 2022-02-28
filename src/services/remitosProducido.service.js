@@ -1,10 +1,14 @@
 const boom = require('@hapi/boom');
 const ProductoService = require('./producto.service');
+const GalponService = require('./galpon.service');
 const {models} = require('../libs/sequelize');
+const {Op} = require('sequelize');
 class RemitosProducidoService{
 
   constructor(){
     this.servicio = new ProductoService();
+    this.servicioGalpon = new GalponService();
+
   }
 
   // create
@@ -32,7 +36,7 @@ class RemitosProducidoService{
   }
   async BuscarporID(id){
     const remito = await models.RemitoProducido.findByPk(id,{
-      include: ['items']
+      include: [{association: 'galpon'},'items']
     });
 
     if(!remito){
@@ -42,8 +46,27 @@ class RemitosProducidoService{
     return remito;
 
   }
-  async BuscarporFecha(fecha){
-    return [];
+  async BuscarporFecha(data){
+
+    const ntp = await models.RemitoProducido.findAll(
+    {
+      where: {
+        created_at: {
+          [Op.gte]: data.fecha_min,
+          [Op.lte]: data.fecha_max
+        }
+      },
+      include: [
+        {association: 'galpon'}
+      ]
+
+    }
+
+
+    );
+    if(!ntp){ throw boom.notFound('No hay pedidos');}
+    return ntp;
+
   }
   async Buscar(){
 
@@ -66,7 +89,7 @@ async Finalizar(data){
 
   const items= data.items;
   if(!items){ throw boom.notFound('No hay lista de productos');}
-
+  const sum = 0;
   const recorreArray =  arr => arr.forEach(item => {
     const producto = {
       ...item,
@@ -75,9 +98,12 @@ async Finalizar(data){
     const rta =  this.additem(producto);
      if(!rta){ throw boom.notFound('producto no agregado');}
      const rta2 = this.SumarProducto(producto.productoId, {cnt: producto.cnt});
+     if(producto.nombre != "maiz"){sum = sum + producto.cnt;}
 
      });
    await recorreArray(items);
+   await this.servicioGalpon.Restar(producido.galponId,{enProduccion: sum});
+
   return {rta: true};
 }
 

@@ -8,6 +8,7 @@ const { createNotaPedido,
   updateNotaPedido,
   filtrarFechaRecepcion,
   addItemSchema} = require('../schemas/notapedido.schema');
+  const {filtrarFechaRemito} = require('../schemas/remito.schema');
 
 const servicio = new NotaPedidoService();
 
@@ -21,18 +22,19 @@ router.get('/',async(req,res,next)=>{
 });
 router.get('/Estado',async(req,res,next)=>{
   try{
-    const notasdepedidos = await servicio.BuscarporEstado(true);
+    const notasdepedidos = await servicio.BuscarporEstado(false);
   res.json(notasdepedidos);
   }catch(error){next(error);}
 
 });
 // filtrar formularios: NTP por fecha
-router.get('/FiltrarPorFecha/:fecha',
-validatorHandler(filtrarFechaRecepcion,'params'),
+router.get('/BuscarporFecha',
+validatorHandler(filtrarFechaRemito,'body'),
 async (req,res,next)=>{
-  try{const {fecha} = req.params;
-  const notasdepedidos = await servicio.BuscarporFecha(fecha);
-  res.json(notasdepedidos);
+  try{
+    const body = req.body;
+  const remitoscompras = await servicio.BuscarporFecha(body);
+  res.json(remitoscompras);
   //devolver lista de notas de pedidos filtradas por fecha
 }catch(error){next(error);}
   });
@@ -57,7 +59,7 @@ async (req,res,next)=>{
   }catch(error){next(error);}
 
 });
-router.post('/add-item',
+router.post('/Agregar',
   validatorHandler(addItemSchema, 'body'),
   async (req, res, next) => {
     try {

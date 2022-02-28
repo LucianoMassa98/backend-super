@@ -2,7 +2,7 @@ const boom = require('@hapi/boom');
 const ProductoService = require('./producto.service');
 const NotaPedidoService = require('./notasDePedidos.service');
 const {models} = require('../libs/sequelize');
-const sequelize = require('../libs/sequelize');
+const {Op} = require('sequelize');
 
 class RemitosCompraService{
 
@@ -58,22 +58,24 @@ class RemitosCompraService{
     return rmtc;
 
   }
-  // falta buscar por fecha
+
   async BuscarporFecha(data){
 
-    const x = new Date(data.fecha);
     const ntp = await models.RemitoCompra.findAll(
     {
       where: {
-        created_at: x
-      }
-    }
-    ,
-    {
+        created_at: {
+          [Op.gte]: data.fecha_min,
+          [Op.lte]: data.fecha_max
+        }
+      },
       include: [
-        {association:'customer'}
+        {association: 'customer'}
       ]
+
     }
+
+
     );
     if(!ntp){ throw boom.notFound('No hay pedidos');}
     return ntp;
@@ -90,8 +92,9 @@ class RemitosCompraService{
 }
 async Finalizar(data){
 
-  const nta = await this.servicioPedido.BuscarporID(data.notaid)
+  const nta = await this.servicioPedido.BuscarporID(data.compra.notaid)
   if(!nta){throw boom.notFound('Nota de pedido no existente');}
+  if(nta.estado===true){throw boom.notFound('Nota de pedido ya recibida');}
   const compra = await this.Crear(data.compra);
   if(!compra){ throw boom.notFound('No se creo compra de pedido');}
 

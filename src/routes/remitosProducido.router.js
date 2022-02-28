@@ -3,6 +3,7 @@ const router = express.Router();
 const RemitosProducidoService =require('../services/remitosProducido.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const {createRemitoProduccion,getRemitoProduccion,addItemSchema,addItemProducidoSchema} = require('../schemas/remitoproduccion.schema');
+const {filtrarFechaRemito} = require('../schemas/remito.schema');
 
 const servicio = new RemitosProducidoService();
 
@@ -15,12 +16,13 @@ router.get('/',async(req,res,next)=>{
 
 });
 // filtrar formularios: RMT por fecha
-router.get('/FiltrarPorFecha/:fecha',
-validatorHandler(getRemitoProduccion,'params'),
+router.get('/BuscarporFecha',
+validatorHandler(filtrarFechaRemito,'body'),
 async (req,res,next)=>{
-  try{const {fecha} = req.params;
-  const remitosproducido = await servicio.BuscarporFecha(fecha);
-  res.json(remitosproducido);
+  try{
+    const body = req.body;
+  const remitoscompras = await servicio.BuscarporFecha(body);
+  res.json(remitoscompras);
   //devolver lista de notas de pedidos filtradas por fecha
 }catch(error){next(error);}
   });

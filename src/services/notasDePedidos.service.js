@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom');
 const ProductoService = require('./producto.service');
-
+const {Op} = require('sequelize');
 
 const {models} = require('../libs/sequelize');
 class NotaPedidoService{
@@ -53,31 +53,35 @@ class NotaPedidoService{
     const ntp = await models.Notapedido.findAll({
       where: {
         estado: estado
-      }
+      },
+      include: [{association:'customer'}]
     });
     if(!ntp){ throw boom.notFound('No hay pedidos');}
     return ntp;
   }
 
- // falta buscar por fecha
   async BuscarporFecha(data){
+
     const ntp = await models.Notapedido.findAll(
     {
       where: {
-        created_at: data.fecha
-      }
-    }
-    ,
-    {
+        created_at: {
+          [Op.gte]: data.fecha_min,
+          [Op.lte]: data.fecha_max
+        }
+      },
       include: [
-        {association:'customer'}
+        {association: 'customer'}
       ]
+
     }
+
+
     );
     if(!ntp){ throw boom.notFound('No hay pedidos');}
     return ntp;
 
-  } /
+  }
 
 
   async RestarProducto(id, data){
