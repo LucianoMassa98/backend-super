@@ -58,6 +58,16 @@ class RemitosCompraService{
     return rmtc;
 
   }
+  async BuscarporEstado(modificacion){
+    const ntp = await models.Notapedido.findAll({
+      where: {
+        modificacion: modificacion
+      },
+      include: [{association:'customer'}]
+    });
+    if(!ntp){ throw boom.notFound('No hay pedidos');}
+    return ntp;
+  }
 
   async BuscarporFecha(data){
 

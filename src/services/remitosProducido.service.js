@@ -89,7 +89,7 @@ async Finalizar(data){
 
   const items= data.items;
   if(!items){ throw boom.notFound('No hay lista de productos');}
-  const sum = 0;
+  let sum = 0;
   const recorreArray =  arr => arr.forEach(item => {
     const producto = {
       ...item,
