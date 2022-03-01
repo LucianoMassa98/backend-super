@@ -94,7 +94,7 @@ async SumarProducto(id, data){
 }
 async Finalizar(data){
 
-
+  console.log(data);
   const nota = await this.Crear(data.nota);
   if(!nota){ throw boom.notFound('No se creo nota de pedido');}
 

@@ -100,7 +100,7 @@ let sum = 0;
      if(!rta){ throw boom.notFound('producto no agregado');}
      const rta2 = this.RestarProducto(producto.productoId, {cnt: producto.cnt});
 
-      sum = sum + producto.
+      sum = sum + producto.cnt;
       console.log(sum);
      });
    await recorreArray(items);
