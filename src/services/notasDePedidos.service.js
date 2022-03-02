@@ -27,7 +27,11 @@ class NotaPedidoService{
     return { rta: true };
   }
   async Buscar(){
-    const ntps = await models.Notapedido.findAll();
+    const ntps = await models.Notapedido.findAll({
+      include: [
+        {association: 'customer'}
+      ]
+    });
     return ntps;
    }
   async BuscarporID(id){
