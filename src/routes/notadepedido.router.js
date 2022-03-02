@@ -29,11 +29,11 @@ router.get('/Estado',async(req,res,next)=>{
 });
 // filtrar formularios: NTP por fecha
 router.get('/BuscarporFecha',
-validatorHandler(filtrarFechaRemito,'body'),
+//validatorHandler(filtrarFechaRemito,'body'),
 async (req,res,next)=>{
   try{
-    const body = req.body;
-  const remitoscompras = await servicio.BuscarporFecha(body);
+
+  const remitoscompras = await servicio.BuscarporFecha(req.query);
   res.json(remitoscompras);
   //devolver lista de notas de pedidos filtradas por fecha
 }catch(error){next(error);}

@@ -45,14 +45,16 @@ class RemitosEnvioService{
 
   }
 
-  async BuscarporFecha(data){
+  async BuscarporFecha(query){
 
+    const {fechamin ,fechamax} = query;
+    console.log(fechamin);
     const ntp = await models.RemitoEnvio.findAll(
     {
       where: {
         created_at: {
-          [Op.gte]: data.fecha_min,
-          [Op.lte]: data.fecha_max
+          [Op.gte]: fechamin,
+          [Op.lte]: fechamax
         }
       },
       include: [

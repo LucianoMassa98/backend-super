@@ -59,7 +59,7 @@ class RemitosCompraService{
 
   }
   async BuscarporEstado(modificacion){
-    const ntp = await models.Notapedido.findAll({
+    const ntp = await models.RemitoCompra.findAll({
       where: {
         modificacion: modificacion
       },
@@ -69,14 +69,16 @@ class RemitosCompraService{
     return ntp;
   }
 
-  async BuscarporFecha(data){
+  async BuscarporFecha(query){
 
+    const {fechamin ,fechamax} = query;
+    console.log(fechamin);
     const ntp = await models.RemitoCompra.findAll(
     {
       where: {
         created_at: {
-          [Op.gte]: data.fecha_min,
-          [Op.lte]: data.fecha_max
+          [Op.gte]: fechamin,
+          [Op.lte]: fechamax
         }
       },
       include: [

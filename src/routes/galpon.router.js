@@ -34,7 +34,18 @@ router.post('/',
     }
   }
 );
-
+router.patch('/:id',
+//validatorHandler(updateProductoSchema,'body'),
+  async(req,res,next)=>{
+  try{
+  const {id} = req.params;
+  const body =  req.body;
+  const producto = await service.update(id,body);
+  res.json(producto);
+  }catch(error){
+    next(error);
+  }
+});
 router.delete('/:id',
   validationHandler(getGalponSchema, 'params'),
   async (req, res, next) => {
