@@ -3,23 +3,23 @@ const { Sequelize } = require('sequelize');
 const { config } = require('./../config/config');
 const setupModels = require('./../db/models');
 
-const USER = encodeURIComponent(config.dbUser);
-const PASSWORD = encodeURIComponent(config.dbPassword);
-const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
-
-const sequelize = new Sequelize(URI, {
+const options = {
   dialect: 'postgres',
-  logging: true,
-});
+  logging: config.isProd ? false : true,
+}
 
-// carga los modelos de la base de datos
+if (config.isProd) {
+  options.dialectOptions = {
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+}
+
+const sequelize = new Sequelize(config.dbUrl,options);
+
+
 setupModels(sequelize);
-/*
-sequelize.sync();
-empieza a leer los modelos, crea tablas y hace relist
- (se sobrescribe información),
-  no se aconseja que se corra en producción.
-  Es mejor sincronizar con un sistema de migraciones. */
 
 
 module.exports = sequelize;

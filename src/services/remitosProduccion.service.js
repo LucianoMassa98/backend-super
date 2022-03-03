@@ -59,7 +59,7 @@ class RemitosProduccionService{
         }
       },
       include: [
-        {association: 'customer'}
+        {association: 'galpon'}
       ]
 
     }
@@ -102,7 +102,8 @@ let sum = 0;
      if(!rta){ throw boom.notFound('producto no agregado');}
      const rta2 = this.RestarProducto(producto.productoId, {cnt: producto.cnt});
 
-      sum = sum + producto.cnt;
+     if(producto.productoId  === 3){}else{sum = sum + producto.cnt;}
+
       console.log(sum);
      });
    await recorreArray(items);
