@@ -1,8 +1,9 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
-const {CUSTOMER_TABLE} = require('../models/customer.model');
-const USER_TABLE = 'users';
+const {Model,DataTypes, Sequelize} = require('sequelize');
 
-const UserSchema = {
+const {CUSTOMER_TABLE}=require('../models/customer.model');
+
+const CLIENTE_TABLE = 'clientes';
+const ClienteSchema  = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -22,15 +23,6 @@ const UserSchema = {
     onDelete: 'SET NULL'
 
   },
-  userName: {
-    allowNull: false,
-    type: DataTypes.STRING,
-    unique: true,
-  },
-  password: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -39,21 +31,28 @@ const UserSchema = {
   }
 }
 
-class User extends Model {
-  static associate(models) {
+class Cliente extends Model{
+  // crear metodos estaticos
+  static associate(models){
+
+    this.hasMany(models.NotaPedido, {as: 'ventas', foreignKey: 'clienteId'});
 
     this.belongsTo(models.Customer, {as: 'customer'});
-  }
 
-  static config(sequelize) {
+
+  }
+  // definir otrto estatico para la conexin
+  static config(sequelize){
     return {
       sequelize,
-      tableName: USER_TABLE,
-      modelName: 'User',
+      tableName:  CLIENTE_TABLE,
+      modelName: 'Cliente',
       timestamps: false
     }
   }
 }
-
-
-module.exports = { USER_TABLE, UserSchema, User }
+module.exports = {
+  CLIENTE_TABLE,
+  ClienteSchema,
+  Cliente
+}

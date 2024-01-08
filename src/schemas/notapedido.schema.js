@@ -1,42 +1,31 @@
 const joi = require('joi');
 
 const id = joi.number().integer();
-const customerId = joi.number().integer();
-const recepcion = joi.date();
-const cnt= joi.number().integer();
-const precio = joi.number();
-const notaId = joi.number().integer();
-const productId = joi.number().integer();
-const pagos = joi.object([{
-  id: id.required(),
-  monto: joi.number()
-}]);
-const lp=joi.object([{
-  id: id.required(),
-  cnt: joi.number(),
-  precio: joi.number()
-}]);
+const userId = joi.number().integer();
+const cajaId = joi.number().integer();
 
-const filtrarFechaRecepcion =joi.object({
-  recepcion: recepcion.required()
-});
+
 
 const createNotaPedido = joi.object({
-  customerId: customerId.required()
-
+  userId: userId.required(),
+  cajaId: cajaId.required(),
+  clienteId: id.required()
 });
+
 const addItemSchema = joi.object({
-  cnt: cnt.required(),
-  precio: precio.required(),
-  notaId: notaId.required(),
-  productoId: productId.required(),
+
+  notaId: id.required(),
+  productoId: id.required(),
+  cnt: joi.number().integer().required(),
+  precio:joi.number().positive().required()
 
 });
-
-const updateNotaPedido = joi.object({
-  customerId
-
+const subItemSchema = joi.object({
+  notaId: id.required(),
+  productoId: id.required()
 });
+
+
 
 const getNotaDePedido = joi.object({
   id: id.required()
@@ -44,7 +33,6 @@ const getNotaDePedido = joi.object({
 
 module.exports ={createNotaPedido,
   getNotaDePedido,
-  updateNotaPedido,
-  filtrarFechaRecepcion,
+  subItemSchema,
   addItemSchema
 };

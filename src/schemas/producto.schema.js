@@ -1,31 +1,40 @@
 const joi = require('joi');
 
 
-const id  = joi.number().integer();
-const nombre = joi.string().min(3);
-const precio =  joi.number().positive();
-const cnt =  joi.number().integer();
-const categoryId = joi.number().integer();
+const ids  = joi.number().integer();
+const textos = joi.string().min(3);
+const montos =  joi.number().positive();
+const enteros =  joi.number().integer();
 
 
 const createProductoSchema = joi.object({
 
-  nombre: nombre.required(),
-  cnt: cnt.required(),
-  precio: precio.required(),
-  categoryId:categoryId.required()
+  codigo: enteros.required(),
+  codBarra: enteros.required(),
+  nombre: textos.required(),
+  descripcion:textos.required(),
+  costo: montos.required(),
+  margen: montos.required(),
+  marca: textos.required(),
+  rubro: textos.required()
 
 });
 
+
+
 const updateProductoSchema = joi.object({
-  nombre,
-  cnt,
-  precio,
-  categoryId
+  codigo: enteros,
+  codBarra: enteros,
+  nombre: textos,
+  descripcion:textos,
+  costo: montos,
+  margen: montos,
+  marca: textos,
+  rubro: textos
 });
 
 const getProductoSchema = joi.object({
-  id: id.required()
+  id: ids.required()
 });
 
 

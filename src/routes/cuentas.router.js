@@ -1,15 +1,15 @@
 const express = require('express');
 
-const CustomerService = require('../services/customers.service');
+const CuentaService = require('../services/cuentas.service');
 const validationHandler = require('../middlewares/validator.handler');
 const {
-  createCustomerSchema,
-  getCustomerSchema,
-  updateCustomerSchema,
-} = require('../schemas/customer.schema');
+  createCuentaSchema,
+  getCuentaSchema,
+  updateCuentaSchema,
+} = require('../schemas/cuenta.schema');
 
 const router = express.Router();
-const service = new CustomerService();
+const service = new CuentaService();
 
 router.get('/',  async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ router.get('/',  async (req, res, next) => {
 });
 
 router.post('/',
-  validationHandler(createCustomerSchema, 'body'),
+  validationHandler(createCuentaSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
@@ -32,8 +32,8 @@ router.post('/',
 );
 
 router.put('/:id',
-  validationHandler(getCustomerSchema, 'params'),
-  validationHandler(updateCustomerSchema, 'body'),
+  validationHandler(getCuentaSchema, 'params'),
+  validationHandler(updateCuentaSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -46,7 +46,7 @@ router.put('/:id',
 );
 
 router.delete('/:id',
-  validationHandler(getCustomerSchema, 'params'),
+  validationHandler(getCuentaSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;

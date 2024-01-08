@@ -5,42 +5,69 @@ const {Op} = require('sequelize');
 const {models} = require('../libs/sequelize');
 class NotaPedidoService{
 
-  constructor(){
-    this.servicio = new ProductoService();
+
+   async create(ntp){
+    const rta = await models.NotaPedido.create(ntp);
+    if(!rta){throw boom.notFound("Nota de Pedido not found");}
+
+    return rta;
   }
-   async Crear(ntp){
-    const newntp = await models.Notapedido.create(ntp);
-    return newntp;
+  async addItem(data){
+    const rta = await models.NotaProducto.create(data);
+    if(!rta){throw boom.notFound("Nota de Pedido not found");}
+
+    return rta;
   }
-  async additem(data){
-    const newitem = await models.NotaProducto.create(data);
-    return newitem;
+
+  async subItem(data){
+    const notaProducto = await  models.NotaProducto.findOne({
+      where:{
+        notaId: data.notaId,
+        productoId: data.productoId
+      }
+    });
+
+    if(!notaProducto){throw boom.notFound("Producto no encontrado");}
+
+   const rta= await notaProducto.destroy();
+    if(!rta){throw boom.notFound("Nota de Pedido not found");}
+
+    return notaProducto;
   }
-  async Actualizar(id,changes){
-     const model = await this.BuscarporID(id);
+  async update(id,changes){
+     const model = await this.findOne(id);
     const rta = await model.update(changes);
+    if(!rta){throw boom.notFound("Nota de Pedido no actualizada");}
+
     return rta;
     }
-  async Borrar(id){
-    const ntp = await this.BuscarporID(id);
-    await ntp.destroy();
-    return { rta: true };
+  async delete(id){
+    const ntp = await this.findOne(id);
+const rta=    await ntp.destroy();
+    if(!rta){throw boom.notFound("Nota de Pedido no eliminada");}
+
+    return ntp
   }
-  async Buscar(){
-    const ntps = await models.Notapedido.findAll({
+  async find(){
+
+    const rta = await models.NotaPedido.findAll({
       include: [
-        {association: 'customer'}
+        { association: 'user',
+        include: ['customer']},
+
       ]
     });
-    return ntps;
+    if(!rta){throw boom.notFound("Nota de Pedido not found");}
+
+    return rta;
    }
-  async BuscarporID(id){
-    const ntp = await models.Notapedido.findByPk(id,
+  async findOne(id){
+    const ntp = await models.NotaPedido.findByPk(id,
       {
         include: [
           {
-            association: 'customer',
-            include: ['user']
+            association: 'user',
+            include: ['customer']
           },
           'items'
         ]
@@ -54,7 +81,7 @@ class NotaPedidoService{
 
   }
   async BuscarporEstado(estado){
-    const ntp = await models.Notapedido.findAll({
+    const ntp = await models.NotaPedido.findAll({
       where: {
         estado: estado
       },
@@ -68,7 +95,7 @@ class NotaPedidoService{
 
     const {fechamin ,fechamax} = query;
     console.log(fechamin);
-    const ntp = await models.Notapedido.findAll(
+    const ntp = await models.NotaPedido.findAll(
     {
       where: {
         created_at: {
@@ -98,26 +125,7 @@ async SumarProducto(id, data){
   const rta = await this.servicio.Sumar(id, data);
   return rta;
 }
-async Finalizar(data){
 
-  console.log(data);
-  const nota = await this.Crear(data.nota);
-  if(!nota){ throw boom.notFound('No se creo nota de pedido');}
-
-  const items= data.items;
-  if(!items){ throw boom.notFound('No hay lista de productos');}
-
-  const recorreArray =  arr => arr.forEach(item => {
-    const producto = {
-      ...item,
-      notaId: nota.id
-    }
-    const rta =  this.additem(producto);
-     if(!rta){ throw boom.notFound('producto no agregado');}
-     });
-   await recorreArray(items);
-  return {rta: true};
-}
 
 
 }

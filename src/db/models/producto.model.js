@@ -1,7 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const   PRODUCTO_TABLE = 'productos';
- const {CATEGORY_TABLE}=require('./category.model');
+const   PRODUCTO_TABLE = 'Productos';
+
 const ProductoSchema = {
   id: {
     allowNull: false,
@@ -9,47 +9,64 @@ const ProductoSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
+  codigo: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    unique: true
+  },
+  codBarra: {
+    allowNull: false,
+    type: DataTypes.DOUBLE,
+    unique: true,
+  },
   nombre: {
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true,
+
   },
-  cnt: {
+  descripcion: {
+    allowNull: false,
+    type: DataTypes.STRING,
+
+  },
+  costo:{
+    allowNull: false,
+    type: DataTypes.DOUBLE
+  },
+  margen:{
     allowNull: false,
     type: DataTypes.INTEGER
   },
-  precio:{
+  rubro: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING
   },
-  categoryId: {
-    field: 'category_id',
+  nombre: {
     allowNull: false,
-    type: DataTypes.INTEGER,
-    references: {
-      model: CATEGORY_TABLE,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
-  }
+    type: DataTypes.STRING
+  },
+
 
 }
 
 class Producto extends Model {
   static associate(models) {
-    this.belongsTo(models.Category, { as: 'category' });
+
   }
+
 
   static config(sequelize) {
     return {
       sequelize,
       tableName: PRODUCTO_TABLE,
-      modelName: 'producto',
+      modelName: 'Producto',
       timestamps: false
     }
   }
 }
 
 
-module.exports = { PRODUCTO_TABLE, ProductoSchema, Producto };
+module.exports = {
+  PRODUCTO_TABLE,
+  ProductoSchema,
+  Producto };

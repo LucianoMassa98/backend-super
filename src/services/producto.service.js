@@ -1,70 +1,54 @@
 
 const boom = require('@hapi/boom');
 //const pool = require('../libs/postgres.pool');
-const {models} =require('../libs/sequelize');
+const { models }= require('../libs/sequelize');
 
 class ProductoServicio{
 
-  constructor(){
+ async create(data){
 
-  }
+  const rta = await models.Producto.create(data);
+   if(!rta){throw boom.notFound("Producto not found");}
 
-  //create
- async Crear(producto){
-   const newproduct = await models.producto.create(producto);
-    return newproduct;
+    return rta;
   }
   //findOne
-  async BuscarporID(id){
+  async findOne(id){
 
-    const producto =  await models.producto.findByPk(id);
+    const producto =  await models.Producto.findByPk(id);
     if(!producto){
       throw boom.notFound('producto no existente');
     }
       return producto;
 
   }
-  //find
-  async Buscar(){
-    /*
-    conectarse con un pool
-    const query = 'SELECT * FROM tasks';
-    const rta = await this.pool.query(query);
-    return rta.rows;*/
 
-    // consulta utilizando orm sequelize
-    const rta = await models.producto.findAll({
-      include: ['category']
-    });
+  async find(){
+
+
+    const rta = await models.Producto.findAll();
+    if(!rta){throw boom.notFound("Productos not found");}
+
     return rta;
   }
-  //update
-  async Actualizar(id,changes){
 
-    const producto =  await this.BuscarporID(id);
+  async update(id,changes){
+
+    const producto =  await this.findOne(id);
     const rta = await producto.update(changes);
+    if(!rta){throw boom.notFound("Producto no actualizado");}
+
       return rta;
   }
-  //delete
-  async Borrar(id){
-    const producto = await this.BuscarporID(id);
-    await producto.destroy();
-    return id;
-  }
- // sumar a la cantidad de los productos
-   async Sumar(id,data){
-    const producto = await this.BuscarporID(id);
-    const changes={cnt:producto.cnt + data.cnt };
-    await this.Actualizar(id,changes);
-    return {rta: true};
 
+  async delete(id){
+    const producto = await this.findOne(id);
+    const rta= await producto.destroy();
+    if(!rta){throw boom.notFound("Producto no eliminado");}
+
+    return producto;
   }
-  async Restar(id, data){
-    const producto = await this.BuscarporID(id);
-    const changes={cnt:producto.cnt - data.cnt };
-    await this.Actualizar(id,changes);
-    return {rta: true};
-  }
+
 
 
 }

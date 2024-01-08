@@ -6,9 +6,9 @@ class CustomerService {
   constructor() {}
 
   async find() {
-    const rta = await models.Customer.findAll({
-      include: ['user']
-    });
+    const rta = await models.Customer.findAll();
+    if(!rta){throw boom.notFound("Customer not found");}
+
     return rta;
   }
 
@@ -21,24 +21,26 @@ class CustomerService {
   }
 
   async create(data) {
-    const newuser = await models.User.create(data.user);
-    const newCustomer = await models.Customer.create({
-      ...data,
-      userId: newuser.id
-    });
-    return newCustomer;
+    const rta = await models.Customer.create(data);
+    if(!rta){throw boom.notFound("Customer not found");}
+
+    return rta;
   }
 
   async update(id, changes) {
     const model = await this.findOne(id);
     const rta = await model.update(changes);
+    if(!rta){throw boom.notFound("Customer no actualizado");}
+
     return rta;
   }
 
   async delete(id) {
     const model = await this.findOne(id);
-    await model.destroy();
-    return { rta: true };
+   const rta= await model.destroy();
+    if(!rta){throw boom.notFound("Customer no eliminado");}
+
+    return model;
   }
 
 }

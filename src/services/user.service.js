@@ -4,24 +4,23 @@ const boom = require('@hapi/boom');
 const {models} =require('../libs/sequelize');
 
 class UserService {
-  constructor() {}
+
 
   async create(data) {
-    const newuser =await models.User.create(data);
+    const rta =await models.User.create(data);
+    if(!rta){throw boom.notFound("User not found");}
 
-    return newuser;
+    return rta;
 
   }
 
   async find() {
 
-    /*const client = await getconexion();
-    const rta = await client.query('SELECT * FROM tasks');
-    return rta.rows;*/
-
     const rta = await models.User.findAll({
       include: 'customer'
     });
+    if(!rta){throw boom.notFound("User not found");}
+
     return rta;
   }
 
@@ -37,13 +36,28 @@ class UserService {
 
     const user = await this.findOne(id);
     const rta = await user.update(changes);
+    if(!rta){throw boom.notFound("User no actualizado");}
+
     return rta;
   }
 
   async delete(id) {
     const user = await this.findOne(id);
-    await user.destroy();
-    return {id};
+    const rta=await user.destroy();
+    if(!rta){throw boom.notFound("User no eliminado");}
+
+    return user;
+  }
+
+  async login(data){
+    const user = await models.User.findOne({where: {
+      userName: data.userName,
+      password: data.password
+    }});
+
+    if(!user){ throw boom.notFound("usuario y/o contraseña incorrectos");}
+
+    return user;
   }
 }
 

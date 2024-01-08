@@ -1,6 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-//relacion 1:1 donde customer carga con la relacion
-const { USER_TABLE } = require('./user.model')
+
 
 const CUSTOMER_TABLE = 'customers';
 
@@ -11,45 +10,38 @@ const CustomerSchema =  {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  name: {
+  nombre: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  lastName: {
+  apellido: {
     allowNull: false,
     type: DataTypes.STRING,
-    field: 'last_name',
   },
-  phone: {
-    allowNull: true,
+  celular: {
+    allowNull: false,
     type: DataTypes.STRING,
   },
-  createdAt: {
+  direccion: {
     allowNull: false,
-    type: DataTypes.DATE,
-    field: 'created_at',
-    defaultValue: Sequelize.NOW,
+    type: DataTypes.STRING,
   },
-  userId: {
-    field: 'user_id',
+  email:  {
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     unique: true,
-    references: {
-      model: USER_TABLE,
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+  },
+  imagen: {
+    type: DataTypes.STRING,
+    allowNull: true,
   }
+
 }
 
 class Customer extends Model {
 
   static associate(models) {
-    this.belongsTo(models.User, {as: 'user'});
-    this.hasMany(models.Notapedido,{as: 'notapedidos', foreignKey: 'customerId'});
-    this.hasMany(models.RemitoCompra,{as: 'RemitosCompra', foreignKey: 'customerId'});
+
   }
 
   static config(sequelize) {

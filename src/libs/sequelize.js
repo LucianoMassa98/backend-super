@@ -1,9 +1,8 @@
-console.log('Moosto');
-const { Sequelize } = require('sequelize');
 
-const { config } = require('./../config/config');
-const setupModels = require('./../db/models');
-console.log('....... aqui 1');
+const { Sequelize } = require('sequelize');
+const { config } = require('../config/config');
+const setupModels = require('../db/models');
+
 const options = {
   dialect: 'postgres',
   logging: config.isProd ? false : true,
@@ -12,15 +11,17 @@ const options = {
 if (config.isProd) {
   options.dialectOptions = {
     ssl: {
+      require: true,
       rejectUnauthorized: false
     }
   }
 }
-console.log(config.dbUrl.toString());
-const sequelize = new Sequelize(config.dbUrl,options);
-console.log('....... aqui 2');
 
-setupModels(sequelize);
-console.log('....... aqui 3');
+console.log('Modo Produccion: '+config.isProd);
+const dat = new Sequelize(config.dbUrl,options);
 
-module.exports = sequelize;
+
+setupModels(dat);
+
+
+module.exports = dat;

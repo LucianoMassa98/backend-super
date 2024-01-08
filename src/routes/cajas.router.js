@@ -1,25 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const ProductoServicio = require('../services/producto.service');
+const CajaServicio = require('../services/caja.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createProductoSchema, updateProductoSchema, getProductoSchema} = require('../schemas/producto.schema');
+const { createCajaSchema, updateCajaSchema, getCajaSchema} = require('../schemas/caja.schema');
 
-const servicio = new ProductoServicio();
+const servicio = new CajaServicio();
 
 
 
 router.get('/',async (req,res,next)=>{
 
  try{
-  const productos = await servicio.find();
-  res.json(productos);
+  const Cajas = await servicio.find();
+  res.json(Cajas);
  }catch(error){next(error);}
 
 
  });
-// cliente busca producto por id
+
+
 router.get('/:id',
-validatorHandler(getProductoSchema, 'params'),
+validatorHandler(getCajaSchema, 'params'),
   async(req, res,next)=>{
   try{
 
@@ -35,11 +36,12 @@ validatorHandler(getProductoSchema, 'params'),
 
 
 router.post('/',
-validatorHandler(createProductoSchema,'body'),
+validatorHandler(createCajaSchema,'body'),
   async(req,res,next)=>{
   try{
     const body = req.body;
     const newproduct = await servicio.create(body);
+
     res.json(newproduct);
 
   }catch(error){ next(error);}
@@ -48,9 +50,8 @@ validatorHandler(createProductoSchema,'body'),
 
 
 
-
-router.put('/:id',
-validatorHandler(updateProductoSchema,'body'),
+router.patch('/:id',
+validatorHandler(updateCajaSchema,'body'),
   async(req,res,next)=>{
   try{
   const {id} = req.params;
@@ -62,8 +63,10 @@ validatorHandler(updateProductoSchema,'body'),
   }
 });
 
+
+
 router.delete('/:id',
-  validatorHandler(getProductoSchema,'params'),
+  validatorHandler(getCajaSchema,'params'),
 async(req,res,next)=>{
   try{
   const {id} = req.params;
