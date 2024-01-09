@@ -6,7 +6,7 @@ const apellido = Joi.string();
 const celular =  Joi.string();
 const direccion = Joi.string();
 const email = Joi.string().email();
-const imagen = Joi.string().uri();
+const imagen = Joi.string();
 
 
 const getCustomerSchema = Joi.object({
