@@ -41,7 +41,7 @@ const ProductoSchema = {
     allowNull: false,
     type: DataTypes.STRING
   },
-  nombre: {
+  marca: {
     allowNull: false,
     type: DataTypes.STRING
   },
