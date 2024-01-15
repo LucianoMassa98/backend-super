@@ -1,30 +1,23 @@
 const boom = require('@hapi/boom');
 
 const { models }= require('../libs/sequelize');
-
+const NotaPedidoService = require('./notasDePedidos.service');
+const { NotaPedido } = require('../db/models/notapedido.model');
+const service = new NotaPedido();
 class InformesService {
 
 
-  async create(data) {
+  async X(query) {
+
+    const notas = await service.find(query);
+
+    consolidar(notas);
 
   }
 
-  async find() {
+  async consolidar(notas){
 
   }
-
-  async findOne(id) {
-
-  }
-
-  async update(id, changes) {
-
-  }
-
-  async delete(id) {
-
-  }
-
 }
 
 module.exports = InformesService;

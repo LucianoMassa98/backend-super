@@ -6,9 +6,13 @@ class ClienteService {
 
 
   async find() {
-    const rta = await models.Cliente.findAll();
-    if(!rta){throw boom.notFound("Clientes not found");}
-    return rta;
+    try{
+      const rta = await models.Cliente.findAll();
+      if(!rta){throw boom.notFound("Clientes not found");}
+      return rta;
+    }catch(err){ console.log(err);}
+
+
   }
 
   async findOne(id) {
@@ -20,6 +24,7 @@ class ClienteService {
   }
 
   async create(data) {
+
     const newCliente = await models.Cliente.create(data);
     if(!newCliente){throw boom.notFound("Clientes not found");}
 

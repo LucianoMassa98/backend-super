@@ -8,31 +8,18 @@ const servicio = new InformeServicio();
 
 
 
-router.get('/',async (req,res,next)=>{
-
+router.get('/Z',
+validatorHandler(getInformeSchema,'query'),
+async (req,res,next)=>{
  try{
-  const informes = await servicio.Buscar();
+  const informes = await servicio.X(req.query);
   res.json(informes);
  }catch(error){next(error);}
-
 
  });
 
 
-router.get('/:id',
-validatorHandler(getInformeSchema, 'params'),
-  async(req, res,next)=>{
-  try{
 
-    const { id } = req.params;
-    const informe = await servicio.BuscarporID(id);
-    res.json(informe);
-
-  }catch(error){
-    next(error);
-  }
-
-});
 
 
 module.exports = router;

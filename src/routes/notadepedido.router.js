@@ -7,16 +7,20 @@ const {
   createNotaPedido,
   getNotaDePedido,
   addItemSchema,
-  subItemSchema
+  subItemSchema,
+  queryNotas,
+  createNotaPedidoTotal
 } = require('../schemas/notapedido.schema');
 
 
 const servicio = new NotaPedidoService();
 
 //cliente solicita lista de formularios: NTP
-router.get('/',async(req,res,next)=>{
+router.get('/',
+validatorHandler(queryNotas,'query'),
+async(req,res,next)=>{
   try{
-    const notasdepedidos = await servicio.find();
+    const notasdepedidos = await servicio.find(req.query);
   res.json(notasdepedidos);
   }catch(error){next(error);}
 
@@ -39,6 +43,17 @@ async (req,res,next)=>{
   try{
   const body = req.body;
   const ntp = await servicio.create(body);
+  res.json(ntp);
+  }catch(error){next(error);}
+
+});
+
+router.post('/CargaCompleta',
+validatorHandler(createNotaPedidoTotal,'body'),
+async (req,res,next)=>{
+  try{
+  const body = req.body;
+  const ntp = await servicio.createTotal(body);
   res.json(ntp);
   }catch(error){next(error);}
 

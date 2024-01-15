@@ -5,6 +5,8 @@ const userId = Joi.number().integer();
 const monto = Joi.number().integer();
 const cajaId =  Joi.number().integer();
 const fechaDesde=Joi.date();
+const ingreso=Joi.boolean();
+
 const fechaHasta= Joi.date();
 
 const getMovimientoSchema = Joi.object({
@@ -14,7 +16,8 @@ const getMovimientoSchema = Joi.object({
 const createMovimientoSchema = Joi.object({
   userId: userId.required(),
   monto: monto.required(),
-  cajaId: cajaId.required()
+  cajaId: cajaId.required(),
+  ingreso: ingreso
 });
 const queryMovimientoSchema = Joi.object({
   userId,

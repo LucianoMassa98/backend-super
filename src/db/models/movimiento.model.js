@@ -36,6 +36,11 @@ const MovimientoSchema = {
     type: DataTypes.DOUBLE,
     allowNull: false,
   },
+  ingreso: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
