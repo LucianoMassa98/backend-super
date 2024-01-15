@@ -17,11 +17,11 @@ class NotaPedidoService {
     if (!rta) {
       throw boom.notFound('Nota de Pedido not found');
     }
-    rta.productos.forEach(async product => {
+    ntp.productos.forEach(async product => {
        await models.NotaProducto.create({...product, notaId: rta.id});
       });
 
-      rta.cobros.forEach(async cobro => {
+      ntp.cobros.forEach(async cobro => {
         await models.Cobro.create({...cobro, notaId: rta.id});
        });
 
