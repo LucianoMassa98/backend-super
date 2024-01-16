@@ -48,7 +48,32 @@ class ProductoServicio{
 
     return producto;
   }
+  async subaPrecio(query){
 
+    const {marca, rubro, porcentaje}=query;
+    let options = {};
+
+    if (marca) {
+      options.where = {
+        marca: marca
+      };
+    }
+
+    if (rubro) {
+      options.where = {
+        rubro: rubro
+      };
+    }
+
+    const rta= await models.Producto.findAll(options);
+    if(!rta){throw boom.notFound("No ha ningun producto con esas caracteristicas");}
+
+    rta.forEach(async product => {
+      await product.update({precio: ((product.precio*porcentaje)/100)+product.precio})
+    });
+
+    return true;
+  }
 
 
 }

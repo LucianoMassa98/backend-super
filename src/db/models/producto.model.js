@@ -29,11 +29,11 @@ const ProductoSchema = {
     type: DataTypes.STRING,
 
   },
-  costo:{
+  precio:{
     allowNull: false,
     type: DataTypes.DOUBLE
   },
-  margen:{
+  impuesto:{
     allowNull: false,
     type: DataTypes.INTEGER
   },

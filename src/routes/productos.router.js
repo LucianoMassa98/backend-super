@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ProductoServicio = require('../services/producto.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createProductoSchema, updateProductoSchema, getProductoSchema} = require('../schemas/producto.schema');
+const { createProductoSchema, updateProductoSchema, getProductoSchema,subaPrecioProductoSchema} = require('../schemas/producto.schema');
 
 const servicio = new ProductoServicio();
 
@@ -56,6 +56,19 @@ validatorHandler(updateProductoSchema,'body'),
   const {id} = req.params;
   const body =  req.body;
   const producto = await servicio.update(id,body);
+  res.json(producto);
+  }catch(error){
+    next(error);
+  }
+});
+
+router.patch('/subaPrecio',
+validatorHandler(subaPrecioProductoSchema,'query'),
+  async(req,res,next)=>{
+  try{
+
+  const producto = await servicio.subaPrecio(req.query);
+
   res.json(producto);
   }catch(error){
     next(error);

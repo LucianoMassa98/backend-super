@@ -13,8 +13,8 @@ const createProductoSchema = joi.object({
   codBarra: enteros.required(),
   nombre: textos.required(),
   descripcion:textos.required(),
-  costo: montos.required(),
-  margen: montos.required(),
+  precio: montos.required(),
+  impuesto: montos.required(),
   marca: textos.required(),
   rubro: textos.required()
 
@@ -27,10 +27,15 @@ const updateProductoSchema = joi.object({
   codBarra: enteros,
   nombre: textos,
   descripcion:textos,
-  costo: montos,
-  margen: montos,
+  precio: montos,
+  impuesto: montos,
   marca: textos,
   rubro: textos
+});
+const subaPrecioProductoSchema = joi.object({
+  marca: textos,
+  rubro:textos,
+  porcentaje: montos.required()
 });
 
 const getProductoSchema = joi.object({
@@ -42,6 +47,7 @@ module.exports = {
 
   createProductoSchema,
   updateProductoSchema,
-  getProductoSchema
+  getProductoSchema,
+  subaPrecioProductoSchema
 
   };
