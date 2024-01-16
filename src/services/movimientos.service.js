@@ -49,8 +49,10 @@ class MovimientoService {
       where: {
         cajaId: cajaId
       },
-      order: [['createdAt', 'ASC']] // Ordenar por 'createdAt' de manera ascendente
+      order: [['createdAt', 'DESC']],
+      limit: 1
     });
+    console.log(movimientos);
     if (!movimientos) {
       throw boom.notFound('Movimiento not found');
     }
@@ -60,9 +62,16 @@ class MovimientoService {
   async create(data) {
     const rta = await models.Movimiento.create(data);
     if(!rta){throw boom.notFound("Movimiento not found");}
-    const cuenta = await service.findOne(data.cuentaId);
-    const  rta2 = await service.update(cuenta.id, {debe: cuenta.debe + data.monto});
-    if(!rta2){ throw boom.notFound("No se pudo sumar");}
+    const cuenta = await service.findOne(1);
+    const {ingreso} =data;
+    if(ingreso==false){
+      const  rta2 = await service.update(cuenta.id, {haber: cuenta.haber + data.monto});
+      if(!rta2){ throw boom.notFound("No se pudo sumar");}
+    }else{
+      const  rta2 = await service.update(cuenta.id, {debe: cuenta.debe + data.monto});
+      if(!rta2){ throw boom.notFound("No se pudo sumar");}
+    }
+
     return rta;
   }
 

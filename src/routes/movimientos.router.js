@@ -23,7 +23,7 @@ validationHandler(queryMovimientoSchema,'query'),
 });
 router.get('/ultimo/:cajaId',  async (req, res, next) => {
   try {
-    const cajaId = req.params;
+    const {cajaId} = req.params;
     res.json(await service.findLast(cajaId));
   } catch (error) {
     next(error);
