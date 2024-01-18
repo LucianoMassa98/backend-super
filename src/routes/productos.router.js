@@ -17,6 +17,20 @@ router.get('/',async (req,res,next)=>{
 
 
  });
+ router.get('/rubros',async (req,res,next)=>{
+  try{
+   const productos = await servicio.findRubros();
+   res.json(productos);
+  }catch(error){next(error);}
+
+  });
+  router.get('/marcas',async (req,res,next)=>{
+    try{
+     const productos = await servicio.findMarcas();
+     res.json(productos);
+    }catch(error){next(error);}
+
+    });
 // cliente busca producto por id
 router.get('/:id',
 validatorHandler(getProductoSchema, 'params'),
@@ -32,8 +46,6 @@ validatorHandler(getProductoSchema, 'params'),
   }
 
 });
-
-
 router.post('/',
 validatorHandler(createProductoSchema,'body'),
   async(req,res,next)=>{

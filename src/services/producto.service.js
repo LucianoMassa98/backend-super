@@ -31,7 +31,26 @@ class ProductoServicio{
 
     return rta;
   }
-
+  async findMarcas(){
+    const rta = await this.find();
+    const miArray = [];
+    rta.forEach( producto => {
+      if (miArray.indexOf(producto.marca) == -1) {
+        miArray.push(producto.marca);
+      }
+    });
+    return miArray;
+  }
+  async findRubros(){
+    const rta = await this.find();
+    const miArray = [];
+    rta.forEach( producto => {
+      if (miArray.indexOf(producto.rubro) == -1) {
+        miArray.push(producto.rubro);
+      }
+    });
+    return miArray;
+  }
   async update(id,changes){
 
     const producto =  await this.findOne(id);

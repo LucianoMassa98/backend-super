@@ -4,10 +4,7 @@ const router = express.Router();
 const NotaPedidoService = require('../services/notasDePedidos.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const {
-  createNotaPedido,
   getNotaDePedido,
-  addItemSchema,
-  subItemSchema,
   queryNotas,
   createNotaPedidoTotal
 } = require('../schemas/notapedido.schema');
@@ -37,8 +34,10 @@ async(req,res,next)=>{
   }catch(error){next(error);}
 });
 
-router.post('/',
-validatorHandler(createNotaPedido,'body'),
+
+
+router.post('/CargaCompleta',
+validatorHandler(createNotaPedidoTotal,'body'),
 async (req,res,next)=>{
   try{
   const body = req.body;
@@ -47,43 +46,6 @@ async (req,res,next)=>{
   }catch(error){next(error);}
 
 });
-
-router.post('/CargaCompleta',
-validatorHandler(createNotaPedidoTotal,'body'),
-async (req,res,next)=>{
-  try{
-  const body = req.body;
-  const ntp = await servicio.createTotal(body);
-  res.json(ntp);
-  }catch(error){next(error);}
-
-});
-router.post('/addItem',
-  validatorHandler(addItemSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const newItem = await servicio.addItem(body);
-      res.json(newItem);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.delete('/subItem',
-  validatorHandler(subItemSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const newItem = await servicio.subItem(body);
-      res.json(newItem);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 
 router.delete('/:id',
 validatorHandler(getNotaDePedido,'params'),

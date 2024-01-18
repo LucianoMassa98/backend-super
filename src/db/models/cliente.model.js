@@ -35,7 +35,7 @@ class Cliente extends Model{
   // crear metodos estaticos
   static associate(models){
 
-    this.hasMany(models.NotaPedido, {as: 'ventas', foreignKey: 'clienteId'});
+    //this.hasMany(models.NotaPedido, {as: 'ventas', foreignKey: 'clienteId'});
 
     this.belongsTo(models.Customer, {as: 'customer'});
 
