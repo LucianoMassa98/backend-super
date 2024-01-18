@@ -44,15 +44,31 @@ class MovimientoService {
     }
     return user;
   }
-  async findLast(cajaId) {
+  async findLastClose(cajaId) {
     const movimientos = await models.Movimiento.findAll({
       where: {
-        cajaId: cajaId
+        cajaId: cajaId,
+        ingreso: false
       },
       order: [['createdAt', 'DESC']],
       limit: 1
     });
-    console.log(movimientos);
+
+    if (!movimientos) {
+      throw boom.notFound('Movimiento not found');
+    }
+    return movimientos[movimientos.length-1];
+  }
+  async findLastOpen(cajaId) {
+    const movimientos = await models.Movimiento.findAll({
+      where: {
+        cajaId: cajaId,
+        ingreso: true
+      },
+      order: [['createdAt', 'DESC']],
+      limit: 1
+    });
+
     if (!movimientos) {
       throw boom.notFound('Movimiento not found');
     }

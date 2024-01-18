@@ -21,10 +21,18 @@ validationHandler(queryMovimientoSchema,'query'),
     next(error);
   }
 });
-router.get('/ultimo/:cajaId',  async (req, res, next) => {
+router.get('/ultimoClosed/:cajaId',  async (req, res, next) => {
   try {
     const {cajaId} = req.params;
-    res.json(await service.findLast(cajaId));
+    res.json(await service.findLastClose(cajaId));
+  } catch (error) {
+    next(error);
+  }
+});
+router.get('/ultimoOpened/:cajaId',  async (req, res, next) => {
+  try {
+    const {cajaId} = req.params;
+    res.json(await service.findLastOpen(cajaId));
   } catch (error) {
     next(error);
   }
