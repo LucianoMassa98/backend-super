@@ -74,7 +74,7 @@ validatorHandler(updateProductoSchema,'body'),
   }
 });
 
-router.patch('/subaPrecio',
+router.put('/subaPrecio',
 validatorHandler(subaPrecioProductoSchema,'query'),
   async(req,res,next)=>{
   try{
