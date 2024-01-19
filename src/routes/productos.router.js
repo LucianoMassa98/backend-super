@@ -74,12 +74,12 @@ validatorHandler(updateProductoSchema,'body'),
   }
 });
 
-router.put('/subaPrecio',
-validatorHandler(subaPrecioProductoSchema,'query'),
+router.post('/subaPrecio',
+validatorHandler(subaPrecioProductoSchema,'body'),
   async(req,res,next)=>{
   try{
 
-  const producto = await servicio.subaPrecio(req.query);
+  const producto = await servicio.subaPrecio(req.body);
 
   res.json(producto);
   }catch(error){
