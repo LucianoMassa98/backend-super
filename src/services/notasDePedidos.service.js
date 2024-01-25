@@ -63,11 +63,20 @@ class NotaPedidoService {
 
     const { fechaDesde, fechaHasta } = query;
     if (fechaDesde && fechaHasta) {
+
+      let dateDesde = new Date(fechaDesde);
+      let dateHasta = new Date(fechaHasta);
+      dateHasta.setHours(parseInt(23, 10)); // parseInt convierte la cadena a un número
+      dateHasta.setMinutes(parseInt(59, 10));
+
+
       whereConditions.createdAt = {
-        [Op.gte]: fechaDesde,
-        [Op.lte]: fechaHasta,
+        [Op.gte]: dateDesde,
+        [Op.lte]: dateHasta,
       };
     }
+
+
     // todas las notas de una caja en particular
     const { cajaId } = query;
     if (cajaId) {
@@ -83,6 +92,14 @@ class NotaPedidoService {
     const { perfil } = query;
     if (perfil) {
       include.push({ association: 'user', include: ['customer'] });
+    }
+    const { cobros } = query;
+    if (cobros) {
+      include.push('cobros');
+    }
+    const { items } = query;
+    if (items) {
+      include.push('items');
     }
 
     const notasPedido = await models.NotaPedido.findAll({ where: whereConditions, include });

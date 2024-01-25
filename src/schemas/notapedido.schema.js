@@ -3,6 +3,8 @@ const joi = require('joi');
 const id = joi.number().integer();
 const userId = joi.number().integer();
 const cajaId = joi.number().integer();
+const cobros = joi.boolean().truthy();
+const items = joi.boolean().truthy();
 
 const  fechaDesde= joi.date();
 const  fechaHasta= joi.date();
@@ -31,7 +33,9 @@ const queryNotas = joi.object({
   cajaId,
   userId,
   fechaDesde,
-  fechaHasta
+  fechaHasta,
+  cobros,
+  items
 });
 
 const getNotaDePedido = joi.object({
