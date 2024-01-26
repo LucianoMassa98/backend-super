@@ -125,7 +125,7 @@ class ProductoServicio {
       });
 
       productos.forEach(async item=>{
-       await this.create(
+        try{await this.create(
           {codigo: parseInt(item.codigo),
             codBarra: parseFloat(item.codBarra),
             nombre: item.nombre,
@@ -135,7 +135,8 @@ class ProductoServicio {
             marca: "nn",
             rubro:"nn"
             }
-          )
+          );}catch(err){console.log("error: "+err+ " En el item: "+item);}
+
       });
 
 
