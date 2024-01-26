@@ -23,7 +23,7 @@ class ProductoServicio {
     return producto;
   }
   async findBarra(codBarra) {
-    const producto = await models.Producto.findOne({where:{codBarra:codBarra}});
+    const producto = await models.Producto.findOne({where:{codBarra: parseFloat(codBarra) }});
     if (!producto) {
       throw boom.notFound('producto no existente');
     }
