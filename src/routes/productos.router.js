@@ -31,7 +31,6 @@ router.get('/',async (req,res,next)=>{
     }catch(error){next(error);}
 
     });
-// cliente busca producto por id
 router.get('/:id',
 validatorHandler(getProductoSchema, 'params'),
   async(req, res,next)=>{
@@ -57,8 +56,6 @@ validatorHandler(createProductoSchema,'body'),
   }catch(error){ next(error);}
 
   });
-
-
 
 
 router.put('/:id',
@@ -98,5 +95,16 @@ async(req,res,next)=>{
   next(error);
 }
 });
+
+router.get('/ArchivoJson/generar',
+async(req,res,next)=>{
+  try{
+  const band = await servicio.CargarProductos();
+  res.json(band);
+}catch(error){
+  next(error);
+}
+});
+
 
 module.exports = router;
