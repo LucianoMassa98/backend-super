@@ -106,7 +106,7 @@ async(req,res,next)=>{
 }
 });
 router.get('/BuscarXCodigo/Barra/:codBarra',
-validatorHandler(getProductoBarraSchema,'params'),
+validatorHandler(getProductoBarraSchema,'body'),
 async(req,res,next)=>{
   try{
     const {codBarra}=req.params;

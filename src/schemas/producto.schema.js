@@ -42,7 +42,7 @@ const getProductoSchema = joi.object({
   id: ids.required()
 });
 const getProductoBarraSchema = joi.object({
-  codBarra: enteros.required()
+  codBarra: textos.required()
 });
 
 
