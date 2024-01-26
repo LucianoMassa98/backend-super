@@ -22,6 +22,13 @@ class ProductoServicio {
     }
     return producto;
   }
+  async findBarra(codBarra) {
+    const producto = await models.Producto.findOne({where:{codBarra:codBarra}});
+    if (!producto) {
+      throw boom.notFound('producto no existente');
+    }
+    return producto;
+  }
 
   async find() {
     const rta = await models.Producto.findAll();

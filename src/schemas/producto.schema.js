@@ -41,6 +41,9 @@ const subaPrecioProductoSchema = joi.object({
 const getProductoSchema = joi.object({
   id: ids.required()
 });
+const getProductoBarraSchema = joi.object({
+  codBarra: enteros.required()
+});
 
 
 module.exports = {
@@ -48,6 +51,7 @@ module.exports = {
   createProductoSchema,
   updateProductoSchema,
   getProductoSchema,
-  subaPrecioProductoSchema
+  subaPrecioProductoSchema,
+  getProductoBarraSchema
 
   };

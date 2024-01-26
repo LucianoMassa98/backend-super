@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ProductoServicio = require('../services/producto.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createProductoSchema, updateProductoSchema, getProductoSchema,subaPrecioProductoSchema} = require('../schemas/producto.schema');
+const { createProductoSchema, updateProductoSchema, getProductoBarraSchema,getProductoSchema,subaPrecioProductoSchema} = require('../schemas/producto.schema');
 
 const servicio = new ProductoServicio();
 
@@ -100,6 +100,17 @@ router.get('/ArchivoJson/generar',
 async(req,res,next)=>{
   try{
   const band = await servicio.CargarProductos();
+  res.json(band);
+}catch(error){
+  next(error);
+}
+});
+router.get('/BuscarXCodigo/Barra/:codBarra',
+validatorHandler(getProductoBarraSchema,'params'),
+async(req,res,next)=>{
+  try{
+    const {codBarra}=req.params;
+  const band = await servicio.findBarra(codBarra);
   res.json(band);
 }catch(error){
   next(error);
