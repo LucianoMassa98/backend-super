@@ -14,10 +14,11 @@ class InformesService {
     const consolidado= await this.consolidarCobros(notasFiltradas);
     if(consolidado.length<1){throw boom.notFound("No hay consolidado");}
 
-    consolidado.forEach(async element => {
-      const cuenta = await service2.findOne(element.cuentaId);
-      element={...element, nombre: cuenta.nombre};
-    });
+
+    for(let i =0; i<consolidado.length;i++){
+      const cuenta = await service2.findOne(consolidado[i].cuentaId);
+      consolidado[i]={...consolidado[i], nombre: cuenta.nombre};
+    }
     return consolidado;
   }
 
@@ -30,32 +31,27 @@ class InformesService {
     let listCobros=[];
     notas.forEach( nota => {
 
-      nota.cobros.forEach( cobro => {
-          const ind = this.buscarIndexCobro(cobro.cuentaId, listCobros);
-          console.log("----> Aquí");
-          console.log(cobro.monto);
-            if(ind==-1){
+      nota.cobros.forEach( async cobro => {
 
-              listCobros.push({cuentaId: cobro.cuentaId, monto: cobro.monto});
-            }else{
-              listCobros[ind].monto +=cobro.monto;
-            }
+          let i =0;
+          while(i<listCobros.length && cobro.cuentaId!=listCobros[i].cuentaId){i++};
+          if(i<listCobros.length ){
+            listCobros[i].monto +=cobro.monto;
+          }else{
+            listCobros.push({cuentaId: cobro.cuentaId, monto: cobro.monto});
+
+          }
 
       });
 
     });
 
+
     return listCobros;
   }
 
   async buscarIndexCobro(cuentaId, listCobros){
-    let i =0;
-    while(i<listCobros.length && cuentaId!=listCobros[i].cuentaId){i++};
-    if(i<listCobros.length ){
-      return i;
-    }else{
-      return -1;
-    }
+
 
   }
 }

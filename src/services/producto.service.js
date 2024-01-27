@@ -41,7 +41,7 @@ class ProductoServicio {
 
   async findProducto(texto) {
 
-    const dat = texto.Split('-');
+    const dat = texto.split('-');
 
     if (dat.Length == 1)
     {
@@ -190,7 +190,7 @@ class ProductoServicio {
             marca: "nn",
             rubro:"nn"
             }
-          );}catch(err){console.log("error: "+err+ " En el item: "+item);}
+          );}catch(err){console.log("error en item:"); console.log(item);}
 
       });
 
