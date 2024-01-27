@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ProductoServicio = require('../services/producto.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createProductoSchema, updateProductoSchema, getProductoBarraSchema,getProductoSchema,subaPrecioProductoSchema} = require('../schemas/producto.schema');
+const { createProductoSchema, getTextoProductoSchema,updateProductoSchema, getProductoBarraSchema,getProductoSchema,subaPrecioProductoSchema} = require('../schemas/producto.schema');
 
 const servicio = new ProductoServicio();
 
@@ -31,6 +31,18 @@ router.get('/',async (req,res,next)=>{
     }catch(error){next(error);}
 
     });
+
+    router.get('/BuscarPorTexto/:texto',
+    validatorHandler(getTextoProductoSchema,'params'),
+    async (req,res,next)=>{
+      try{
+        const {texto} = req.params;
+       const productos = await servicio.findProducto(texto);
+       res.json(productos);
+
+      }catch(error){next(error);}
+
+      });
 router.get('/:id',
 validatorHandler(getProductoSchema, 'params'),
   async(req, res,next)=>{

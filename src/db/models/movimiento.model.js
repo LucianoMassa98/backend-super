@@ -19,7 +19,7 @@ const MovimientoSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   cajaId: {
     field: 'caja_id',
@@ -30,7 +30,7 @@ const MovimientoSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   monto: {
     type: DataTypes.DOUBLE,

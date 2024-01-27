@@ -24,16 +24,61 @@ class ProductoServicio {
   }
   async findBarra(codBarra) {
 
-    console.log(codBarra);
-    const num = parseFloat(codBarra);
-    console.log(num);
-    const producto = await models.Producto.findOne({where:{codBarra: num }});
+    const producto = await models.Producto.findOne({where:{codBarra: codBarra }});
+    if (!producto) {
+      throw boom.notFound('producto no existente');
+    }
+    return producto;
+  }
+  async findCodigo(codigo) {
+
+    const producto = await models.Producto.findOne({where:{codigo: codigo }});
     if (!producto) {
       throw boom.notFound('producto no existente');
     }
     return producto;
   }
 
+  async findProducto(texto) {
+
+    const dat = texto.Split('-');
+
+    if (dat.Length == 1)
+    {
+        // buscar primero por codigo barra
+        try{
+
+          const Producto = await this.findBarra(texto);
+          return Producto;
+        }catch(err){
+          const Producto = await this.findCodigo(texto);
+          return Producto;
+        }
+    }
+    else
+    {  const listProductos = await this.find();
+        if (dat.Length == 3) {
+
+            let Producto = listProductos.FirstOrDefault(p => p.nombre == dat[0] && p.descripcion == dat[1] && p.marca == dat[2]);
+            if (!Producto) { return Producto; }
+
+            Producto = listProductos.FirstOrDefault(p => p.marca == dat[0] && p.nombre== dat[1] && p.descripcion== dat[2]);
+            if (!Producto) { return Producto; }
+
+        }
+        else if(dat.Length == 4) {
+
+            let Producto = listProductos.FirstOrDefault(p => p.rubro == dat[0] && p.nombre == dat[1] && p.descripcion == dat[2] && p.marca == dat[3]);
+            if (!Producto) { return Producto; }
+
+             Producto = listProductos.FirstOrDefault(p => p.rubro == dat[0] && p.marca == dat[1] && p.nombre== dat[2] && p.descripcion== dat[3]);
+            if (!Producto) { return Producto; }
+
+        }
+    }
+    return null;
+
+  }
   async find() {
     const rta = await models.Producto.findAll();
     if (!rta) {
@@ -121,7 +166,6 @@ class ProductoServicio {
       const lines = data.split('\n');
       const productos= [];
 
-     // const regex = /^(\d{5})-(\d{18})\s+-([^\s].*?)\s+$/;
       lines.forEach((linea) => {
 
        const match= linea.split('-');
@@ -138,11 +182,11 @@ class ProductoServicio {
       productos.forEach(async item=>{
         try{await this.create(
           {codigo: parseInt(item.codigo),
-            codBarra: parseFloat(item.codBarra),
+            codBarra: item.codBarra,
             nombre: item.nombre,
             descripcion:"nn",
             precio: 1,
-            impuesto: 0,
+            impuesto: 1,
             marca: "nn",
             rubro:"nn"
             }

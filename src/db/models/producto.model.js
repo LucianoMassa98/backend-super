@@ -16,7 +16,7 @@ const ProductoSchema = {
   },
   codBarra: {
     allowNull: false,
-    type: DataTypes.DOUBLE,
+    type: DataTypes.STRING,
     unique: true,
   },
   nombre: {

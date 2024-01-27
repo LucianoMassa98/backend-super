@@ -21,7 +21,7 @@ const NotapedidoSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   clienteId: {
     field: 'cliente_id',
@@ -32,7 +32,7 @@ const NotapedidoSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   cajaId: {
     field: 'caja_id',
@@ -43,7 +43,7 @@ const NotapedidoSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   createdAt: {
     allowNull: false,

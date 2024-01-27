@@ -10,7 +10,7 @@ const enteros =  joi.number().integer();
 const createProductoSchema = joi.object({
 
   codigo: enteros.required(),
-  codBarra: enteros.required(),
+  codBarra: textos.required(),
   nombre: textos.required(),
   descripcion:textos.required(),
   precio: montos.required(),
@@ -24,7 +24,7 @@ const createProductoSchema = joi.object({
 
 const updateProductoSchema = joi.object({
   codigo: enteros,
-  codBarra: enteros,
+  codBarra: textos,
   nombre: textos,
   descripcion:textos,
   precio: montos,
@@ -45,10 +45,14 @@ const getProductoBarraSchema = joi.object({
   codBarra: textos.required()
 });
 
+const getTextoProductoSchema = joi.object({
+  texto: textos.required()
+});
 
 module.exports = {
 
   createProductoSchema,
+  getTextoProductoSchema,
   updateProductoSchema,
   getProductoSchema,
   subaPrecioProductoSchema,

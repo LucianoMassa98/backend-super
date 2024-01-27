@@ -35,7 +35,7 @@ const NotaProductoSchema =  {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   productoId: {
     field: 'product_id',
@@ -46,7 +46,7 @@ const NotaProductoSchema =  {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   }
 }
 
