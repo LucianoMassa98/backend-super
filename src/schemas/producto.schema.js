@@ -2,7 +2,7 @@ const joi = require('joi');
 
 
 const ids  = joi.number().integer();
-const textos = joi.string().min(3);
+const textos = joi.string().min(1);
 const montos =  joi.number().positive();
 const enteros =  joi.number().integer();
 

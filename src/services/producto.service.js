@@ -27,7 +27,6 @@ class ProductoServicio {
     console.log(codBarra);
     const num = parseFloat(codBarra);
     console.log(num);
-    console.log("");
     const producto = await models.Producto.findOne({where:{codBarra: num }});
     if (!producto) {
       throw boom.notFound('producto no existente');
