@@ -87,6 +87,17 @@ class ProductoServicio {
 
     return rta;
   }
+  async obtenerCodigo() {
+
+    const ultimoElemento = await models.Producto.findOne({
+      order: [['id', 'DESC']],
+    });
+
+    if (!ultimoElemento) {
+      return {codigo:1};
+    }
+    return {codigo:ultimoElemento.codigo+1};
+  }
   async findMarcas() {
     const rta = await this.find();
     const miArray = [];

@@ -13,6 +13,11 @@ const cajaSchema =  {
   nombre: {
     allowNull: false,
     type: DataTypes.STRING,
+  },
+  saldo: {
+    allowNull: false,
+    type: DataTypes.DOUBLE,
+    defaultValue: 0
   }
 }
 

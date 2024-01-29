@@ -12,7 +12,7 @@ const ProductoSchema = {
   codigo: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    unique: true
+    unique: true,
   },
   codBarra: {
     allowNull: false,
