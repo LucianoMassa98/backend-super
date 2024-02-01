@@ -1,6 +1,8 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
 const CuentaService = require('./cuentas.service');
+const { Op } = require('sequelize');
+
 const service = new CuentaService();
 class MovimientoService {
 
