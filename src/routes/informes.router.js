@@ -18,7 +18,15 @@ async (req,res,next)=>{
 
  });
 
+ router.get('/Consolidado',
+ validatorHandler(queryZ,'query'),
+ async (req,res,next)=>{
+  try{
+   const informes = await servicio.consolidado(req.query);
+   res.json(informes);
+  }catch(error){next(error);}
 
+  });
 
 
 

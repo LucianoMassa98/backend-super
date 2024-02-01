@@ -59,6 +59,7 @@ class NotaPedido extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: 'user', });
     this.belongsTo(models.Cliente, { as: 'cliente', });
+
     this.hasMany(models.Cobro, { as: 'cobros', foreignKey: 'notaId' });
 
     this.belongsToMany(models.Producto, {

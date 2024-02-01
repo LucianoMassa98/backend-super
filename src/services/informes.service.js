@@ -50,10 +50,38 @@ class InformesService {
     return listCobros;
   }
 
-  async buscarIndexCobro(cuentaId, listCobros){
+  async consolidarProductos(notas){
+    let list=[];
+    notas.forEach( nota => {
+
+      nota.items.forEach( async item => {
+
+          let i =0;
+          while(i<list.length && item.id!=list[i].id){i++};
+
+          if(i<list.length ){
+            list[i].NotaProducto.precio += item.NotaProducto.precio;
+            list[i].NotaProducto.cnt += item.NotaProducto.cnt;
+          }else{
+            list.push(item);
+          }
+
+      });
+
+    });
 
 
+    return list;
   }
+  async consolidado(query){
+    const notasFiltradas= await this.filtrarNotas(query);
+    console.log(notasFiltradas);
+    const consolidado= await this.consolidarProductos(notasFiltradas);
+    if(consolidado.length<1){throw boom.notFound("No hay consolidado");}
+
+    return consolidado;
+  }
+
 }
 
 module.exports = InformesService;

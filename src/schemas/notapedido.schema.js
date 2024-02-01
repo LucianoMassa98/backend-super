@@ -5,6 +5,8 @@ const userId = joi.number().integer();
 const cajaId = joi.number().integer();
 const cobros = joi.boolean().truthy();
 const items = joi.boolean().truthy();
+const cliente = joi.boolean().truthy();
+const user = joi.boolean().truthy();
 
 const  fechaDesde= joi.date();
 const  fechaHasta= joi.date();
@@ -35,7 +37,9 @@ const queryNotas = joi.object({
   fechaDesde,
   fechaHasta,
   cobros,
-  items
+  items,
+  cliente,
+  user
 });
 
 const getNotaDePedido = joi.object({
