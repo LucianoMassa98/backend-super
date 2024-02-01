@@ -101,7 +101,7 @@ class NotaPedidoService {
     }
     const { cobros } = query;
     if (cobros) {
-      include.push('cobros');
+      include.push({ association: 'cobros', include: ['cuenta'] });
     }
     const { items } = query;
     if (items) {
