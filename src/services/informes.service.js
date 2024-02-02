@@ -75,7 +75,6 @@ class InformesService {
   }
   async consolidado(query){
     const notasFiltradas= await this.filtrarNotas(query);
-    console.log(notasFiltradas);
     const consolidado= await this.consolidarProductos(notasFiltradas);
     if(consolidado.length<1){throw boom.notFound("No hay consolidado");}
 

@@ -11,11 +11,6 @@ class MovimientoService {
   async find(query) {
 
     const options = {
-     /* include:[{
-        model: models.User, // Modelo Cliente
-        as: 'user', // Alias 'cliente'
-        include: ['customer'], // Incluir el perfil del cliente
-      }]*/
     };
 
     const { fechaDesde, fechaHasta } = query;
@@ -27,12 +22,14 @@ class MovimientoService {
       dateHasta.setMinutes(parseInt(59, 10));
 
 
-      options.where.createdAt = {
-        [Op.gte]: dateDesde,
-        [Op.lte]: dateHasta,
+      options.where= {
+        createdAt:{[Op.gte]: dateDesde,
+          [Op.lte]: dateHasta}
+
       };
     }
 
+    console.log("Aquiiiiii");
     const rta = await models.Movimiento.findAll(options);
     if(!rta){throw boom.notFound("Movimiento not found");}
 
