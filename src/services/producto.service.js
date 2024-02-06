@@ -213,6 +213,20 @@ class ProductoServicio {
     const productos = await this.GenerarArchivoJsonProductos("./STOCK.txt");
 
   }
+
+  async exportarProductos(){
+    const productos = await this.find();
+    let texto="";
+     productos.forEach( item =>{
+      texto+=item.nombre+">"+
+            item.descripcion+">"+
+            item.rubro+">"+
+            item.marca+">"+
+            item.precio+">"+
+            item.impuesto+"/n";
+     });
+return texto;
+  }
 }
 
 module.exports = ProductoServicio;

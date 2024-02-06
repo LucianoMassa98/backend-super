@@ -7,7 +7,7 @@ const cobros = joi.boolean().truthy();
 const items = joi.boolean().truthy();
 const cliente = joi.boolean().truthy();
 const user = joi.boolean().truthy();
-
+const fiscal = joi.boolean().truthy();
 const  fechaDesde= joi.date();
 const  fechaHasta= joi.date();
 
@@ -28,6 +28,7 @@ const createNotaPedidoTotal = joi.object({
   userId: userId.required(),
   cajaId: cajaId.required(),
   clienteId: id.required(),
+  fiscal,
   productos: joi.array().items(productoSchema).required(),
   cobros: joi.array().items(cobroSchema).required()
 });

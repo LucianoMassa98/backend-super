@@ -90,7 +90,17 @@ router.get('/BuscarXCodigo/Barra/:codBarra',
   }
 );
 
+router.get('/Exportar/List/CSV',
+  async (req, res, next) => {
+    try {
 
+      const band = await servicio.exportarProductos();
+      res.json(band);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 
 router.post(

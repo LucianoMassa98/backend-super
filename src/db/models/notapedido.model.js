@@ -45,6 +45,11 @@ const NotapedidoSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   },
+  fiscal: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
