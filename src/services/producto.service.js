@@ -176,7 +176,6 @@ class ProductoServicio {
 
       const lines = data.trim().split('\n');
       const productos= [];
-      const productosNoCargados= [];
 
       lines.forEach((linea) => {
 
@@ -193,28 +192,33 @@ class ProductoServicio {
           });
         }
       });
-
+        let i =1;
       productos.forEach(async item=>{
-        try{await this.create(
+        try{
+          if(item.codBarra)
+
+
+          await this.create(
           {
             codigo: item.codigo,
-            codBarra: item.codBarra,
+            codBarra: item.codBarra.trim() !== '' ? item.codBarra.trim() : i.toString(),
             nombre: item.nombre,
             descripcion:"dd",
-            precio: item.precio,
+            precio: !isNaN(item.precio) ? parseFloat(item.precio) : 0,
             impuesto: item.impuesto,
             marca: "mm",
             rubro:"rr"
             }
           );}catch(err){
 
-            console.log("error en item:"); console.log(item); console.log(err); console.log("---------------");
-            productosNoCargados.push(item);
+            console.log("error en item:",item);
+            console.log(err);
+            console.log("---------------");
           }
 
       });
 
-        return productosNoCargados;
+
     });
   }
 
