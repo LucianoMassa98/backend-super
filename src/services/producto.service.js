@@ -201,7 +201,7 @@ class ProductoServicio {
           await this.create(
           {
             codigo: item.codigo,
-            codBarra: item.codBarra.trim() !== '' ? item.codBarra.trim() : i.toString(),
+            codBarra: item.codBarra.trim() !== '' ? item.codBarra.trim() : (i++).toString(),
             nombre: item.nombre,
             descripcion:"dd",
             precio: !isNaN(item.precio) ? parseFloat(item.precio) : 0,
@@ -211,9 +211,7 @@ class ProductoServicio {
             }
           );}catch(err){
 
-            console.log("error en item:",item);
-            console.log(err);
-            console.log("---------------");
+            console.log(item);
           }
 
       });
