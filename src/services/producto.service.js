@@ -3,13 +3,13 @@ const fs = require('fs');
 
 const { models } = require('../libs/sequelize');
 const { DOUBLE } = require('sequelize');
-const productos = require('./productosNoCargados.js');
+//const productos = require('./productosNoCargados.js');
 const { options } = require('joi');
 
 class ProductoServicio {
 
   async generar(){
-
+/*
    await productos.forEach(async item=>{
       try{
        const rta= await this.create( {
@@ -28,7 +28,7 @@ class ProductoServicio {
         }
 
     });
-
+*/
     return true;
 
   }
