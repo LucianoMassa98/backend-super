@@ -1,9 +1,9 @@
 const boom = require('@hapi/boom');
 const fs = require('fs');
 
-//const pool = require('../libs/postgres.pool');
 const { models } = require('../libs/sequelize');
 const { DOUBLE } = require('sequelize');
+
 
 class ProductoServicio {
   async create(data) {
@@ -167,39 +167,43 @@ class ProductoServicio {
     return true;
   }
 
-  async GenerarArchivoJsonProductos(nombreArchivo) {
+  async importarProductos(nombreArchivo) {
     fs.readFile(nombreArchivo, 'utf8', (err, data) => {
       if (err) {
         console.error(`Error al leer el archivo: ${err.message}`);
         return;
       }
 
-      const lines = data.split('\n');
+      const lines = data.trim().split('\n');
       const productos= [];
 
       lines.forEach((linea) => {
 
-       const match= linea.split('-');
-       // const match = linea.match(regex);
-        if(match.length==3){
+       const match= linea.split(';');
+
+        if(match.length==6){
           productos.push({
-            codigo: match[0],
-            codBarra: match[1].trim().replace(/^0+/, ''),
-            nombre: match[2].trim().slice(0, -2),
+            codigo: parseInt( match[0].trim()),
+            codBarra: match[1].trim().replace(/\s/g, ''),
+            nombre: match[2].trim().replace(/\s/g, ''),
+            impuesto: parseFloat(match[3].trim().replace(',', '.')),
+            precio: parseFloat(match[4].trim().replace(',', '.'))
+
           });
         }
       });
 
       productos.forEach(async item=>{
         try{await this.create(
-          {codigo: parseInt(item.codigo),
+          {
+            codigo: item.codigo,
             codBarra: item.codBarra,
             nombre: item.nombre,
-            descripcion:"nn",
-            precio: 1,
-            impuesto: 1,
-            marca: "nn",
-            rubro:"nn"
+            descripcion:"dd",
+            precio: item.precio,
+            impuesto: item.impuesto,
+            marca: "mm",
+            rubro:"rr"
             }
           );}catch(err){console.log("error en item:"); console.log(item);}
 
@@ -207,11 +211,6 @@ class ProductoServicio {
 
 
     });
-  }
-
-  async CargarProductos(){
-    const productos = await this.GenerarArchivoJsonProductos("./STOCK.txt");
-
   }
 
   async exportarProductos(){

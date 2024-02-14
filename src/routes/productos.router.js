@@ -71,8 +71,8 @@ router.get('/:id',
 );
 router.get('/ArchivoJson/generar', async (req, res, next) => {
   try {
-    const band = await servicio.CargarProductos();
-    res.json(band);
+    await servicio.importarProductos("./STOCK.txt");
+    res.json(true);
   } catch (error) {
     next(error);
   }
