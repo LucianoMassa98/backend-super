@@ -35,7 +35,7 @@ const ProductoSchema = {
   },
   impuesto:{
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.DOUBLE
   },
   rubro: {
     allowNull: false,

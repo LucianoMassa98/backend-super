@@ -77,6 +77,16 @@ router.get('/ArchivoJson/generar', async (req, res, next) => {
     next(error);
   }
 });
+
+router.get('/ArchivoJson/generar/productos', async (req, res, next) => {
+  try {
+    //const rta = await servicio.generar();
+    const rta = await servicio.importarProductos("./STOCK.txt");
+    res.json(rta);
+  } catch (error) {
+    next(error);
+  }
+});
 router.get('/BuscarXCodigo/Barra/:codBarra',
   validatorHandler(getProductoBarraSchema, 'params'),
   async (req, res, next) => {

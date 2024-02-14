@@ -3,9 +3,35 @@ const fs = require('fs');
 
 const { models } = require('../libs/sequelize');
 const { DOUBLE } = require('sequelize');
-
+const productos = require('./productosNoCargados.js');
+const { options } = require('joi');
 
 class ProductoServicio {
+
+  async generar(){
+
+   await productos.forEach(async item=>{
+      try{
+       const rta= await this.create( {
+        codigo: item.codigo,
+        codBarra: item.codBarra,
+        nombre: item.nombre,
+        descripcion:"dd",
+        precio: item.precio,
+        impuesto: item.impuesto,
+        marca: "mm",
+        rubro:"rr"
+        });
+
+      }catch(err){
+          console.log(err);
+        }
+
+    });
+
+    return true;
+
+  }
   async create(data) {
     const rta = await models.Producto.create(data);
     if (!rta) {
@@ -21,6 +47,63 @@ class ProductoServicio {
       throw boom.notFound('producto no existente');
     }
     return producto;
+  }
+
+  async findOne2(query) {
+
+
+    let options = { where:{}}
+    const {codBarra, codigo, id, nombre, descripcion, marca, rubro}=query;
+
+    if(id){options.where={id:id}}
+    if (codBarra) {
+      options.where = {
+        ...options.where,
+        codBarra: codBarra,
+      };
+    }
+
+    if (codigo) {
+      options.where = {
+        ...options.where,
+        codigo: codigo,
+      };
+    }
+
+    if (nombre) {
+      options.where = {
+        ...options.where,
+        nombre: nombre,
+      };
+    }
+
+    if (descripcion) {
+      options.where = {
+        ...options.where,
+        descripcion: descripcion,
+      };
+    }
+
+    if (rubro) {
+      options.where = {
+        ...options.where,
+        rubro: rubro,
+      };
+    }
+
+    if (marca) {
+      options.where = {
+        ...options.where,
+        marca: marca,
+      };
+    }
+
+    const producto = await models.Producto.findOne(options);
+      if (!producto) {
+        throw boom.notFound('producto no existente');
+      }
+      return producto;
+
   }
   async findBarra(codBarra) {
 
