@@ -176,6 +176,7 @@ class ProductoServicio {
 
       const lines = data.trim().split('\n');
       const productos= [];
+      const productosNoCargados= [];
 
       lines.forEach((linea) => {
 
@@ -185,7 +186,7 @@ class ProductoServicio {
           productos.push({
             codigo: parseInt( match[0].trim()),
             codBarra: match[1].trim().replace(/\s/g, ''),
-            nombre: match[2].trim().replace(/\s/g, ''),
+            nombre: match[2].trim(),
             impuesto: parseFloat(match[3].trim().replace(',', '.')),
             precio: parseFloat(match[4].trim().replace(',', '.'))
 
@@ -205,11 +206,15 @@ class ProductoServicio {
             marca: "mm",
             rubro:"rr"
             }
-          );}catch(err){console.log("error en item:"); console.log(item);}
+          );}catch(err){
+
+            console.log("error en item:"); console.log(item); console.log(err); console.log("---------------");
+            productosNoCargados.push(item);
+          }
 
       });
 
-
+        return productosNoCargados;
     });
   }
 
