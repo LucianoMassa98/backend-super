@@ -251,7 +251,7 @@ class ProductoServicio {
   }
 
   async importarProductos(nombreArchivo) {
-    fs.readFile(nombreArchivo, 'utf8', (err, data) => {
+    fs.readFile(nombreArchivo, 'utf8', async (err, data) => {
       if (err) {
         console.error(`Error al leer el archivo: ${err.message}`);
         return;
@@ -260,7 +260,7 @@ class ProductoServicio {
       const lines = data.trim().split('\n');
       const productos= [];
 
-      lines.forEach((linea) => {
+    await lines.forEach((linea) => {
 
        const match= linea.split(';');
 
@@ -276,7 +276,7 @@ class ProductoServicio {
         }
       });
         let i =1;
-      productos.forEach(async item=>{
+     await productos.forEach(async item=>{
         try{
           if(item.codBarra)
 
