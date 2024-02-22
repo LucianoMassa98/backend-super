@@ -57,4 +57,16 @@ async(req,res,next)=>{
   }catch(error){next(error);}
 });
 
+router.post('/alertas/prueba',
+  async (req, res, next) => {
+    try {
+     const rta = await servicio.utlizarAxios();
+      res.json(rta);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+
 module.exports = router;

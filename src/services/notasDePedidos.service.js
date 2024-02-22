@@ -1,5 +1,5 @@
 const boom = require('@hapi/boom');
-const ProductoService = require('./producto.service');
+const axios = require('axios');
 const { Op } = require('sequelize');
 const { config } = require('./../config/config');
 
@@ -13,8 +13,8 @@ class NotaPedidoService {
         cajaId: ntp.cajaId,
         clienteId: ntp.clienteId,
       };
-      if(ntp.fiscal){
-       data = {...data, fiscal:true};
+      if (ntp.fiscal) {
+        data = { ...data, fiscal: true };
       }
       const rta = await models.NotaPedido.create(data);
       if (!rta) {
@@ -27,9 +27,9 @@ class NotaPedidoService {
       await ntp.cobros.forEach(async (cobro) => {
         await models.Cobro.create({ ...cobro, notaId: rta.id });
       });
-      if(rta.fiscal){
-      const rta2= await this.findOne(rta.id);
-      const rta3 = await this.createFacturaB(rta2);
+      if (rta.fiscal) {
+        const rta2 = await this.findOne(rta.id);
+        const rta3 = await this.createFacturaB(rta2);
       }
       return rta;
     } else {
@@ -151,67 +151,98 @@ class NotaPedidoService {
     return ntp;
   }
 
-  async  createFacturaB(ntp){
-    let detalle=[];
-    ntp.items.forEach(element => {
+  async createFacturaB(ntp) {
+    let detalle = [];
+    ntp.items.forEach((element) => {
       detalle.push({
-        "cantidad":element.NotaProducto.cnt,
-        "afecta_stock":"N",
-        "actualiza_precio":"N",
-        "bonificacion_porcentaje":0,
-        "producto":{
-           "descripcion": (element.nombre + element.descripcion),
-           "codigo":element.codigo,
-           "lista_precios":"standard",
-           "leyenda":"",
-           "unidad_bulto":1,
-           "alicuota":element.impuesto,
-           "actualiza_precio":"N",
-           "rg5329": "N",
-           "precio_unitario_sin_iva":element.precio
-        }
-     })
+        cantidad: element.NotaProducto.cnt,
+        afecta_stock: 'N',
+        actualiza_precio: 'N',
+        bonificacion_porcentaje: 0,
+        producto: {
+          descripcion: element.nombre + element.descripcion,
+          codigo: element.codigo,
+          lista_precios: 'standard',
+          leyenda: '',
+          unidad_bulto: 1,
+          alicuota: element.impuesto,
+          actualiza_precio: 'N',
+          rg5329: 'N',
+          precio_unitario_sin_iva: element.precio,
+        },
+      });
     });
 
-  const datason= {
-    "apitoken":config.apiToken,
-    "cliente":{
-       "documento_tipo":"DNI",
-       "condicion_iva":"CF",
-       "domicilio":ntp.cliente.customer.direccion,
-       "condicion_pago":"201",
-       "documento_nro":"111132333",
-       "razon_social":"Juan Pedro KJL",
-       "provincia":"2",
-       "email":ntp.cliente.customer.email,
-       "envia_por_mail":"N",
-        "rg5329": "N"
-    },
-    "apikey":config.apiKey,
-    "comprobante":{
-       "rubro":"Sevicios web",
-       "percepciones_iva":0,
-       "tipo":"FACTURA B",
-       "numero":ntp.id,
-       "bonificacion":0,
-       "operacion":"V",
-       "detalle": detalle,
-       "fecha":ntp.createdAt,
-       "vencimiento":"26/03/2023",
-       "rubro_grupo_contable":"Sevicios",
-       "total":139.0,
-       "cotizacion":1,
-       "moneda":"PES",
-       "punto_venta":ntp.cajaId,
-       "tributos":[],
-       "impuestos_internos":"0",
-       "impuestos_internos_base":"0",
-       "impuestos_internos_alicuota":"0"
-    },
-    "usertoken":config.userToken
+    const datason = {
+      apitoken: config.apiToken,
+      cliente: {
+        documento_tipo: 'DNI',
+        condicion_iva: 'CF',
+        domicilio: ntp.cliente.customer.direccion,
+        condicion_pago: '201',
+        documento_nro: '111132333',
+        razon_social: 'Juan Pedro KJL',
+        provincia: '2',
+        email: ntp.cliente.customer.email,
+        envia_por_mail: 'N',
+        rg5329: 'N',
+      },
+      apikey: config.apiKey,
+      comprobante: {
+        rubro: 'Sevicios web',
+        percepciones_iva: 0,
+        tipo: 'FACTURA B',
+        numero: ntp.id,
+        bonificacion: 0,
+        operacion: 'V',
+        detalle: detalle,
+        fecha: ntp.createdAt,
+        vencimiento: '26/03/2023',
+        rubro_grupo_contable: 'Sevicios',
+        total: 139.0,
+        cotizacion: 1,
+        moneda: 'PES',
+        punto_venta: ntp.cajaId,
+        tributos: [],
+        impuestos_internos: '0',
+        impuestos_internos_base: '0',
+        impuestos_internos_alicuota: '0',
+      },
+      usertoken: config.userToken,
+    };
   }
 
-  //enviar json
+  async utlizarAxios() {
+
+    // Datos que deseas enviar en el cuerpo de la solicitud
+    const data = {
+      usertoken:'522c8ff1d15529bec89ed960d245a798a7a2c4e9169781d20b7a2c29242d565e',
+      apikey: '61636',
+      apitoken: '1bae54d1dca38c6bc41ba02c40acb69a',
+    };
+
+    // Opciones de la solicitud
+    const options = {
+      method: 'POST',
+      url: 'https://www.tusfacturas.app/app/api/v2/estado_servicios/alertas', // Cambia esto por la URL del servidor destino
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+
+    // Realiza la solicitud POST
+    axios(options)
+      .then((response) => {
+        console.log('Respuesta del servidor:', response.data);
+        return response;
+      })
+      .catch((error) => {
+        console.error('Error al enviar la solicitud:', error);
+        return response;
+      });
+
+
   }
 }
 
