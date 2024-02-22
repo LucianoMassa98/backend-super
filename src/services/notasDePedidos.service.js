@@ -1,27 +1,36 @@
 const boom = require('@hapi/boom');
 const ProductoService = require('./producto.service');
 const { Op } = require('sequelize');
+const { config } = require('./../config/config');
 
 const { models } = require('../libs/sequelize');
 class NotaPedidoService {
   async create(ntp) {
     const veri = this.verificarNTP(ntp);
     if (veri) {
-      const rta = await models.NotaPedido.create({
+      let data = {
         userId: ntp.userId,
         cajaId: ntp.cajaId,
         clienteId: ntp.clienteId,
-      });
+      };
+      if(ntp.fiscal){
+       data = {...data, fiscal:true};
+      }
+      const rta = await models.NotaPedido.create(data);
       if (!rta) {
         throw boom.notFound('Nota de Pedido not found');
       }
-      ntp.productos.forEach(async (product) => {
+      await ntp.productos.forEach(async (product) => {
         await models.NotaProducto.create({ ...product, notaId: rta.id });
       });
 
-      ntp.cobros.forEach(async (cobro) => {
+      await ntp.cobros.forEach(async (cobro) => {
         await models.Cobro.create({ ...cobro, notaId: rta.id });
       });
+      if(rta.fiscal){
+      const rta2= await this.findOne(rta.id);
+      const rta3 = await this.createFacturaB(rta2);
+      }
       return rta;
     } else {
       throw boom.notFound(
@@ -126,6 +135,10 @@ class NotaPedidoService {
           association: 'user',
           include: ['customer'],
         },
+        {
+          association: 'cliente',
+          include: ['customer'],
+        },
         'items',
         'cobros',
       ],
@@ -136,6 +149,69 @@ class NotaPedidoService {
     }
 
     return ntp;
+  }
+
+  async  createFacturaB(ntp){
+    let detalle=[];
+    ntp.items.forEach(element => {
+      detalle.push({
+        "cantidad":element.NotaProducto.cnt,
+        "afecta_stock":"N",
+        "actualiza_precio":"N",
+        "bonificacion_porcentaje":0,
+        "producto":{
+           "descripcion": (element.nombre + element.descripcion),
+           "codigo":element.codigo,
+           "lista_precios":"standard",
+           "leyenda":"",
+           "unidad_bulto":1,
+           "alicuota":element.impuesto,
+           "actualiza_precio":"N",
+           "rg5329": "N",
+           "precio_unitario_sin_iva":element.precio
+        }
+     })
+    });
+
+  const datason= {
+    "apitoken":config.apiToken,
+    "cliente":{
+       "documento_tipo":"DNI",
+       "condicion_iva":"CF",
+       "domicilio":ntp.cliente.customer.direccion,
+       "condicion_pago":"201",
+       "documento_nro":"111132333",
+       "razon_social":"Juan Pedro KJL",
+       "provincia":"2",
+       "email":ntp.cliente.customer.email,
+       "envia_por_mail":"N",
+        "rg5329": "N"
+    },
+    "apikey":config.apiKey,
+    "comprobante":{
+       "rubro":"Sevicios web",
+       "percepciones_iva":0,
+       "tipo":"FACTURA B",
+       "numero":ntp.id,
+       "bonificacion":0,
+       "operacion":"V",
+       "detalle": detalle,
+       "fecha":ntp.createdAt,
+       "vencimiento":"26/03/2023",
+       "rubro_grupo_contable":"Sevicios",
+       "total":139.0,
+       "cotizacion":1,
+       "moneda":"PES",
+       "punto_venta":ntp.cajaId,
+       "tributos":[],
+       "impuestos_internos":"0",
+       "impuestos_internos_base":"0",
+       "impuestos_internos_alicuota":"0"
+    },
+    "usertoken":config.userToken
+  }
+
+  //enviar json
   }
 }
 

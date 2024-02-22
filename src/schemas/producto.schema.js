@@ -6,7 +6,6 @@ const textos = joi.string().min(1);
 const montos =  joi.number().positive();
 const enteros =  joi.number().integer();
 
-
 const createProductoSchema = joi.object({
 
   codigo: enteros.required(),
@@ -19,9 +18,6 @@ const createProductoSchema = joi.object({
   rubro: textos.required()
 
 });
-
-
-
 const updateProductoSchema = joi.object({
   codigo: enteros,
   codBarra: textos,
@@ -39,7 +35,13 @@ const subaPrecioProductoSchema = joi.object({
 });
 
 const getProductoSchema = joi.object({
-  id: ids.required()
+  id: ids,
+  codigo: enteros,
+  codBarra: textos,
+  nombre: textos,
+  descripcion: textos,
+  marca: textos,
+  rubro: textos
 });
 const getProductoBarraSchema = joi.object({
   codBarra: textos.required()

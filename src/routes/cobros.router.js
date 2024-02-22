@@ -1,6 +1,7 @@
 const express = require('express');
 
 const CobroService = require('../services/cobros.service');
+const service = new CobroService();
 const validationHandler = require('../middlewares/validator.handler');
 const {
   createCobroSchema,
@@ -9,7 +10,7 @@ const {
 } = require('../schemas/cobro.schema');
 
 const router = express.Router();
-const service = new CobroService();
+
 
 router.get('/',  async (req, res, next) => {
   try {

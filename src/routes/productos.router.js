@@ -45,24 +45,14 @@ router.get('/obtenerCodigo', async (req, res, next) => {
     next(error);
   }
 });
-router.get('/BuscarPorTexto/:texto',
-  validatorHandler(getTextoProductoSchema, 'params'),
+
+
+router.get('/findOne',
+  validatorHandler(getProductoSchema, 'query'),
   async (req, res, next) => {
     try {
-      const { texto } = req.params;
-      const productos = await servicio.findProducto(texto);
-      res.json(productos);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-router.get('/:id',
-  validatorHandler(getProductoSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const producto = await servicio.findOne(id);
+
+      const producto = await servicio.findOne(req.query);
       res.json(producto);
     } catch (error) {
       next(error);
@@ -78,39 +68,7 @@ router.get('/ArchivoJson/generar', async (req, res, next) => {
   }
 });
 
-router.get('/ArchivoJson/generar/productos', async (req, res, next) => {
-  try {
-    //const rta = await servicio.generar();
-    const rta = await servicio.importarProductos("./STOCK.txt");
-    res.json(rta);
-  } catch (error) {
-    next(error);
-  }
-});
-router.get('/BuscarXCodigo/Barra/:codBarra',
-  validatorHandler(getProductoBarraSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { codBarra } = req.params;
-      const band = await servicio.findBarra(codBarra);
-      res.json(band);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
-router.get('/Exportar/List/CSV',
-  async (req, res, next) => {
-    try {
-
-      const band = await servicio.exportarProductos();
-      res.json(band);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 
 router.post(

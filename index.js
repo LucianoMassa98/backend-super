@@ -30,7 +30,15 @@ app.use(errorHandler);
 
 routerApi(app);
 //----- escucha de peticiones en el port
+
+
+const { getServerIPAddress } = require('./src/modules/obtenerIp');
+
+
+
 app.listen(port, ()=>{
+// Uso de la función para obtener la dirección IP del servidor
+console.log('La dirección IP del servidor es:', getServerIPAddress());
 
   console.log("Mi port "+port);
 });

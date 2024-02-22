@@ -40,16 +40,9 @@ class ProductoServicio {
 
     return rta;
   }
-  //findOne
-  async findOne(id) {
-    const producto = await models.Producto.findByPk(id);
-    if (!producto) {
-      throw boom.notFound('producto no existente');
-    }
-    return producto;
-  }
 
-  async findOne2(query) {
+
+  async findOne(query) {
 
 
     let options = { where:{}}
