@@ -81,6 +81,31 @@ class NotaPedido extends Model {
 
   }
 
+  async calcularTotal(){
+
+    let sum=0;
+    this.items.forEach(element => {
+      sum += element.NotaProducto.cnt * element.NotaProducto.precio;
+    });
+    return sum;
+  }
+  async emision(){
+    const dia = this.createdAt.getDate().toString().padStart(2, '0'); // Asegura que el día tenga dos dígitos
+    const mes = (this.createdAt.getMonth() + 1).toString().padStart(2, '0'); // Asegura que el mes tenga dos dígitos
+    const año = this.createdAt.getFullYear();
+
+    const fechaFormateada = `${dia}/${mes}/${año}`;
+  return fechaFormateada;
+  }
+  async vencimiento(){
+    const fecha = new Date(this.createdAt.getFullYear() + 5, this.createdAt.getMonth(), this.createdAt.getDate());;
+    const dia = fecha.getDate().toString().padStart(2, '0'); // Asegura que el día tenga dos dígitos
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Asegura que el mes tenga dos dígitos
+    const año = fecha.getFullYear();
+
+    const fechaFormateada = `${dia}/${mes}/${año}`;
+  return fechaFormateada;
+  }
   static config(sequelize) {
     return {
       sequelize,

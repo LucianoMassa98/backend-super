@@ -28,8 +28,10 @@ class NotaPedidoService {
         await models.Cobro.create({ ...cobro, notaId: rta.id });
       });
       if (rta.fiscal) {
-        const rta2 = await this.findOne(rta.id);
-        const rta3 = await this.createFacturaB(rta2);
+        setTimeout(async() => {
+          await this.createFacturaB(rta.id);
+        }, 4000);
+
       }
       return rta;
     } else {
@@ -151,7 +153,10 @@ class NotaPedidoService {
     return ntp;
   }
 
-  async createFacturaB(ntp) {
+  async createFacturaB(notaId) {
+
+    const ntp = await this.findOne(notaId);
+
     let detalle = [];
     ntp.items.forEach((element) => {
       detalle.push({
@@ -168,26 +173,44 @@ class NotaPedidoService {
           alicuota: element.impuesto,
           actualiza_precio: 'N',
           rg5329: 'N',
-          precio_unitario_sin_iva: element.precio,
+          precio_unitario_sin_iva: element.NotaProducto.precio-(element.impuesto*element.NotaProducto.precio/100),
         },
       });
     });
 
-    const datason = {
-      apitoken: config.apiToken,
-      cliente: {
+    let cliente={};
+    if(ntp.clienteId==1){
+      cliente= {
+        documento_tipo: 'OTRO',
+        condicion_iva: 'CF',
+        domicilio: '',
+        condicion_pago: '201',
+        documento_nro: '0',
+        razon_social: '',
+        provincia: '2',
+        email:'',
+        envia_por_mail: 'N',
+        rg5329: 'N',
+      };
+    }else{
+      cliente= {
         documento_tipo: 'DNI',
         condicion_iva: 'CF',
         domicilio: ntp.cliente.customer.direccion,
         condicion_pago: '201',
         documento_nro: '111132333',
-        razon_social: 'Juan Pedro KJL',
+        razon_social: ntp.cliente.customer.nombre + " "+ntp.cliente.customer.apellido,
         provincia: '2',
         email: ntp.cliente.customer.email,
         envia_por_mail: 'N',
         rg5329: 'N',
-      },
+      };
+    }
+
+    let data = {
+      apitoken: config.apiToken,
       apikey: config.apiKey,
+      usertoken: config.userToken,
       comprobante: {
         rubro: 'Sevicios web',
         percepciones_iva: 0,
@@ -196,10 +219,10 @@ class NotaPedidoService {
         bonificacion: 0,
         operacion: 'V',
         detalle: detalle,
-        fecha: ntp.createdAt,
-        vencimiento: '26/03/2023',
-        rubro_grupo_contable: 'Sevicios',
-        total: 139.0,
+        fecha: await ntp.emision(),
+        vencimiento: await ntp.vencimiento(),
+        rubro_grupo_contable: 'Productos',
+        total: await ntp.calcularTotal(),
         cotizacion: 1,
         moneda: 'PES',
         punto_venta: ntp.cajaId,
@@ -207,31 +230,29 @@ class NotaPedidoService {
         impuestos_internos: '0',
         impuestos_internos_base: '0',
         impuestos_internos_alicuota: '0',
-      },
-      usertoken: config.userToken,
+      }
     };
+
+    data = {
+      ...data,
+      cliente
+    }
+
+
+    await this.utlizarAxios('POST',data,'https://www.tusfacturas.app/app/api/v2/facturacion/nuevo_encola');
   }
 
-  async utlizarAxios() {
-
-    // Datos que deseas enviar en el cuerpo de la solicitud
-    const data = {
-      usertoken:'522c8ff1d15529bec89ed960d245a798a7a2c4e9169781d20b7a2c29242d565e',
-      apikey: '61636',
-      apitoken: '1bae54d1dca38c6bc41ba02c40acb69a',
-    };
-
+  async utlizarAxios(method, data, URL) {
     // Opciones de la solicitud
     const options = {
-      method: 'POST',
-      url: 'https://www.tusfacturas.app/app/api/v2/estado_servicios/alertas', // Cambia esto por la URL del servidor destino
+      method: method,
+      url: URL, // Cambia esto por la URL del servidor destino
       headers: {
         'Content-Type': 'application/json',
       },
       data: data,
     };
-
-    // Realiza la solicitud POST
+    // Realiza la solicitud
     axios(options)
       .then((response) => {
         console.log('Respuesta del servidor:', response.data);
@@ -241,8 +262,6 @@ class NotaPedidoService {
         console.error('Error al enviar la solicitud:', error);
         return response;
       });
-
-
   }
 }
 
