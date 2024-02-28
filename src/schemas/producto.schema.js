@@ -37,27 +37,21 @@ const subaPrecioProductoSchema = joi.object({
 const getProductoSchema = joi.object({
   id: ids,
   codigo: enteros,
-  codBarra: textos,
-  nombre: textos,
-  descripcion: textos,
-  marca: textos,
-  rubro: textos
-});
-const getProductoBarraSchema = joi.object({
-  codBarra: textos.required()
+  codBarra: textos
 });
 
-const getTextoProductoSchema = joi.object({
-  texto: textos.required()
+
+const getProductosSchema = joi.object({
+  texto: textos,
+  limit: enteros.required(),
+   offset: enteros.required()
 });
 
 module.exports = {
 
   createProductoSchema,
-  getTextoProductoSchema,
+  getProductosSchema,
   updateProductoSchema,
   getProductoSchema,
-  subaPrecioProductoSchema,
-  getProductoBarraSchema
-
+  subaPrecioProductoSchema
   };

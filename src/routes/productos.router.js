@@ -4,61 +4,38 @@ const ProductoServicio = require('../services/producto.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const {
   createProductoSchema,
-  getTextoProductoSchema,
   updateProductoSchema,
-  getProductoBarraSchema,
   getProductoSchema,
+  getProductosSchema,
   subaPrecioProductoSchema,
 } = require('../schemas/producto.schema');
 
 const servicio = new ProductoServicio();
 
-router.get('/', async (req, res, next) => {
-  try {
-    const productos = await servicio.find();
-    res.json(productos);
-  } catch (error) {
-    next(error);
-  }
-});
-router.get('/rubros', async (req, res, next) => {
-  try {
-    const productos = await servicio.findRubros();
-    res.json(productos);
-  } catch (error) {
-    next(error);
-  }
-});
-router.get('/marcas', async (req, res, next) => {
-  try {
-    const productos = await servicio.findMarcas();
-    res.json(productos);
-  } catch (error) {
-    next(error);
-  }
-});
-router.get('/obtenerCodigo', async (req, res, next) => {
-  try {
-    const productos = await servicio.obtenerCodigo();
-    res.json(productos);
-  } catch (error) {
-    next(error);
-  }
-});
-
-
 router.get('/findOne',
-  validatorHandler(getProductoSchema, 'query'),
-  async (req, res, next) => {
-    try {
-
-      const producto = await servicio.findOne(req.query);
-      res.json(producto);
-    } catch (error) {
-      next(error);
-    }
+validatorHandler(getProductoSchema,'query'),
+async (req, res, next) => {
+  try {
+    const productos = await servicio.findOne(req.query);
+    res.json(productos);
+  } catch (error) {
+    next(error);
   }
-);
+});
+
+router.get('/findAll',
+validatorHandler(getProductosSchema,'query'),
+async (req, res, next) => {
+  try {
+    const productos = await servicio.find(req.query);
+    res.json(productos);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 router.get('/ArchivoJson/generar', async (req, res, next) => {
   try {
     const rta = await servicio.importarProductos("./STOCK.txt");

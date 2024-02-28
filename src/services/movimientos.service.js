@@ -29,7 +29,6 @@ class MovimientoService {
       };
     }
 
-    console.log("Aquiiiiii");
     const rta = await models.Movimiento.findAll(options);
     if(!rta){throw boom.notFound("Movimiento not found");}
 

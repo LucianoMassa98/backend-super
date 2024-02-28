@@ -2,9 +2,8 @@ const boom = require('@hapi/boom');
 const fs = require('fs');
 
 const { models } = require('../libs/sequelize');
-const { DOUBLE } = require('sequelize');
-//const productos = require('./productosNoCargados.js');
-const { options } = require('joi');
+
+const { Op } = require('sequelize');
 
 class ProductoServicio {
 
@@ -40,56 +39,24 @@ class ProductoServicio {
 
     return rta;
   }
-
-
   async findOne(query) {
-
-
     let options = { where:{}}
-    const {codBarra, codigo, id, nombre, descripcion, marca, rubro}=query;
+    const {codBarra, codigo, id}=query;
 
     if(id){options.where={id:id}}
     if (codBarra) {
       options.where = {
-        ...options.where,
         codBarra: codBarra,
       };
     }
 
     if (codigo) {
       options.where = {
-        ...options.where,
         codigo: codigo,
       };
     }
 
-    if (nombre) {
-      options.where = {
-        ...options.where,
-        nombre: nombre,
-      };
-    }
 
-    if (descripcion) {
-      options.where = {
-        ...options.where,
-        descripcion: descripcion,
-      };
-    }
-
-    if (rubro) {
-      options.where = {
-        ...options.where,
-        rubro: rubro,
-      };
-    }
-
-    if (marca) {
-      options.where = {
-        ...options.where,
-        marca: marca,
-      };
-    }
 
     const producto = await models.Producto.findOne(options);
       if (!producto) {
@@ -98,68 +65,33 @@ class ProductoServicio {
       return producto;
 
   }
-  async findBarra(codBarra) {
 
-    const producto = await models.Producto.findOne({where:{codBarra: codBarra }});
-    if (!producto) {
-      throw boom.notFound('producto no existente');
-    }
-    return producto;
-  }
-  async findCodigo(codigo) {
+  async find(query) {
+    const {limit, offset, texto} = query;
 
-    const producto = await models.Producto.findOne({where:{codigo: codigo }});
-    if (!producto) {
-      throw boom.notFound('producto no existente');
-    }
-    return producto;
-  }
+    let options = {
+      where:{},
+      limit,
+      offset
+    };
 
-  async findProducto(texto) {
+    if(texto){ options.where={ nombre:{[Op.iLike]: `%${texto}%` }}}
 
-    const dat = texto.split('-');
-
-    if (dat.Length == 1)
-    {
-        // buscar primero por codigo barra
-        try{
-
-          const Producto = await this.findBarra(texto);
-          return Producto;
-        }catch(err){
-          const Producto = await this.findCodigo(texto);
-          return Producto;
-        }
-    }
-    else
-    {  const listProductos = await this.find();
-        if (dat.Length == 3) {
-
-            let Producto = listProductos.FirstOrDefault(p => p.nombre == dat[0] && p.descripcion == dat[1] && p.marca == dat[2]);
-            if (!Producto) { return Producto; }
-
-            Producto = listProductos.FirstOrDefault(p => p.marca == dat[0] && p.nombre== dat[1] && p.descripcion== dat[2]);
-            if (!Producto) { return Producto; }
-
-        }
-        else if(dat.Length == 4) {
-
-            let Producto = listProductos.FirstOrDefault(p => p.rubro == dat[0] && p.nombre == dat[1] && p.descripcion == dat[2] && p.marca == dat[3]);
-            if (!Producto) { return Producto; }
-
-             Producto = listProductos.FirstOrDefault(p => p.rubro == dat[0] && p.marca == dat[1] && p.nombre== dat[2] && p.descripcion== dat[3]);
-            if (!Producto) { return Producto; }
-
-        }
-    }
-    return null;
-
-  }
-  async find() {
-    const rta = await models.Producto.findAll();
+    const rta = await models.Producto.findAll(options);
     if (!rta) {
       throw boom.notFound('Productos not found');
     }
+    await rta.sort(function(a, b) {
+      var nombreA = a.nombre.toUpperCase(); // Convertir nombres a mayúsculas
+      var nombreB = b.nombre.toUpperCase(); // Convertir nombres a mayúsculas
+      if (nombreA < nombreB) {
+          return -1;
+      }
+      if (nombreA > nombreB) {
+          return 1;
+      }
+      return 0;
+  });
 
     return rta;
   }
@@ -196,21 +128,17 @@ class ProductoServicio {
   }
   async update(id, changes) {
 
-    console.log(changes);
-    const producto = await this.findOne(id);
-    console.log(producto);
-    try{
+    const producto = await this.findOne({id:id});
       const rta = await producto.update(changes);
     if (!rta) {
       throw boom.notFound('Producto no actualizado');
     }
     return rta;
-    }catch(err){ console.log(err); throw boom.notFound("not found");}
 
   }
 
   async delete(id) {
-    const producto = await this.findOne(id);
+    const producto = await this.findOne({id:id});
     const rta = await producto.destroy();
     if (!rta) {
       throw boom.notFound('Producto no eliminado');
