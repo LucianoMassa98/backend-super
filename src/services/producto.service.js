@@ -198,12 +198,15 @@ class ProductoServicio {
 
     console.log(changes);
     const producto = await this.findOne(id);
-    const rta = await producto.update(changes);
+    console.log(producto);
+    try{
+      const rta = await producto.update(changes);
     if (!rta) {
       throw boom.notFound('Producto no actualizado');
     }
-    console.log(producto);
     return rta;
+    }catch(err){ console.log(err); throw boom.notFound("not found");}
+
   }
 
   async delete(id) {
