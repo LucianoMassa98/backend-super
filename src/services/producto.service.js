@@ -71,9 +71,12 @@ class ProductoServicio {
 
     let options = {
       where:{},
-      limit,
       offset
     };
+
+    if(limit){
+      options.limit=limit;
+    }
 
     if(texto){ options.where={ nombre:{[Op.iLike]: `%${texto}%` }}}
 

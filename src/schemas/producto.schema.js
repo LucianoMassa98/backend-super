@@ -43,7 +43,7 @@ const getProductoSchema = joi.object({
 
 const getProductosSchema = joi.object({
   texto: textos,
-  limit: enteros.required(),
+  limit: enteros,
    offset: enteros.required()
 });
 
