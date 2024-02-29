@@ -7,7 +7,7 @@ class ClienteService {
 
   async find() {
     try{
-      const rta = await models.Cliente.findAll();
+      const rta = await models.Cliente.findAll({include:['customer']});
       if(!rta){throw boom.notFound("Clientes not found");}
       return rta;
     }catch(err){ console.log(err);}
