@@ -18,8 +18,8 @@ class CajaService {
     return Cajas;
   }
 
-  async findOne(id) {
-    const Caja = await models.Caja.findByPk(id);
+  async findOne(ip) {
+    const Caja = await models.Caja.findOne({where:{ip:ip}});
     if(!Caja){ throw boom.notFound('Caja no encontrada');}
     return Caja;
   }

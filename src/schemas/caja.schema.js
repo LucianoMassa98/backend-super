@@ -8,7 +8,8 @@ const textos = joi.string().min(3);
 const createCajaSchema = joi.object({
 
 
-  nombre: textos.required()
+  nombre: textos.required(),
+  ip: textos.required()
 
 });
 
@@ -18,7 +19,7 @@ const updateCajaSchema = joi.object({
 });
 
 const getCajaSchema = joi.object({
-  id: ids.required()
+  ip: textos.required()
 });
 
 

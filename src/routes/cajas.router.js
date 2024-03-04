@@ -19,13 +19,13 @@ router.get('/',async (req,res,next)=>{
  });
 
 
-router.get('/:id',
+router.get('/:ip',
 validatorHandler(getCajaSchema, 'params'),
   async(req, res,next)=>{
   try{
 
-    const { id } = req.params;
-    const producto = await servicio.findOne(id);
+    const { ip } = req.params;
+    const producto = await servicio.findOne(ip);
     res.json(producto);
 
   }catch(error){

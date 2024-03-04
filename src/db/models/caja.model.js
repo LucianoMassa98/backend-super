@@ -18,6 +18,10 @@ const cajaSchema =  {
     allowNull: false,
     type: DataTypes.DOUBLE,
     defaultValue: 0
+  },
+  ip: {
+    allowNull: false,
+    type: DataTypes.STRING
   }
 }
 
