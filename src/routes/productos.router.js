@@ -23,6 +23,16 @@ async (req, res, next) => {
   }
 });
 
+router.get('/obtenerCodigo',
+async (req, res, next) => {
+  try {
+    const productos = await servicio.obtenerCodigo();
+    res.json(productos);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/findAll',
 validatorHandler(getProductosSchema,'query'),
 async (req, res, next) => {
