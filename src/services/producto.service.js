@@ -7,30 +7,7 @@ const { Op } = require('sequelize');
 
 class ProductoServicio {
 
-  async generar(){
-/*
-   await productos.forEach(async item=>{
-      try{
-       const rta= await this.create( {
-        codigo: item.codigo,
-        codBarra: item.codBarra,
-        nombre: item.nombre,
-        descripcion:"dd",
-        precio: item.precio,
-        impuesto: item.impuesto,
-        marca: "mm",
-        rubro:"rr"
-        });
 
-      }catch(err){
-          console.log(err);
-        }
-
-    });
-*/
-    return true;
-
-  }
   async create(data) {
     const rta = await models.Producto.create(data);
     if (!rta) {
@@ -179,9 +156,10 @@ class ProductoServicio {
     return true;
   }
 
-  async importarProductos() {
-    const nombreArchivo = './STOCK.txt'
-    fs.readFile(nombreArchivo, 'utf8', async (err, data) => {
+  async generar() {
+    const nombreArchivo = './STOCK.txt';
+
+    await fs.readFile(nombreArchivo, 'utf8', async (err, data) => {
       if (err) {
         console.error(`Error al leer el archivo: ${err.message}`);
         return;
@@ -234,7 +212,7 @@ class ProductoServicio {
 
     });
 
-
+    return true;
   }
 
   async exportarProductos(){

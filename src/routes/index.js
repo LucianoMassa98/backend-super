@@ -11,6 +11,8 @@ const usuariosRouter = require('./users.router');
 const customerRouter = require('./customer.router');
 const informesRouter = require('./informes.router');
 const movimientoRouter = require('./movimientos.router');
+const descargaRouter = require('./descargas.router');
+const generadorRouter = require('./generador.router');
 
 
 function routerApi(app) {
@@ -27,7 +29,8 @@ function routerApi(app) {
   router.use('/customers',customerRouter);
   router.use('/informes',informesRouter);
   router.use('/clientes',clientesRouter);
-
+  router.use('/descargas',descargaRouter);
+  router.use('/generador',generadorRouter);
 
 }
 

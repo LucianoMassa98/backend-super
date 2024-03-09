@@ -3,8 +3,6 @@ const { models } = require('../libs/sequelize');
 
 class ClienteService {
 
-
-
   async find() {
     try{
       const rta = await models.Cliente.findAll({include:['customer']});

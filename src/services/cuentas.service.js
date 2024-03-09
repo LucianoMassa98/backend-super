@@ -3,7 +3,21 @@ const { models } = require('../libs/sequelize');
 
 class CuentaService {
 
+  async generar(){
+    const cuentas = [
+      {codigo: "1.1.1", nombre:"Efectivo"},
+      {codigo: "1.1.2", nombre:"Mercado Pago"},
+      {codigo: "1.1.3", nombre:"Cuenta Corriente"},
+      {codigo: "1.1.4", nombre:"Debito"},
+      {codigo: "1.1.5", nombre:"Credito"},
+    ];
 
+    await cuentas.forEach(async (item) => {
+        await this.create(item);
+     });
+
+    return true;
+  }
 
   async find() {
     const rta = await models.Cuenta.findAll();

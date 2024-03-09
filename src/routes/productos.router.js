@@ -46,18 +46,6 @@ async (req, res, next) => {
 
 
 
-router.get('/ArchivoJson/generar', async (req, res, next) => {
-  try {
-    const rta = await servicio.importarProductos();
-    res.json(rta);
-  } catch (error) {
-    next(error);
-  }
-});
-
-
-
-
 router.post(
   '/',
   validatorHandler(createProductoSchema, 'body'),

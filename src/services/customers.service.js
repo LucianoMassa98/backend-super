@@ -3,8 +3,6 @@ const { models } = require('../libs/sequelize');
 
 class CustomerService {
 
-  constructor() {}
-
   async find() {
     const rta = await models.Customer.findAll();
     if(!rta){throw boom.notFound("Customer not found");}
