@@ -186,8 +186,7 @@ class ProductoServicio {
         console.error(`Error al leer el archivo: ${err.message}`);
         return;
       }
-      console.log(data);
-      return true;
+
 
       const lines = data.trim().split('\n');
       const productos= [];
