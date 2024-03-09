@@ -180,12 +180,14 @@ class ProductoServicio {
   }
 
   async importarProductos() {
-    const nombreArchivo = "./STOCK.txt"
+    const nombreArchivo = './STOCK.txt'
     fs.readFile(nombreArchivo, 'utf8', async (err, data) => {
       if (err) {
         console.error(`Error al leer el archivo: ${err.message}`);
         return;
       }
+      console.log(data);
+      return true;
 
       const lines = data.trim().split('\n');
       const productos= [];
@@ -230,7 +232,10 @@ class ProductoServicio {
       });
 
 
+
     });
+
+
   }
 
   async exportarProductos(){
