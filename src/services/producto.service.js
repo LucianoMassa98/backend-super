@@ -179,7 +179,8 @@ class ProductoServicio {
     return true;
   }
 
-  async importarProductos(nombreArchivo) {
+  async importarProductos() {
+    const nombreArchivo = "./STOCK.txt"
     fs.readFile(nombreArchivo, 'utf8', async (err, data) => {
       if (err) {
         console.error(`Error al leer el archivo: ${err.message}`);
