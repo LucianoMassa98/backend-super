@@ -168,6 +168,7 @@ class ProductoServicio {
 
       const lines = data.trim().split('\n');
       const productos= [];
+      console.log("Cantidad de lineas: "+lines.length);
 
     await lines.forEach((linea) => {
 
@@ -184,13 +185,14 @@ class ProductoServicio {
           });
         }
       });
+
+      console.log("Cantidad de productos: "+productos.length);
+
         let i =1;
      await productos.forEach(async item=>{
         try{
-          if(item.codBarra)
 
-
-          await this.create(
+        const rta=  await this.create(
           {
             codigo: item.codigo,
             codBarra: item.codBarra.trim() !== '' ? item.codBarra.trim() : (i++).toString(),
@@ -201,14 +203,14 @@ class ProductoServicio {
             marca: "mm",
             rubro:"rr"
             }
-          );}catch(err){
+          );
 
-            console.log(item);
-          }
+          if(!rta){ console.log(item);}
+        }catch(err){ console.log(item);}
 
       });
 
-
+      console.log("Cantidad de productos cargados: "+ (await this.find({offset:0})).length);
 
     });
 

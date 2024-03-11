@@ -13,27 +13,23 @@ const CustomerService = require('../services/customers.service');
 const servicio4 = new CustomerService();
 
 class GeneradorServicio {
-
-  async iniciar(){
-
-
-
+  async iniciar() {
+    //create customer y cliente del consumidor final
     const customer = await servicio4.create({
-      nombre: "cajero",
-      apellido: "cajero",
+      nombre: 'Consumidor',
+      apellido: 'Final',
       celular: 9876544321,
-      direccion: "algun lugar 1234",
-      email: "cajero@example.com"
+      direccion: 'algun lugar 1234',
+      email: 'ConsumidorFinal@example.com',
     });
-    const cuentas = await servicio2.generar();
-
-    const cliente = await servicio3.create({customerId: customer.id});
-
-    const productos = await servicio.generar();
+     await servicio3.create({ customerId: customer.id });
+    //create cuentas
+    await servicio2.generar();
+    //create productos
+    await servicio.generar();
 
     return true;
   }
-
 }
 
 module.exports = GeneradorServicio;
