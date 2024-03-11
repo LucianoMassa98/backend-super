@@ -25,7 +25,7 @@ class GeneradorServicio {
      await servicio3.create({ customerId: customer.id });
     //create cuentas
     await servicio2.generar();
-    //create productos
+    //create productos*/
     await servicio.generar();
 
     return true;

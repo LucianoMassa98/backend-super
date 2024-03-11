@@ -9,12 +9,19 @@ class ProductoServicio {
 
 
   async create(data) {
-    const rta = await models.Producto.create(data);
-    if (!rta) {
+    try{
+      const rta = await models.Producto.create(data);
+      if (!rta) {
+        throw boom.notFound('Producto not found');
+      }
+
+      return rta;
+    }catch(err){
+      console.log(err);
       throw boom.notFound('Producto not found');
+
     }
 
-    return rta;
   }
   async findOne(query) {
     let options = { where:{}}
@@ -167,9 +174,9 @@ class ProductoServicio {
 
 
       const lines = data.trim().split('\n');
-      const productos= [];
+      let productos= [];
       console.log("Cantidad de lineas: "+lines.length);
-
+    //
     await lines.forEach((linea) => {
 
        const match= linea.split(';');
@@ -188,7 +195,7 @@ class ProductoServicio {
 
       console.log("Cantidad de productos: "+productos.length);
 
-        let i =1;
+       let i =1000;
      await productos.forEach(async item=>{
         try{
 
@@ -209,8 +216,9 @@ class ProductoServicio {
         }catch(err){ console.log(item);}
 
       });
+      //*/
 
-      console.log("Cantidad de productos cargados: "+ (await this.find({offset:0})).length);
+      console.log("Cantidad de productos cargados: "+ await this.find({offset:0}).length);
 
     });
 
