@@ -14,6 +14,10 @@ const {Movimiento, MovimientoSchema}=require('./movimiento.model');
 
 const {NotaProducto, NotaProductoSchema}=require('./nota-producto.model');
 
+const {AperturaCaja, AperturaCajaSchema}=require('./aperturaCaja.model');
+const {CierreCaja, CierreCajaSchema}=require('./cierreCaja.model');
+
+
 function setupModels(sequelize) {
   Customer.init(CustomerSchema,Customer.config(sequelize));
   Cuenta.init(CuentaSchema,Cuenta.config(sequelize));
@@ -29,6 +33,11 @@ function setupModels(sequelize) {
   NotaProducto.init(NotaProductoSchema,NotaProducto.config(sequelize));
   Cobro.init(CobroSchema,Cobro.config(sequelize));
 
+  AperturaCaja.init(AperturaCajaSchema,AperturaCaja.config(sequelize));
+  CierreCaja.init(CierreCajaSchema,CierreCaja.config(sequelize));
+
+  //---------------
+
   Customer.associate(sequelize.models);
   Cuenta.associate(sequelize.models);
 
@@ -41,6 +50,9 @@ function setupModels(sequelize) {
   NotaPedido.associate(sequelize.models);
   NotaProducto.associate(sequelize.models);
   Cobro.associate(sequelize.models);
+
+  AperturaCaja.associate(sequelize.models);
+  CierreCaja.associate(sequelize.models);
 
 }
 

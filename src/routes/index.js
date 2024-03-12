@@ -14,6 +14,8 @@ const movimientoRouter = require('./movimientos.router');
 const descargaRouter = require('./descargas.router');
 const generadorRouter = require('./generador.router');
 
+const aperturaCajaRouter = require('./aperturaCajas.router');
+const cierreCajaRouter = require('./cierreCajas.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -31,6 +33,8 @@ function routerApi(app) {
   router.use('/clientes',clientesRouter);
   router.use('/descargas',descargaRouter);
   router.use('/generador',generadorRouter);
+  router.use('/aperturas',aperturaCajaRouter);
+  router.use('/cierres',cierreCajaRouter);
 
 }
 

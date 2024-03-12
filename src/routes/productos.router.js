@@ -44,6 +44,24 @@ async (req, res, next) => {
   }
 });
 
+router.get('/marcas/listado/traer',
+async (req, res, next) => {
+  try {
+    const productos = await servicio.findMarcas();
+    res.json(productos);
+  } catch (error) {
+    next(error);
+  }
+});
+router.get('/rubros/listado',
+async (req, res, next) => {
+  try {
+    const productos = await servicio.findRubros();
+    res.json(productos);
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 router.post(
