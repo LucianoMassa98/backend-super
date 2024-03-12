@@ -3,7 +3,7 @@ const express = require('express');
 const cierreCajasService = require('../services/cierreCajas.service');
 const validationHandler = require('../middlewares/validator.handler');
 const {
-  getCierreCajaSchema, createCierreCajaSchema,queryCierreCajaSchema } = require('../schemas/aperturaCaja.schema');
+  getCierreCajaSchema, createCierreCajaSchema,queryCierreCajaSchema } = require('../schemas/cierreCaja.schema');
 
 const router = express.Router();
 const service = new cierreCajasService();
