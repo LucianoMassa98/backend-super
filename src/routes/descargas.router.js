@@ -3,14 +3,13 @@ const path = require('path');
 const fs = require('fs');
 const archiver = require('archiver');
 const router = express.Router();
-/*const CajaServicio = require('../services/caja.service');
-const servicio = new CajaServicio();
-const { } = require('../schemas/descarga.schema');
-*/
 
-const validatorHandler = require('../middlewares/validator.handler');
+
+const DescargasServicio = require('../services/descargas.service');
+const servicio = new DescargasServicio();
+
+
 const directorioParaDescargar = './App/Debug';
-
 router.get('/app',async (req,res,next)=>{
 
  try{
@@ -59,6 +58,28 @@ router.get('/app',async (req,res,next)=>{
 
 
  });
+
+ const rutaDirectorio = path.join(__dirname, '..', '..');
+ const dirLogo1 = path.resolve(rutaDirectorio, 'App', 'image', 'logo1.jpg');
+ const dirLogo2 = path.resolve(rutaDirectorio, 'App', 'image', 'logo2.jpg');
+
+ router.get('/logo/:ip',async (req,res,next)=>{
+
+  try{
+    const {ip}= req.params;
+    const band = await servicio.logo(ip);
+    console.log(band);
+    if(band){
+      res.sendFile(dirLogo1);
+    }else{
+      res.sendFile(dirLogo2);
+
+    }
+
+  }catch(error){next(error);}
+
+
+  });
 
 
 module.exports = router;
