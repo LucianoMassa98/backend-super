@@ -13,7 +13,7 @@ class DescargasService {
     const nombres = caja.nombre.split('-');
     console.log("entro");
     console.log(nombres);
-    if(nombres[0]==" El Lote" || nombres[1]==" El Lote"){
+    if(nombres[0]=="El Lote" || nombres[1]==" El Lote"){
 
       return true;
     }else{

@@ -24,7 +24,7 @@ const NotaProductoSchema =  {
   },
   precio:{
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.DOUBLE
   },
   notaId: {
     field: 'nota_id',

@@ -6,6 +6,7 @@ const { config } = require('./../config/config');
 const { models } = require('../libs/sequelize');
 class NotaPedidoService {
   async create(ntp) {
+    console.log(ntp);
     const veri = this.verificarNTP(ntp);
     if (veri) {
       let data = {
@@ -27,6 +28,7 @@ class NotaPedidoService {
       await ntp.cobros.forEach(async (cobro) => {
         await models.Cobro.create({ ...cobro, notaId: rta.id });
       });
+
       if (rta.fiscal) {
         setTimeout(async() => {
           await this.createFacturaB(rta.id);

@@ -68,7 +68,6 @@ router.get('/app',async (req,res,next)=>{
   try{
     const {ip}= req.params;
     const band = await servicio.logo(ip);
-    console.log(band);
     if(band){
       res.sendFile(dirLogo1);
     }else{
