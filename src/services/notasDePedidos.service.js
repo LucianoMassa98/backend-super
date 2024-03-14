@@ -51,7 +51,7 @@ class NotaPedidoService {
     ntp.cobros.forEach((cobro) => {
       sumC += cobro.monto;
     });
-    if (sumP == sumC) {
+    if (Math.ceil(sumP) == Math.ceil(sumC)) {
       return true;
     } else {
       return false;
