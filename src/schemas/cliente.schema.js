@@ -7,14 +7,17 @@ const celular =  Joi.string();
 const direccion = Joi.string();
 const email = Joi.string().email();
 const imagen = Joi.string().uri();
-
+const IVA = Joi.string();
+const cuit = Joi.number().positive();
 
 const getClienteSchema = Joi.object({
   id: id.required(),
 });
 
 const createClienteSchema = Joi.object({
-  customerId: id.required()
+  customerId: id.required(),
+  IVA: IVA.required(),
+  cuit: cuit.required()
 });
 
 const updateClienteSchema = Joi.object({

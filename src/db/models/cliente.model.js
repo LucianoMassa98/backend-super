@@ -23,6 +23,14 @@ const ClienteSchema  = {
     onDelete: 'CASCADE'
 
   },
+  IVA:{
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  cuit:{
+    allowNull: false,
+    type: DataTypes.DOUBLE
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
