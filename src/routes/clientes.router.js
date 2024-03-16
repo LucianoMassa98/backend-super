@@ -45,4 +45,17 @@ router.delete('/:id',
   }
 );
 
+router.put('/:id',
+  validationHandler(getClienteSchema, 'params'),
+  validationHandler(updateClienteSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      res.json(await service.update(id,req.body));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = router;

@@ -21,7 +21,8 @@ const createClienteSchema = Joi.object({
 });
 
 const updateClienteSchema = Joi.object({
-  customerId: id.required()
+  IVA: IVA.required(),
+  cuit: cuit.required()
 });
 
 module.exports = { getClienteSchema, createClienteSchema, updateClienteSchema };
