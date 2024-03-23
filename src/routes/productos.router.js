@@ -44,7 +44,7 @@ async (req, res, next) => {
   }
 });
 
-router.get('/marcas/listado/traer',
+router.get('/marcas/listado',
 async (req, res, next) => {
   try {
     const productos = await servicio.findMarcas();
@@ -62,7 +62,15 @@ async (req, res, next) => {
     next(error);
   }
 });
-
+router.get('/cntTotalCargados',
+async (req, res, next) => {
+  try {
+    const productos = await servicio.cntTotalCargados();
+    res.json(productos);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post(
   '/',

@@ -50,6 +50,13 @@ class ProductoServicio {
 
   }
 
+  async cntTotalCargados(){
+    const rta = await models.Producto.findAll();
+    if (!rta) {
+      throw boom.notFound('Productos not found');
+    }
+    return rta.length;
+  }
   async find(query) {
     const {limit, offset, texto} = query;
 
