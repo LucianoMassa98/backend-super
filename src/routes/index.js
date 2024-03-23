@@ -16,6 +16,7 @@ const generadorRouter = require('./generador.router');
 
 const aperturaCajaRouter = require('./aperturaCajas.router');
 const cierreCajaRouter = require('./cierreCajas.router');
+const webHookRouter = require('./webhook.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -35,6 +36,8 @@ function routerApi(app) {
   router.use('/generador',generadorRouter);
   router.use('/aperturas',aperturaCajaRouter);
   router.use('/cierres',cierreCajaRouter);
+  router.use('/webhook',webHookRouter);
+
 
 }
 

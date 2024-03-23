@@ -183,16 +183,17 @@ class NotaPedidoService {
     let cliente={};
     if(ntp.clienteId==1){
       cliente= {
-        documento_tipo: 'OTRO',
         condicion_iva: 'CF',
-        domicilio: '',
-        condicion_pago: '201',
-        documento_nro: '0',
-        razon_social: '',
-        provincia: '2',
-        email:'',
         envia_por_mail: 'N',
         rg5329: 'N',
+        documento_tipo:"DNI",
+        documento_nro: "1292963535",
+        razon_social:"Pirulo",
+        email:"test@test.com",
+        domicilio:"Av Sta Fe 123",
+        provincia:"2",
+        condicion_pago:"214",
+        condicion_pago_otra:"Cobrado en ventanilla",
       };
     }else{
       cliente= {
@@ -208,6 +209,8 @@ class NotaPedidoService {
         rg5329: 'N',
       };
     }
+    console.log("----------");
+    console.log(cliente);
 
     let data = {
       apitoken: config.apiToken,

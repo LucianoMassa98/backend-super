@@ -7,6 +7,8 @@ const { CAJA_TABLE, cajaSchema } = require('../models/caja.model');
 const { COBRO_TABLE, CobroSchema } = require('../models/cobro.model');
 const { MOVIMIENTO_TABLE, MovimientoSchema } = require('../models/movimiento.model');
 const { CUENTA_TABLE, CuentaSchema } = require('../models/cuenta.model');
+const { APERTURA_CAJA_TABLE, AperturaCajaSchema } = require('../models/aperturaCaja.model');
+const { CIERRE_CAJA_TABLE, CierreCajaSchema } = require('../models/cierreCaja.model');
 
 
 
@@ -33,9 +35,17 @@ module.exports = {
     await queryInterface.createTable(NOTA_PRODUCTO_TABLE, NotaProductoSchema);
     await queryInterface.createTable(COBRO_TABLE, CobroSchema);
     await queryInterface.createTable(MOVIMIENTO_TABLE, MovimientoSchema);
+
+    await queryInterface.createTable(APERTURA_CAJA_TABLE, AperturaCajaSchema);
+    await queryInterface.createTable(CIERRE_CAJA_TABLE, CierreCajaSchema);
+
+
   },
 
   async down(queryInterface) {
+    await queryInterface.dropTable(CIERRE_CAJA_TABLE);
+    await queryInterface.dropTable(APERTURA_CAJA_TABLE);
+
     await queryInterface.dropTable(MOVIMIENTO_TABLE);
     await queryInterface.dropTable(COBRO_TABLE);
     await queryInterface.dropTable(NOTA_PRODUCTO_TABLE);

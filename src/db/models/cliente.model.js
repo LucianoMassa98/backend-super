@@ -29,7 +29,7 @@ const ClienteSchema  = {
   },
   cuit:{
     allowNull: false,
-    type: DataTypes.DOUBLE
+    type: DataTypes.STRING
   },
   createdAt: {
     allowNull: false,

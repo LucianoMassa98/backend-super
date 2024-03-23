@@ -22,7 +22,7 @@ class GeneradorServicio {
       direccion: 'algun lugar 1234',
       email: 'ConsumidorFinal@example.com',
     });
-     await servicio3.create({ customerId: customer.id });
+     await servicio3.create({ customerId: customer.id, IVA: "C:consumidor final", cuit:"000000000" });
     //create cuentas
     await servicio2.generar();
     //create productos*/
