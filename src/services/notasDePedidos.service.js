@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom');
 const axios = require('axios');
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 const { config } = require('./../config/config');
 
 const { models } = require('../libs/sequelize');
@@ -30,10 +30,9 @@ class NotaPedidoService {
       });
 
       if (rta.fiscal) {
-        setTimeout(async() => {
+        setTimeout(async () => {
           await this.createFacturaB(rta.id);
         }, 4000);
-
       }
       return rta;
     } else {
@@ -112,9 +111,15 @@ class NotaPedidoService {
     if (cliente) {
       include.push({ association: 'cliente', include: ['customer'] });
     }
-    const { cobros } = query;
+    const { cobros, cuentaId } = query;
     if (cobros) {
-      include.push({ association: 'cobros', include: ['cuenta'] });
+      if (cuentaId) {
+        include.push({association: 'cobros',
+          include: [{ association: 'cuenta', where: { id: cuentaId } }],
+        });
+      } else {
+        include.push({ association: 'cobros', include: ['cuenta'] });
+      }
     }
     const { items } = query;
     if (items) {
@@ -129,6 +134,7 @@ class NotaPedidoService {
     if (!notasPedido) {
       throw boom.notFound('Nota de Pedido not found');
     }
+
     return notasPedido;
   }
 
@@ -156,7 +162,6 @@ class NotaPedidoService {
   }
 
   async createFacturaB(notaId) {
-
     const ntp = await this.findOne(notaId);
 
     let detalle = [];
@@ -175,41 +180,44 @@ class NotaPedidoService {
           alicuota: element.impuesto,
           actualiza_precio: 'N',
           rg5329: 'N',
-          precio_unitario_sin_iva: element.NotaProducto.precio-(element.impuesto*element.NotaProducto.precio/100),
+          precio_unitario_sin_iva:
+            element.NotaProducto.precio -
+            (element.impuesto * element.NotaProducto.precio) / 100,
         },
       });
     });
 
-    let cliente={};
-    if(ntp.clienteId==1){
-      cliente= {
+    let cliente = {};
+    if (ntp.clienteId == 1) {
+      cliente = {
         condicion_iva: 'CF',
         envia_por_mail: 'N',
         rg5329: 'N',
-        documento_tipo:"DNI",
-        documento_nro: "1292963535",
-        razon_social:"Pirulo",
-        email:"test@test.com",
-        domicilio:"Av Sta Fe 123",
-        provincia:"2",
-        condicion_pago:"214",
-        condicion_pago_otra:"Cobrado en ventanilla",
+        documento_tipo: 'DNI',
+        documento_nro: '1292963535',
+        razon_social: 'Pirulo',
+        email: 'test@test.com',
+        domicilio: 'Av Sta Fe 123',
+        provincia: '2',
+        condicion_pago: '214',
+        condicion_pago_otra: 'Cobrado en ventanilla',
       };
-    }else{
-      cliente= {
+    } else {
+      cliente = {
         documento_tipo: 'DNI',
         condicion_iva: 'CF',
         domicilio: ntp.cliente.customer.direccion,
         condicion_pago: '201',
         documento_nro: '111132333',
-        razon_social: ntp.cliente.customer.nombre + " "+ntp.cliente.customer.apellido,
+        razon_social:
+          ntp.cliente.customer.nombre + ' ' + ntp.cliente.customer.apellido,
         provincia: '2',
         email: ntp.cliente.customer.email,
         envia_por_mail: 'N',
         rg5329: 'N',
       };
     }
-    console.log("----------");
+    console.log('----------');
     console.log(cliente);
 
     let data = {
@@ -235,16 +243,19 @@ class NotaPedidoService {
         impuestos_internos: '0',
         impuestos_internos_base: '0',
         impuestos_internos_alicuota: '0',
-      }
+      },
     };
 
     data = {
       ...data,
-      cliente
-    }
+      cliente,
+    };
 
-
-    await this.utlizarAxios('POST',data,'https://www.tusfacturas.app/app/api/v2/facturacion/nuevo_encola');
+    await this.utlizarAxios(
+      'POST',
+      data,
+      'https://www.tusfacturas.app/app/api/v2/facturacion/nuevo_encola'
+    );
   }
 
   async utlizarAxios(method, data, URL) {

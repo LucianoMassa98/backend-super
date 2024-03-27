@@ -1,6 +1,7 @@
 const joi = require('joi');
 
 const id = joi.number().integer();
+const cuentaId = joi.number().integer();
 const userId = joi.number().integer();
 const cajaId = joi.number().integer();
 const cobros = joi.boolean().truthy();
@@ -40,6 +41,7 @@ const queryNotas = joi.object({
   cobros,
   items,
   cliente,
+  cuentaId,
   user
 });
 

@@ -12,6 +12,9 @@ const servicio3 = new ClienteService();
 const CustomerService = require('../services/customers.service');
 const servicio4 = new CustomerService();
 
+const NotaPedidoService = require('../services/notasDePedidos.service');
+const servicio5 = new NotaPedidoService();
+
 class GeneradorServicio {
   async iniciar() {
     //create customer y cliente del consumidor final
@@ -27,6 +30,16 @@ class GeneradorServicio {
     await servicio2.generar();
     //create productos*/
     await servicio.generar();
+
+    return true;
+  }
+
+  async delete(nomTabla) {
+
+   const items=  await servicio5.find({});
+   items.forEach( async item => {
+   await servicio5.delete(item.id);
+   });
 
     return true;
   }

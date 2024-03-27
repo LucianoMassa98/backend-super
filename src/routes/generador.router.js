@@ -12,4 +12,13 @@ router.get('/iniciar', async (req, res, next) => {
   }
 });
 
+router.delete('/notas', async (req, res, next) => {
+  try {
+    const rta = await servicio.delete();
+    res.json(rta);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

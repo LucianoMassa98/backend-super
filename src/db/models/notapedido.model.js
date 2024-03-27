@@ -81,14 +81,7 @@ class NotaPedido extends Model {
 
   }
 
-  async calcularTotal(){
 
-    let sum=0;
-    this.items.forEach(element => {
-      sum += element.NotaProducto.cnt * element.NotaProducto.precio;
-    });
-    return sum;
-  }
   async emision(){
     const dia = this.createdAt.getDate().toString().padStart(2, '0'); // Asegura que el día tenga dos dígitos
     const mes = (this.createdAt.getMonth() + 1).toString().padStart(2, '0'); // Asegura que el mes tenga dos dígitos

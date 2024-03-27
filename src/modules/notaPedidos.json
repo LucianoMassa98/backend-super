@@ -1,0 +1,836 @@
+[
+	{
+		"id": 8,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T14:41:06.787Z",
+		"cobros": [
+			{
+				"id": 4,
+				"notaId": 8,
+				"cuentaId": 4,
+				"monto": 10408,
+				"createdAt": "2024-03-26T14:41:06.861Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 10,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T14:46:58.972Z",
+		"cobros": [
+			{
+				"id": 6,
+				"notaId": 10,
+				"cuentaId": 4,
+				"monto": 35473,
+				"createdAt": "2024-03-26T14:46:59.048Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 11,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T14:51:03.924Z",
+		"cobros": [
+			{
+				"id": 7,
+				"notaId": 11,
+				"cuentaId": 1,
+				"monto": 1500,
+				"createdAt": "2024-03-26T14:51:03.980Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 12,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T14:52:03.548Z",
+		"cobros": [
+			{
+				"id": 8,
+				"notaId": 12,
+				"cuentaId": 1,
+				"monto": 300,
+				"createdAt": "2024-03-26T14:52:03.626Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 13,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T14:54:46.929Z",
+		"cobros": [
+			{
+				"id": 9,
+				"notaId": 13,
+				"cuentaId": 1,
+				"monto": 2701.98,
+				"createdAt": "2024-03-26T14:54:46.988Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 14,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:09:36.983Z",
+		"cobros": [
+			{
+				"id": 10,
+				"notaId": 14,
+				"cuentaId": 4,
+				"monto": 18655,
+				"createdAt": "2024-03-26T15:09:37.055Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 15,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:10:40.545Z",
+		"cobros": [
+			{
+				"id": 11,
+				"notaId": 15,
+				"cuentaId": 1,
+				"monto": 270,
+				"createdAt": "2024-03-26T15:10:40.621Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 16,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:12:24.254Z",
+		"cobros": [
+			{
+				"id": 12,
+				"notaId": 16,
+				"cuentaId": 4,
+				"monto": 4554,
+				"createdAt": "2024-03-26T15:12:24.315Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 17,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": true,
+		"createdAt": "2024-03-26T15:16:43.146Z",
+		"cobros": [
+			{
+				"id": 13,
+				"notaId": 17,
+				"cuentaId": 4,
+				"monto": 29895.93,
+				"createdAt": "2024-03-26T15:16:43.240Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 18,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:18:25.290Z",
+		"cobros": [
+			{
+				"id": 14,
+				"notaId": 18,
+				"cuentaId": 1,
+				"monto": 1650.99,
+				"createdAt": "2024-03-26T15:18:25.351Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 19,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:19:47.613Z",
+		"cobros": [
+			{
+				"id": 15,
+				"notaId": 19,
+				"cuentaId": 1,
+				"monto": 1540.99,
+				"createdAt": "2024-03-26T15:19:47.803Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 20,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:21:09.736Z",
+		"cobros": [
+			{
+				"id": 16,
+				"notaId": 20,
+				"cuentaId": 1,
+				"monto": 890,
+				"createdAt": "2024-03-26T15:21:09.794Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 21,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:22:36.203Z",
+		"cobros": [
+			{
+				"id": 17,
+				"notaId": 21,
+				"cuentaId": 1,
+				"monto": 2481.98,
+				"createdAt": "2024-03-26T15:22:36.282Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 22,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:25:00.609Z",
+		"cobros": [
+			{
+				"id": 18,
+				"notaId": 22,
+				"cuentaId": 2,
+				"monto": 5908,
+				"createdAt": "2024-03-26T15:25:00.671Z",
+				"cuenta": {
+					"id": 2,
+					"codigo": "1.1.2",
+					"nombre": "Mercado Pago",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 23,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:28:08.318Z",
+		"cobros": [
+			{
+				"id": 19,
+				"notaId": 23,
+				"cuentaId": 1,
+				"monto": 2000,
+				"createdAt": "2024-03-26T15:28:08.396Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			},
+			{
+				"id": 20,
+				"notaId": 23,
+				"cuentaId": 4,
+				"monto": 897,
+				"createdAt": "2024-03-26T15:28:08.396Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 24,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": true,
+		"createdAt": "2024-03-26T15:29:27.025Z",
+		"cobros": [
+			{
+				"id": 21,
+				"notaId": 24,
+				"cuentaId": 1,
+				"monto": 1000,
+				"createdAt": "2024-03-26T15:29:27.090Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 25,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 1,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:32:27.067Z",
+		"cobros": [
+			{
+				"id": 22,
+				"notaId": 25,
+				"cuentaId": 1,
+				"monto": 220,
+				"createdAt": "2024-03-26T15:32:27.148Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 26,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:37:51.899Z",
+		"cobros": [
+			{
+				"id": 23,
+				"notaId": 26,
+				"cuentaId": 1,
+				"monto": 757,
+				"createdAt": "2024-03-26T15:37:51.958Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 27,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:39:18.716Z",
+		"cobros": [
+			{
+				"id": 24,
+				"notaId": 27,
+				"cuentaId": 1,
+				"monto": 1000,
+				"createdAt": "2024-03-26T15:39:18.777Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 28,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:41:42.666Z",
+		"cobros": [
+			{
+				"id": 25,
+				"notaId": 28,
+				"cuentaId": 1,
+				"monto": 1100,
+				"createdAt": "2024-03-26T15:41:42.733Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 29,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:43:22.711Z",
+		"cobros": [
+			{
+				"id": 26,
+				"notaId": 29,
+				"cuentaId": 4,
+				"monto": 3400,
+				"createdAt": "2024-03-26T15:43:22.768Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 30,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:45:53.794Z",
+		"cobros": [
+			{
+				"id": 27,
+				"notaId": 30,
+				"cuentaId": 4,
+				"monto": 847,
+				"createdAt": "2024-03-26T15:45:53.852Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 31,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:47:35.936Z",
+		"cobros": [
+			{
+				"id": 28,
+				"notaId": 31,
+				"cuentaId": 1,
+				"monto": 13155.96,
+				"createdAt": "2024-03-26T15:47:36.001Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 32,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:49:34.182Z",
+		"cobros": [
+			{
+				"id": 29,
+				"notaId": 32,
+				"cuentaId": 1,
+				"monto": 3188.99,
+				"createdAt": "2024-03-26T15:49:34.249Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 33,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:51:54.206Z",
+		"cobros": [
+			{
+				"id": 30,
+				"notaId": 33,
+				"cuentaId": 4,
+				"monto": 2600,
+				"createdAt": "2024-03-26T15:51:54.293Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 34,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T15:58:38.005Z",
+		"cobros": [
+			{
+				"id": 31,
+				"notaId": 34,
+				"cuentaId": 3,
+				"monto": 4330.99,
+				"createdAt": "2024-03-26T15:58:38.086Z",
+				"cuenta": {
+					"id": 3,
+					"codigo": "1.1.3",
+					"nombre": "Cuenta Corriente",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 35,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T16:04:12.106Z",
+		"cobros": [
+			{
+				"id": 32,
+				"notaId": 35,
+				"cuentaId": 1,
+				"monto": 1573.99,
+				"createdAt": "2024-03-26T16:04:12.118Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 36,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T16:06:11.543Z",
+		"cobros": [
+			{
+				"id": 33,
+				"notaId": 36,
+				"cuentaId": 1,
+				"monto": 1380,
+				"createdAt": "2024-03-26T16:06:11.549Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 37,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T16:07:36.033Z",
+		"cobros": [
+			{
+				"id": 34,
+				"notaId": 37,
+				"cuentaId": 1,
+				"monto": 2660.99,
+				"createdAt": "2024-03-26T16:07:36.199Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 38,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T16:08:12.624Z",
+		"cobros": [
+			{
+				"id": 35,
+				"notaId": 38,
+				"cuentaId": 1,
+				"monto": 120,
+				"createdAt": "2024-03-26T16:08:12.704Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 39,
+		"userId": 1,
+		"clienteId": 1,
+		"cajaId": 2,
+		"fiscal": false,
+		"createdAt": "2024-03-26T16:22:13.668Z",
+		"cobros": [
+			{
+				"id": 36,
+				"notaId": 39,
+				"cuentaId": 4,
+				"monto": 6619.97,
+				"createdAt": "2024-03-26T16:22:13.736Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			}
+		]
+	},
+	{
+		"id": 40,
+		"userId": 3,
+		"clienteId": 1,
+		"cajaId": 6,
+		"fiscal": false,
+		"createdAt": "2024-03-26T19:17:15.579Z",
+		"cobros": [
+			{
+				"id": 37,
+				"notaId": 40,
+				"cuentaId": 1,
+				"monto": 8400,
+				"createdAt": "2024-03-26T19:17:15.669Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	},
+	{
+		"id": 41,
+		"userId": 3,
+		"clienteId": 1,
+		"cajaId": 6,
+		"fiscal": false,
+		"createdAt": "2024-03-26T19:19:20.156Z",
+		"cobros": [
+			{
+				"id": 38,
+				"notaId": 41,
+				"cuentaId": 1,
+				"monto": 4200,
+				"createdAt": "2024-03-26T19:19:20.254Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			},
+			{
+				"id": 39,
+				"notaId": 41,
+				"cuentaId": 4,
+				"monto": 4200,
+				"createdAt": "2024-03-26T19:19:20.254Z",
+				"cuenta": {
+					"id": 4,
+					"codigo": "1.1.4",
+					"nombre": "Debito",
+					"debe": 0,
+					"haber": 0
+				}
+			},
+			{
+				"id": 40,
+				"notaId": 41,
+				"cuentaId": 1,
+				"monto": 1500,
+				"createdAt": "2024-03-26T19:19:20.254Z",
+				"cuenta": {
+					"id": 1,
+					"codigo": "1.1.1",
+					"nombre": "Efectivo",
+					"debe": 20130,
+					"haber": 91610
+				}
+			}
+		]
+	}
+]

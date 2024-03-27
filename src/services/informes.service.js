@@ -23,7 +23,20 @@ class InformesService {
   }
 
   async filtrarNotas(query){
-    const rta = await service.find({...query, cobros: true, items:true});
+
+    let fechaDesde = new Date(query.fechaDesde);
+    fechaDesde.setHours(1, 59, 59);
+    let fechaHasta =  new Date(query.fechaDesde);
+    fechaHasta.setDate(fechaHasta.getDate() + 1);
+
+    let query2 = {
+      cajaId: query.cajaId,
+      userId: query.userId,
+      fechaDesde: fechaDesde,
+      fechaHasta: fechaHasta
+    };
+    console.log(query2);
+    const rta = await service.find({...query2, cobros: true, items:true});
     if(!rta){throw boom.notFound("No hay Ventas realizadas");}
     return rta;
   }
